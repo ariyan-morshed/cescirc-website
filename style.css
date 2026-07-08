@@ -14,7 +14,6 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.8;
-    /* Subtle geopolitical grid background */
     background-image: 
         linear-gradient(rgba(128, 0, 0, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(128, 0, 0, 0.03) 1px, transparent 1px);
@@ -24,6 +23,27 @@ body {
 h1, h2, h3, h4 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
+}
+
+/* --- NEWSPAPER FONT CLASSES --- */
+.newspaper-title {
+    font-family: 'Redaction', serif;
+    font-weight: 20;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.newspaper-subtitle {
+    font-family: 'Redaction', serif;
+    font-weight: 35;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    /* THIS FIXES THE NUMBERS DROPPING DOWN */
+    font-feature-settings: "lnum" 1; 
+    font-variant-numeric: lining-nums;
 }
 
 /* --- NAVIGATION --- */
@@ -41,12 +61,10 @@ h1, h2, h3, h4 {
     border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-.logo-main {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: var(--gold);
-    font-weight: 700;
-    letter-spacing: 2px;
+/* LOGO MAGIC: Makes dark backgrounds transparent */
+.logo-img {
+    height: 60px;
+    mix-blend-mode: screen; 
 }
 
 .nav-links {
@@ -117,10 +135,9 @@ h1, h2, h3, h4 {
 }
 
 .hero-content h1 {
-    font-size: 5rem;
+    font-size: 4.5rem;
     color: #fff;
     margin: 0;
-    line-height: 1.1;
 }
 
 .divider {
@@ -131,10 +148,12 @@ h1, h2, h3, h4 {
 }
 
 .description {
-    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.5rem;
     max-width: 600px;
     margin: 0 auto;
-    color: #aaa;
+    color: #ccc;
 }
 
 /* --- SECTIONS --- */
@@ -191,25 +210,30 @@ h1, h2, h3, h4 {
     border-radius: 50%;
 }
 
-.timeline-content h3 {
-    color: var(--gold);
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}
-
 .timeline-content ul {
     padding-left: 20px;
     color: #bbb;
 }
 
-/* --- PANEL GRID --- */
-.panel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+/* --- ORGANOGRAM PANEL LAYOUT --- */
+.organogram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
 }
 
-.card {
+.org-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
+}
+
+/* Make cards slightly smaller to fit rows */
+.organogram .card {
+    flex: 1;
+    max-width: 280px;
     background: linear-gradient(145deg, #111, #1a1a1a);
     border: 1px solid rgba(212, 175, 55, 0.15);
     overflow: hidden;
@@ -217,43 +241,67 @@ h1, h2, h3, h4 {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-10px);
+.organogram .card:hover {
+    transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(128, 0, 0, 0.4);
     border-color: var(--gold);
 }
 
-/* The large graphic area for photos */
+/* Highlight the In-Charge */
+.tier-highlight {
+    border: 2px solid var(--gold) !important;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
 .card-graphic {
     width: 100%;
-    height: 250px;
+    height: 200px;
     background: linear-gradient(135deg, #1a0505, #0b0f14);
     border-bottom: 2px solid var(--gold);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #333;
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .card h3 { 
     color: #fff; 
-    font-size: 1.5rem; 
-    margin: 20px 0 5px 0; 
+    font-size: 1.3rem; 
+    margin: 15px 0 5px 0; 
 }
 
 .card .post { 
     color: var(--gold); 
     text-transform: uppercase; 
-    letter-spacing: 2px; 
-    font-size: 0.85rem; 
-    margin-bottom: 20px;
+    letter-spacing: 1px; 
+    font-size: 0.8rem; 
+    margin-bottom: 15px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
 }
 
 /* --- FORM SECTION --- */
 .form-section { text-align: center; }
+
+/* Fail-safe button */
+.form-fallback-btn {
+    display: inline-block;
+    background-color: var(--gold);
+    color: var(--dark-blue);
+    text-decoration: none;
+    padding: 15px 30px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: background 0.3s;
+}
+
+.form-fallback-btn:hover {
+    background-color: #fff;
+}
+
 .iframe-container {
     max-width: 800px;
     margin: 0 auto;
