@@ -25,25 +25,21 @@ h1, h2, h3, h4 {
     font-weight: 700;
 }
 
-/* --- NEWSPAPER FONT CLASSES --- */
+/* --- NEWSPAPER FONT CLASSES (Proper Redaction 20) --- */
 .newspaper-title {
-    font-family: 'Redaction', serif;
-    font-weight: 20;
+    font-family: 'Redaction 20', monospace; /* The heavy stamped look */
     letter-spacing: 4px;
     text-transform: uppercase;
     line-height: 1.2;
+    font-size: 4.5rem; /* Made it slightly bigger for impact */
 }
 
 .newspaper-subtitle {
-    font-family: 'Redaction', serif;
-    font-weight: 35;
+    font-family: 'Redaction 20', monospace; /* The heavy stamped look */
     text-transform: uppercase;
     color: var(--gold);
     font-size: 1.8rem;
     margin-bottom: 10px;
-    /* THIS FIXES THE NUMBERS DROPPING DOWN */
-    font-feature-settings: "lnum" 1; 
-    font-variant-numeric: lining-nums;
 }
 
 /* --- NAVIGATION --- */
@@ -61,42 +57,19 @@ h1, h2, h3, h4 {
     border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-/* LOGO MAGIC: Makes dark backgrounds transparent */
+/* LOGO FIX: Framing it to hide the brown contrast */
+.logo-text {
+    background-color: #2a0808; /* A very dark maroon that blends into the site */
+    padding: 5px 15px;
+    border-radius: 4px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
 .logo-img {
-    height: 60px;
-    mix-blend-mode: screen; 
+    height: 50px;
+    display: block; /* Removes weird spacing under the image */
+    /* mix-blend-mode removed because it failed on brown backgrounds */
 }
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-links a {
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover { color: var(--gold); }
-
-.btn-join {
-    border: 1px solid var(--gold);
-    padding: 8px 20px !important;
-    color: var(--gold) !important;
-}
-
-.btn-join:hover {
-    background-color: var(--gold);
-    color: var(--dark-blue) !important;
-}
-
 /* --- HERO SECTION --- */
 .hero {
     height: 100vh;
