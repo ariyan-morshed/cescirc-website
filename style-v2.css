@@ -2,7 +2,7 @@
 @font-face { font-family: 'MyRedaction'; src: url('fonts/redaction20.otf') format('opentype'); font-weight: normal; font-style: normal; }
 html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
 
-/* --- CESCIRC OFFICIAL DESIGN SYSTEM (NO NAVY) --- */
+/* --- CESCIRC OFFICIAL DESIGN SYSTEM --- */
 :root {
     --bg-primary: #5A1F1F;         
     --bg-secondary: #6B2828;       
@@ -11,27 +11,34 @@ html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
     --accent-primary: #C9A34E;     
     --accent-hover: #E5C46B;       
     --border-color: rgba(138, 106, 46, 0.35); 
-    --panel-bg: #F4EFDD;           
-    --panel-text: #2A211B;         
-    --bg-shadow: #3d1515;          /* Derived darker maroon for depth/shadows */
+    --bg-shadow: #2a0e0e;          /* Deep dark maroon for shadows/depth */
 }
 
 body {
-    /* DIRECTIONAL GRADIENT: Prevents flat solid color feel */
-    background: linear-gradient(160deg, #5A1F1F 0%, #4a1818 50%, #5A1F1F 100%);
-    background-attachment: fixed;
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     line-height: 1.8;
-    /* Subtle dot texture overlay for premium paper feel */
-    background-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
+    
+    /* --- VIBRANT BACKGROUND ELEMENTS --- */
+    background-color: var(--bg-primary); /* Fallback */
+    background-image: 
+        /* 1. Subtle Gold Spotlight top-right */
+        radial-gradient(circle at 85% 15%, rgba(201, 163, 78, 0.08) 0%, transparent 50%),
+        /* 2. Deep Shadow Vignette bottom-left */
+        radial-gradient(circle at 10% 90%, rgba(30, 10, 10, 0.6) 0%, transparent 50%),
+        /* 3. Soft central highlight */
+        radial-gradient(circle at 50% 50%, rgba(107, 40, 40, 0.4) 0%, transparent 70%),
+        /* 4. Faint topographic grid lines */
+        linear-gradient(rgba(201, 163, 78, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201, 163, 78, 0.04) 1px, transparent 1px),
+        /* 5. Base directional gradient */
+        linear-gradient(160deg, #5A1F1F 0%, #4a1818 50%, #5A1F1F 100%);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 50px 50px, 50px 50px, 100% 100%;
+    background-attachment: fixed; /* Keeps background elements still while scrolling - looks premium */
 }
 
 h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
-
-/* Redaction uses exact palette colors */
 .newspaper-title { font-family: 'MyRedaction', monospace; letter-spacing: 6px; text-transform: uppercase; line-height: 1; font-size: 5rem; color: var(--text-primary); }
 .newspaper-subtitle { font-family: 'MyRedaction', monospace; text-transform: uppercase; color: var(--accent-primary); font-size: 1.8rem; margin-bottom: 10px; }
 
@@ -39,30 +46,28 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
 .navbar { 
     display: flex; justify-content: space-between; align-items: center; 
     padding: 15px 40px; 
-    /* Semi-transparent maroon with blur for glassmorphism depth */
-    background: rgba(90, 31, 31, 0.85); 
+    background: rgba(42, 14, 14, 0.85); /* Very dark maroon glass */
     backdrop-filter: blur(12px);
     position: fixed; width: 100%; top: 0; z-index: 1000; 
     border-bottom: 2px solid var(--accent-primary);
     box-sizing: border-box; 
-    /* Subtle bottom inner shadow to lift it off the page */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
-/* Circular logo with new gold glow */
-.logo-wrapper { filter: drop-shadow(0 0 6px rgba(201, 163, 78, 0.5)); }
+.logo-wrapper { filter: drop-shadow(0 0 6px rgba(201, 163, 78, 0.6)); }
 .logo-img { height: 65px; display: block; border-radius: 50%; }
 
 .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
 .nav-links a { color: var(--text-primary) !important; text-decoration: none !important; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; font-weight: 600; }
-.nav-links a:hover { color: var(--accent-hover) !important; }
+.nav-links a:hover { color: var(--accent-hover) !important; text-shadow: 0 0 8px rgba(201, 163, 78, 0.4); }
 
-/* --- HERO SECTION (Spotlight Effect) --- */
+/* --- HERO SECTION (Enhanced Vignette) --- */
 .hero { 
     height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; 
     position: relative; overflow: hidden; 
-    /* Radial gradient creates a spotlight/vignette effect */
-    background: radial-gradient(ellipse at center, #6B2828 0%, #4a1818 50%, var(--bg-shadow) 100%); 
+    background: 
+        radial-gradient(circle at 50% 45%, rgba(201, 163, 78, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at center, #6B2828 0%, #4a1818 40%, var(--bg-shadow) 100%); 
 }
 .hero-content { position: relative; z-index: 2; padding: 0 20px; box-sizing: border-box; }
 .hero-subtitle { color: var(--accent-primary); letter-spacing: 4px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;}
@@ -70,39 +75,39 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
 .divider { width: 80px; height: 4px; background-color: var(--accent-hover); margin: 30px auto; }
 .description { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; max-width: 600px; margin: 0 auto; color: var(--text-secondary); }
 
-/* --- ABOUT SPLIT LAYOUT (Using Cream Panel) --- */
+/* --- ABOUT SPLIT LAYOUT --- */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; scroll-margin-top: 100px; }
 
-/* APPLYING CREAM CONTENT PANEL RULE HERE */
+/* FROSTED GLASS TEXT PANEL (No white backgrounds!) */
 .about-text { 
-    background-color: var(--panel-bg); 
-    color: var(--panel-text); 
+    background: rgba(90, 31, 31, 0.4); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 40px; 
     border-radius: 8px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    border-left: 5px solid var(--accent-primary);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
-.about-text p { font-size: 1.2rem; line-height: 1.8; margin: 0; }
-.about-text .section-title { color: var(--bg-primary); margin-bottom: 20px; border-left-color: var(--accent-primary); }
+.about-text p { font-size: 1.2rem; color: var(--text-primary); line-height: 1.8; margin: 0; }
 
-.about-image img { width: 100%; height: 400px; object-fit: cover; border: 4px solid var(--accent-primary); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.about-image img { width: 100%; height: 400px; object-fit: cover; border: 4px solid var(--accent-primary); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
 
 /* --- SECTIONS --- */
 .section { padding: 100px 10%; max-width: 1200px; margin: 0 auto; scroll-margin-top: 100px; }
-.section-title { color: var(--accent-hover); font-size: 3rem; margin-bottom: 50px; border-left: 5px solid var(--accent-primary); padding-left: 20px; }
+.section-title { color: var(--accent-hover); font-size: 3rem; margin-bottom: 50px; border-left: 5px solid var(--accent-primary); padding-left: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
 /* --- TIMELINE --- */
 .timeline { position: relative; padding-left: 40px; }
-.timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: linear-gradient(to bottom, var(--accent-primary), var(--bg-secondary)); }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: linear-gradient(to bottom, var(--accent-primary), var(--bg-shadow)); }
 .timeline-item { margin-bottom: 80px; position: relative; }
-.timeline-dot { position: absolute; left: -46px; top: 0; width: 14px; height: 14px; background: var(--accent-hover); border: 3px solid var(--bg-primary); border-radius: 50%; }
+.timeline-dot { position: absolute; left: -46px; top: 0; width: 14px; height: 14px; background: var(--accent-hover); border: 3px solid var(--bg-primary); border-radius: 50%; box-shadow: 0 0 10px rgba(201, 163, 78, 0.4); }
 .timeline-content h3 { margin-bottom: 20px; }
 .timeline-content ul { padding-left: 20px; color: var(--text-secondary); }
 
 /* IMAGE CONTAINERS */
-.timeline-image { margin-bottom: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.3); border: 1px solid var(--border-color); background-color: var(--bg-secondary); }
-.timeline-image img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.3s; filter: brightness(0.85) contrast(1.1); } /* Slightly cinematic filter */
-.timeline-image:hover img { transform: scale(1.03); filter: brightness(1) contrast(1); }
+.timeline-image { margin-bottom: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); border: 1px solid var(--border-color); background-color: var(--bg-secondary); }
+.timeline-image img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.4s, filter 0.4s; filter: brightness(0.8) contrast(1.1) saturate(1.1); }
+.timeline-image:hover img { transform: scale(1.05); filter: brightness(0.9) contrast(1.1) saturate(1.2); }
 
 /* --- ORGANOGRAM --- */
 .organogram { display: flex; flex-direction: column; align-items: center; gap: 25px; }
@@ -110,35 +115,39 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
 
 .organogram .card { 
     flex: 0 0 250px; width: 250px; 
-    /* CARDS: 3D gradient effect instead of flat color */
-    background: linear-gradient(180deg, #7a3232 0%, var(--bg-secondary) 30%, var(--bg-primary) 100%); 
+    background: linear-gradient(180deg, #7a3232 0%, var(--bg-secondary) 40%, var(--bg-primary) 100%); 
     border: 1px solid var(--border-color); 
     overflow: hidden; text-align: center; transition: all 0.3s; 
     display: flex; flex-direction: column; 
-    /* Inner top shadow and outer drop shadow for depth */
     box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05); 
 }
-.organogram .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1); border-color: var(--accent-hover); }
-.tier-highlight { border: 2px solid var(--accent-hover) !important; }
+.organogram .card:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 20px rgba(201, 163, 78, 0.1); 
+    border-color: var(--accent-hover); 
+}
+.tier-highlight { border: 2px solid var(--accent-hover) !important; box-shadow: 0 0 25px rgba(201, 163, 78, 0.15); }
 
-/* Card top graphic uses deepest maroon for contrast */
 .card-graphic { 
     width: 100%; height: 200px; 
-    background: radial-gradient(circle at center, var(--bg-shadow) 0%, #2a0e0e 100%); 
+    background: radial-gradient(circle at center, var(--bg-shadow) 0%, #1a0808 100%); 
     border-bottom: 3px solid var(--accent-primary); 
     display: flex; align-items: center; justify-content: center; 
-    color: rgba(255,255,255,0.05); font-size: 2rem; flex-shrink: 0; 
+    color: rgba(255,255,255,0.03); font-size: 2rem; flex-shrink: 0; 
     position: relative;
+    overflow: hidden;
 }
-/* Subtle geometric accent in graphic area */
-.card-graphic::after { content: ''; position: absolute; width: 60px; height: 60px; border: 1px solid rgba(201, 163, 78, 0.15); border-radius: 50%; }
+/* Abstract background element for cards */
+.card-graphic::after { content: ''; position: absolute; width: 120%; height: 120%; background: radial-gradient(circle, rgba(201, 163, 78, 0.05) 0%, transparent 60%); top: -10%; left: -10%; }
 
 .card h3 { color: var(--text-primary); font-size: 1.3rem; margin: 15px 10px 5px 10px; }
 .card .post { color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 15px; font-family: 'Inter', sans-serif; font-weight: 700; }
 
-/* --- FOOTER (Deep Maroon to ground the site) --- */
-footer { text-align: center; padding: 30px; background: var(--bg-shadow); color: var(--text-secondary); font-size: 0.9rem; border-top: 2px solid var(--accent-primary); }
-footer p { margin: 0; }
+/* --- FOOTER --- */
+footer { text-align: center; padding: 30px; background: var(--bg-shadow); color: var(--text-secondary); font-size: 0.9rem; border-top: 2px solid var(--accent-primary); position: relative; overflow: hidden;}
+/* Subtle gold glow at the top of the footer */
+footer::before { content: ''; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 60%; height: 40px; background: radial-gradient(ellipse, rgba(201, 163, 78, 0.1) 0%, transparent 70%); }
+footer p { margin: 0; position: relative; z-index: 2; }
 
 /* --- MOBILE RULES --- */
 @media (max-width: 768px) {
