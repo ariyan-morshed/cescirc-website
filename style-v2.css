@@ -1,0 +1,125 @@
+/* --- CUSTOM DOWNLOADED FONTS --- */
+@font-face {
+    font-family: 'MyRedaction';
+    src: url('fonts/redaction20.otf') format('opentype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* --- KILLS SIDE SCROLL --- */
+html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
+
+/* --- V2 COLOR SCHEME: Clean Slate Blue & Bright PPT Gold --- */
+:root {
+    --navy: #0f172a; /* Clean, rich slate blue (No more muddy dark blue) */
+    --gold: #D4AF37; /* Classic PPT Gold */
+    --text-light: #f1f5f9; /* Brighter white text for contrast */
+    --card-bg: #1e293b; /* Lighter cards so they pop */
+}
+
+body {
+    background-color: var(--navy);
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    /* Clean, subtle grid instead of muddy red lines */
+    background-image: 
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+.newspaper-title { font-family: 'MyRedaction', monospace; letter-spacing: 6px; text-transform: uppercase; line-height: 1; font-size: 5rem; color: #fff; }
+.newspaper-subtitle { font-family: 'MyRedaction', monospace; text-transform: uppercase; color: var(--gold); font-size: 1.8rem; margin-bottom: 10px; }
+
+/* --- NAVIGATION --- */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 40px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);
+    position: fixed; width: 100%; top: 0; z-index: 1000;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2); box-sizing: border-box;
+}
+
+/* CIRCULAR LOGO WITH GLOW */
+.logo-wrapper { filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 20px rgba(0,0,0,0.8)); }
+.logo-img { height: 70px; display: block; border-radius: 50%; /* MAKES IT CIRCULAR */ }
+
+.nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
+.nav-links a { color: #ffffff !important; text-decoration: none !important; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; font-family: 'Inter', sans-serif; font-weight: 400; }
+.nav-links a:hover { color: var(--gold) !important; }
+
+/* --- HERO SECTION (Real Image Background) --- */
+.hero {
+    height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center;
+    position: relative; overflow: hidden;
+    /* Geopolitical Background Image */
+    background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+}
+/* Hero overlay circle REMOVED */
+
+.hero-content { position: relative; z-index: 2; padding: 0 20px; box-sizing: border-box; }
+.hero-subtitle { color: var(--gold); letter-spacing: 4px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px; }
+.hero-content h1 { font-size: 4.5rem; color: #fff; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.divider { width: 80px; height: 3px; background-color: var(--gold); margin: 30px auto; }
+.description { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; max-width: 600px; margin: 0 auto; color: #ddd; }
+
+/* --- ABOUT SPLIT LAYOUT (Breaks the PPT feel) --- */
+.about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; scroll-margin-top: 100px;
+}
+.about-text p { font-size: 1.2rem; color: #cbd5e1; line-height: 1.8; }
+.about-image img { width: 100%; height: 400px; object-fit: cover; border: 2px solid var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+/* --- SECTIONS --- */
+.section { padding: 100px 10%; max-width: 1200px; margin: 0 auto; scroll-margin-top: 100px; }
+.section-title { color: var(--gold); font-size: 3rem; margin-bottom: 50px; border-left: 5px solid var(--gold); padding-left: 20px; }
+
+/* --- TIMELINE --- */
+.timeline { position: relative; padding-left: 40px; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: linear-gradient(to bottom, var(--gold), #334155); }
+.timeline-item { margin-bottom: 80px; position: relative; }
+.timeline-dot { position: absolute; left: -46px; top: 0; width: 14px; height: 14px; background: var(--navy); border: 2px solid var(--gold); border-radius: 50%; }
+.timeline-content h3 { margin-bottom: 20px; }
+.timeline-image { margin-bottom: 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+.timeline-image img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.3s; }
+.timeline-image:hover img { transform: scale(1.05); }
+.timeline-content ul { padding-left: 20px; color: #cbd5e1; }
+
+/* --- ORGANOGRAM --- */
+.organogram { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+.org-row { display: flex; justify-content: center; gap: 25px; width: 100%; flex-wrap: wrap; }
+.organogram .card { flex: 0 0 250px; width: 250px; background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.2); overflow: hidden; text-align: center; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+.organogram .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); border-color: var(--gold); }
+.tier-highlight { border: 2px solid var(--gold) !important; box-shadow: 0 0 20px rgba(212, 175, 55, 0.15); }
+.card-graphic { width: 100%; height: 200px; background: linear-gradient(135deg, #334155, #1e293b); border-bottom: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; color: #475569; font-size: 2rem; flex-shrink: 0; }
+.card h3 { color: #fff; font-size: 1.3rem; margin: 15px 10px 5px 10px; }
+.card .post { color: var(--gold); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 15px; font-family: 'Inter', sans-serif; font-weight: 600; }
+
+/* --- FOOTER --- */
+footer { text-align: center; padding: 30px; background: #020617; border-top: 1px solid #1e293b; color: #64748b; font-size: 0.9rem; }
+
+/* --- MOBILE RULES --- */
+@media (max-width: 768px) {
+    .navbar { flex-direction: column; gap: 15px; padding: 15px; align-items: center !important; text-align: center; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
+    .hero-content h1, .newspaper-title { font-size: 2rem !important; letter-spacing: 2px !important; }
+    .newspaper-subtitle { font-size: 1.2rem; }
+    .description { font-size: 1rem; }
+    
+    /* Stacks the about section on phones */
+    .about-grid { grid-template-columns: 1fr; gap: 30px; }
+    .about-image img { height: 250px; }
+    
+    .section { padding: 60px 20px; }
+    .section-title { font-size: 2rem; margin-bottom: 30px; }
+    .org-row { flex-direction: column; align-items: center; }
+    .organogram .card { width: 100%; max-width: 100%; flex: 1 1 auto; overflow: visible; }
+    .card-graphic { height: 150px; }
+    .timeline { padding-left: 25px; }
+    .timeline::before { left: 0; }
+    .timeline-dot { left: -31px; width: 12px; height: 12px; }
+    .timeline-content h3 { font-size: 1.4rem; }
+}
