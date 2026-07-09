@@ -10,7 +10,7 @@
 :root {
     --maroon: #800000;
     --gold: #D4AF37;
-    --dark-blue: #10141a; /* Made slightly lighter so it's not pure black */
+    --dark-blue: #0f1520; /* Richer, more lively dark blue */
     --text-light: #e0e0e0;
 }
 
@@ -22,11 +22,12 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.8;
-    /* A richer, slightly visible geopolitical grid background */
+    /* Lively background with a maroon glow in the top left corner */
     background-image: 
-        linear-gradient(rgba(30, 50, 80, 0.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30, 50, 80, 0.15) 1px, transparent 1px);
-    background-size: 40px 40px;
+        radial-gradient(circle at 0% 0%, rgba(128, 0, 0, 0.15) 0%, transparent 50%),
+        linear-gradient(rgba(30, 50, 80, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 50, 80, 0.12) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px, 40px 40px;
 }
 
 h1, h2, h3, h4 {
@@ -52,13 +53,13 @@ h1, h2, h3, h4 {
     margin-bottom: 10px;
 }
 
-/* --- NAVIGATION & LOGO (FIXED) --- */
+/* --- NAVIGATION --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px; /* Shorter padding fixes the elongated bar */
-    background: rgba(11, 15, 20, 0.98);
+    padding: 15px 40px;
+    background: rgba(15, 21, 32, 0.95); /* Match new lively background */
     backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
@@ -68,18 +69,24 @@ h1, h2, h3, h4 {
     box-sizing: border-box;
 }
 
-/* THE UNIQUE LOGO SECTION WITH GOLD BORDER */
+/* THE COLOR DIFFUSION LOGO EFFECT */
 .logo-wrapper {
-    background-color: #1a0505; /* Deep dark red background */
-    border: 2px solid var(--gold); /* Gold border */
-    padding: 8px 12px;
-    border-radius: 8px; 
-    display: flex;
-    align-items: center;
+    background: transparent; /* Removed the box completely */
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    /* This creates the beautiful bleeding aura around the maroon logo */
+    filter: drop-shadow(0 0 10px rgba(128, 0, 0, 0.8)) drop-shadow(0 0 25px rgba(212, 175, 55, 0.3));
+    transition: filter 0.3s ease;
+}
+
+.logo-wrapper:hover {
+    /* Makes the glow stronger when you hover over it */
+    filter: drop-shadow(0 0 15px rgba(128, 0, 0, 1)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.5));
 }
 
 .logo-img {
-    height: 50px;
+    height: 80px; /* Made it much bigger */
     display: block;
 }
 
@@ -91,10 +98,10 @@ h1, h2, h3, h4 {
     padding: 0;
 }
 
-/* FIXES THE BLUE HYPERLINK ISSUE FOREVER */
+/* FIXES BLUE LINKS */
 .nav-links a {
-    color: #ffffff !important; /* Forces pure white text */
-    text-decoration: none !important; /* Forces NO underline */
+    color: #ffffff !important; 
+    text-decoration: none !important; 
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -250,18 +257,20 @@ h1, h2, h3, h4 {
     justify-content: center;
     gap: 25px;
     width: 100%;
-    flex-wrap: wrap; /* FIX: Stops boxes from squishing horizontally */
+    flex-wrap: wrap; 
 }
 
-/* FIX: Forces boxes to stay a fixed width */
+/* STRICT ASPECT RATIO FIX: Boxes will NEVER squish horizontally */
 .organogram .card {
-    flex: 0 0 250px; 
-    max-width: 280px;
+    flex: 0 0 250px; /* Forces exactly 250px width, no growing, no shrinking */
+    width: 250px;
     background: linear-gradient(145deg, #111, #1a1a1a);
     border: 1px solid rgba(212, 175, 55, 0.15);
-    overflow: hidden;
+    overflow: hidden; 
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column; /* Ensures text stays at bottom */
 }
 
 .organogram .card:hover {
@@ -285,12 +294,13 @@ h1, h2, h3, h4 {
     justify-content: center;
     color: #333;
     font-size: 2rem;
+    flex-shrink: 0; /* Prevents graphic from squishing */
 }
 
 .card h3 { 
     color: #fff; 
     font-size: 1.3rem; 
-    margin: 15px 0 5px 0; 
+    margin: 15px 10px 5px 10px; 
 }
 
 .card .post { 
@@ -349,23 +359,25 @@ footer {
    ========================================= */
 @media (max-width: 768px) {
     
-    /* Stacks the logo and menu on top of each other */
+    /* Forces perfect centering on phones */
     .navbar {
         flex-direction: column;
         gap: 15px;
         padding: 15px;
+        align-items: center !important;
+        text-align: center;
     }
     
-    /* Wraps the menu links neatly */
     .nav-links {
         flex-wrap: wrap;
         justify-content: center;
         gap: 15px;
     }
 
-    /* Shrinks the huge title on phones */
+    /* DRASTICALLY shrinks text so it fits on phone screens */
     .hero-content h1, .newspaper-title {
-        font-size: 2.5rem !important;
+        font-size: 1.8rem !important;
+        letter-spacing: 2px !important;
     }
     
     .newspaper-subtitle {
@@ -377,11 +389,10 @@ footer {
     }
 
     .description {
-        font-size: 1.1rem;
+        font-size: 1rem;
         padding: 0 20px;
     }
 
-    /* Gives sections less side-padding on phones */
     .section {
         padding: 60px 20px;
     }
@@ -396,18 +407,23 @@ footer {
         font-size: 1rem;
     }
 
-    /* Forces panel cards to stack vertically on phones */
+    /* Fixes the post titles getting cut off on phones */
     .org-row {
         flex-direction: column;
         align-items: center;
     }
 
     .organogram .card {
-        max-width: 100%;
         width: 100%;
+        max-width: 100%;
+        flex: 1 1 auto; /* Allows cards to breathe on mobile */
+        overflow: visible; /* Un-hides the text */
+    }
+    
+    .card-graphic {
+        height: 150px; /* Smaller image on phone */
     }
 
-    /* Adjusts timeline for smaller screens */
     .timeline {
         padding-left: 25px;
     }
