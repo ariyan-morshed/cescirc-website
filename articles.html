@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore IR - CESCIRC</title>
+    
+    <!-- PULL YOUR FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Redaction+20&family=Redaction+35&display=swap" rel="stylesheet">
+    
+    <!-- PULL YOUR MASTER CSS SO IT LOOKS EXACTLY LIKE THE MAIN SITE -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Specific styles only for this page */
+        .explore-container {
+            padding-top: 120px; /* Pushes content below the fixed navbar */
+            text-align: center;
+            min-height: 100vh;
+        }
+        
+        .random-btn {
+            background-color: var(--gold);
+            color: var(--dark-blue);
+            font-family: 'Redaction 20', monospace;
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .random-btn:hover {
+            background-color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .fallback-link {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            color: var(--gold);
+            padding: 10px 20px;
+            text-decoration: none;
+            border: 1px solid var(--gold);
+            margin-bottom: 30px;
+            transition: 0.3s;
+        }
+
+        .fallback-link:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        /* The iframe container */
+        .iframe-viewer {
+            width: 90%;
+            max-width: 1200px;
+            height: 75vh; /* Takes up 75% of the screen height */
+            margin: 0 auto;
+            border: 2px solid var(--gold);
+            background: #000;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        .iframe-viewer iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SAME NAVBAR AS HOME PAGE -->
+    <nav class="navbar">
+        <div class="logo-wrapper">
+            <a href="index.html"><img src="https://i.imgur.com/BxrGxQH.png" alt="CESCIRC Logo" class="logo-img"></a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#roadmap">Sessions</a></li>
+            <li><a href="index.html#panel">The Panel</a></li>
+            <li><a href="articles.html" style="color: var(--gold) !important;">Explore IR</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <div class="explore-container">
+        <h2 class="section-title" style="border-left: none; text-align: center; margin-bottom: 30px;">Global Intel Feed</h2>
+        <p style="color: #aaa; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">Stay updated. Hit the button to discover a random article or geopolitical background from top global affairs sources.</p>
+
+        <button class="random-btn" onclick="loadRandomArticle()">Load Random Intel</button>
+
+        <div id="article-info" style="margin-bottom: 20px; display: none;">
+            <p class="article-title" id="title-display"></p>
+            <!-- Fallback link if iframe is blocked by the news site -->
+            <a id="fallback-link" class="fallback-link" href="#" target="_blank">Blocked? Click here to read on the source website</a>
+        </div>
+
+        <div class="iframe-viewer">
+            <!-- Default empty state -->
+            <iframe id="article-frame" src="about:blank"></iframe>
+        </div>
+    </div>
+
+    <!-- THE JAVASCRIPT MAGIC -->
+    <script>
+        // Your curated list of geopolitical articles/resources
+        const articles = [
+            {
+                title: "Council on Foreign Relations - Global Conflict Tracker",
+                url: "https://www.cfr.org/global-conflict-tracker"
+            },
+            {
+                title: "Wikipedia - Current Events (Global)",
+                url: "https://en.wikipedia.org/wiki/Portal:Current_events"
+            },
+            {
+                title: "BBC News - World",
+                url: "https://www.bbc.com/news/world"
+            },
+            {
+                title: "Al Jazeera - Middle East",
+                url: "https://www.aljazeera.com/where/middle-east/"
+            },
+            {
+                title: "Foreign Affairs - Latest",
+                url: "https://www.foreignaffairs.com/"
+            },
+            {
+                title: "The Diplomat - Asia Pacific",
+                url: "https://thediplomat.com/"
+            }
+        ];
+
+        function loadRandomArticle() {
+            // Pick a random number based on the list length
+            const randomIndex = Math.floor(Math.random() * articles.length);
+            
+            // Get the chosen article
+            const chosen = articles[randomIndex];
+
+            // Update the text
+            document.getElementById('title-display').innerText = "Now Loading: " + chosen.title;
+            document.getElementById('fallback-link').href = chosen.url;
+            
+            // Show the text and link area
+            document.getElementById('article-info').style.display = 'block';
+
+            // Change the iframe source
+            document.getElementById('article-frame').src = chosen.url;
+        }
+    </script>
+
+</body>
+</html>
