@@ -2,102 +2,125 @@
 @font-face { font-family: 'MyRedaction'; src: url('fonts/redaction20.otf') format('opentype'); font-weight: normal; font-style: normal; }
 html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
 
-/* --- V2 COLOR SCHEME: VIBRANT LIGHT MODE --- */
+/* --- CESCIRC OFFICIAL DESIGN SYSTEM --- */
 :root {
-    --maroon: #800000;
-    --gold: #C5A028; /* Brighter gold to pop on light backgrounds */
-    --cream: #F9F7F2; /* Premium off-white paper background */
-    --text-dark: #1a1a1a; /* Rich black text */
-    --card-bg: #ffffff;
+    --bg-primary: #5A1F1F;         /* Maroon */
+    --bg-secondary: #6B2828;       /* Lighter maroon for cards */
+    --text-primary: #F4EFDD;       /* Warm cream */
+    --text-secondary: #D4C6AC;     /* Soft tan */
+    --accent-primary: #C9A34E;     /* Muted gold */
+    --accent-hover: #E5C46B;       /* Brighter gold */
+    --navy-primary: #1B2A4A;       /* Deep navy (For contrast pops) */
+    --navy-hover: #2E4270;         /* Lighter navy */
+    --border-color: rgba(138, 106, 46, 0.35); /* Gold at 35% opacity */
+    --panel-bg: #F4EFDD;           /* Cream panels */
+    --panel-text: #2A211B;         /* Dark text for cream panels */
 }
 
 body {
-    background-color: var(--cream);
-    color: var(--text-dark);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Inter', sans-serif;
-    font-weight: 400; /* Slightly darker font weight for light mode */
+    font-weight: 400;
     line-height: 1.8;
-    /* Subtle cream grid texture */
+    /* Subtle texture */
     background-image: 
-        linear-gradient(rgba(128, 0, 0, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(128, 0, 0, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
     background-size: 40px 40px;
 }
 
 h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
 
-/* REDACTION LOOKS LIKE A REAL NEWSPAPER STAMP ON LIGHT BACKGROUNDS */
-.newspaper-title { font-family: 'MyRedaction', monospace; letter-spacing: 6px; text-transform: uppercase; line-height: 1; font-size: 5rem; color: var(--maroon); }
-.newspaper-subtitle { font-family: 'MyRedaction', monospace; text-transform: uppercase; color: var(--maroon); font-size: 1.8rem; margin-bottom: 10px; }
+/* Redaction now uses the exact Gold and Cream from your palette */
+.newspaper-title { font-family: 'MyRedaction', monospace; letter-spacing: 6px; text-transform: uppercase; line-height: 1; font-size: 5rem; color: var(--text-primary); }
+.newspaper-subtitle { font-family: 'MyRedaction', monospace; text-transform: uppercase; color: var(--accent-primary); font-size: 1.8rem; margin-bottom: 10px; }
 
-/* --- NAVIGATION --- */
+/* --- NAVIGATION (Using Navy for contrast) --- */
 .navbar { 
     display: flex; justify-content: space-between; align-items: center; 
     padding: 15px 40px; 
-    background: rgba(255, 255, 255, 0.95); 
-    backdrop-filter: blur(12px); 
+    background: var(--navy-primary); 
     position: fixed; width: 100%; top: 0; z-index: 1000; 
-    border-bottom: 2px solid var(--maroon); /* Thick maroon line */
+    border-bottom: 2px solid var(--accent-primary);
     box-sizing: border-box; 
 }
 
-/* CIRCULAR LOGO WITH SUBTLE SHADOW FOR LIGHT MODE */
-.logo-wrapper { filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+/* Circular logo with a subtle gold glow to match theme */
+.logo-wrapper { filter: drop-shadow(0 0 8px rgba(201, 163, 78, 0.4)); }
 .logo-img { height: 65px; display: block; border-radius: 50%; }
 
 .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
-.nav-links a { color: var(--text-dark) !important; text-decoration: none !important; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; font-weight: 600; }
-.nav-links a:hover { color: var(--maroon) !important; }
+.nav-links a { color: var(--text-primary) !important; text-decoration: none !important; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; font-weight: 600; }
+.nav-links a:hover { color: var(--accent-hover) !important; }
 
-/* --- HERO SECTION (Vibrant Maroon) --- */
+/* --- HERO SECTION (Using Navy for impact) --- */
 .hero { 
     height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; 
     position: relative; overflow: hidden; 
-    background: var(--maroon); /* Solid, vibrant maroon */
+    background: var(--navy-primary); 
 }
 .hero-content { position: relative; z-index: 2; padding: 0 20px; box-sizing: border-box; }
-.hero-subtitle { color: var(--gold); letter-spacing: 4px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;}
-.hero-content h1 { font-size: 4.5rem; color: #fff; margin: 0; }
-.divider { width: 80px; height: 4px; background-color: var(--gold); margin: 30px auto; }
-.description { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; max-width: 600px; margin: 0 auto; color: rgba(255,255,255,0.9); }
+.hero-subtitle { color: var(--accent-primary); letter-spacing: 4px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;}
+.hero-content h1 { font-size: 4.5rem; color: var(--text-primary); margin: 0; }
+.divider { width: 80px; height: 4px; background-color: var(--accent-hover); margin: 30px auto; }
+.description { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; max-width: 600px; margin: 0 auto; color: var(--text-secondary); }
 
 /* --- ABOUT SPLIT LAYOUT --- */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; scroll-margin-top: 100px; }
-.about-text p { font-size: 1.2rem; color: #444; line-height: 1.8; }
-.about-image img { width: 100%; height: 400px; object-fit: cover; border: 4px solid var(--maroon); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.about-text p { font-size: 1.2rem; color: var(--text-secondary); line-height: 1.8; }
+.about-image img { width: 100%; height: 400px; object-fit: cover; border: 4px solid var(--accent-primary); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
 
 /* --- SECTIONS --- */
 .section { padding: 100px 10%; max-width: 1200px; margin: 0 auto; scroll-margin-top: 100px; }
-.section-title { color: var(--maroon); font-size: 3rem; margin-bottom: 50px; border-left: 5px solid var(--gold); padding-left: 20px; }
+.section-title { color: var(--accent-hover); font-size: 3rem; margin-bottom: 50px; border-left: 5px solid var(--accent-primary); padding-left: 20px; }
 
 /* --- TIMELINE --- */
 .timeline { position: relative; padding-left: 40px; }
-.timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: var(--gold); }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: var(--accent-primary); }
 .timeline-item { margin-bottom: 80px; position: relative; }
-.timeline-dot { position: absolute; left: -46px; top: 0; width: 14px; height: 14px; background: var(--gold); border: 3px solid var(--cream); border-radius: 50%; }
+.timeline-dot { position: absolute; left: -46px; top: 0; width: 14px; height: 14px; background: var(--accent-hover); border: 3px solid var(--bg-primary); border-radius: 50%; }
 .timeline-content h3 { margin-bottom: 20px; }
-.timeline-content ul { padding-left: 20px; color: #444; }
+.timeline-content ul { padding-left: 20px; color: var(--text-secondary); }
 
 /* IMAGE CONTAINERS */
-.timeline-image { margin-bottom: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.08); border: 1px solid #ddd; background-color: #eee; } /* Fallback background if image breaks */
-.timeline-image img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.3s; }
-.timeline-image:hover img { transform: scale(1.03); }
+.timeline-image { margin-bottom: 20px; border-radius: 4px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.2); border: 1px solid var(--border-color); background-color: var(--bg-secondary); }
+.timeline-image img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.3s; filter: brightness(0.9); }
+.timeline-image:hover img { transform: scale(1.03); filter: brightness(1); }
 
 /* --- ORGANOGRAM --- */
 .organogram { display: flex; flex-direction: column; align-items: center; gap: 25px; }
 .org-row { display: flex; justify-content: center; gap: 25px; width: 100%; flex-wrap: wrap; }
-.organogram .card { flex: 0 0 250px; width: 250px; background: var(--card-bg); border: 1px solid #e0e0e0; overflow: hidden; text-align: center; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-.organogram .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(128, 0, 0, 0.15); border-color: var(--maroon); }
-.tier-highlight { border: 2px solid var(--maroon) !important; }
-.card-graphic { width: 100%; height: 200px; background: linear-gradient(135deg, var(--maroon), #5c0000); border-bottom: 3px solid var(--gold); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 2rem; flex-shrink: 0; }
-.card h3 { color: var(--text-dark); font-size: 1.3rem; margin: 15px 10px 5px 10px; }
-.card .post { color: var(--maroon); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 15px; font-family: 'Inter', sans-serif; font-weight: 700; }
+.organogram .card { 
+    flex: 0 0 250px; width: 250px; 
+    background: var(--bg-secondary); 
+    border: 1px solid var(--border-color); 
+    overflow: hidden; text-align: center; transition: all 0.3s; 
+    display: flex; flex-direction: column; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+}
+.organogram .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); border-color: var(--accent-hover); }
+.tier-highlight { border: 2px solid var(--accent-hover) !important; }
 
-/* --- FOOTER --- */
-footer { text-align: center; padding: 30px; background: var(--maroon); color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+/* Card top graphic uses Navy for beautiful contrast against Maroon cards */
+.card-graphic { 
+    width: 100%; height: 200px; 
+    background: var(--navy-primary); 
+    border-bottom: 3px solid var(--accent-primary); 
+    display: flex; align-items: center; justify-content: center; 
+    color: rgba(255,255,255,0.1); font-size: 2rem; flex-shrink: 0; 
+    transition: background 0.3s;
+}
+.organogram .card:hover .card-graphic { background: var(--navy-hover); }
+
+.card h3 { color: var(--text-primary); font-size: 1.3rem; margin: 15px 10px 5px 10px; }
+.card .post { color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 15px; font-family: 'Inter', sans-serif; font-weight: 700; }
+
+/* --- FOOTER (Navy to bookend the site) --- */
+footer { text-align: center; padding: 30px; background: var(--navy-primary); color: var(--text-secondary); font-size: 0.9rem; border-top: 2px solid var(--accent-primary); }
 footer p { margin: 0; }
 
-/* --- MOBILE --- */
+/* --- MOBILE RULES --- */
 @media (max-width: 768px) {
     .navbar { flex-direction: column; gap: 15px; padding: 15px; align-items: center !important; text-align: center; }
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
