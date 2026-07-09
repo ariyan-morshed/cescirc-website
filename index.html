@@ -5,56 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CESCIRC - International Relations Club</title>
     
-    <!-- FONTS: Redaction 20 (Heavy Stamped), Redaction 35 (Readable), Playfair (Grand) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Redaction+20&family=Redaction+35&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Redaction+20&family=Redaction+35&display=swap" rel="stylesheet">
     
-    <!-- AOS ANIMATIONS LIBRARY -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style-v2.css">
     
-    <!-- OUR CUSTOM CSS -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Z-INDEX FIX FOR CLEAN LAYERS -->
+    <style> section, .about-text, .timeline-content, .organogram { position: relative; z-index: 2; } </style>
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
     <nav class="navbar">
         <div class="logo-wrapper">
-            <!-- Added mix-blend-mode to remove maroon background clash -->
-            <img src="https://i.imgur.com/BxrGxQH.png" alt="CESCIRC Logo" class="logo-img">
+            <a href="index-v2.html"><img src="https://i.imgur.com/BxrGxQH.png" alt="CESCIRC Logo" class="logo-img"></a>
         </div>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#roadmap">Sessions</a></li>
-	    <li><a href="articles.html" class="nav-explore">Explore IR</a></li>
             <li><a href="#panel">The Panel</a></li>
+            <li><a href="articles.html">Explore IR</a></li>
         </ul>
     </nav>
 
-    <!-- HERO SECTION -->
     <header id="home" class="hero">
-        <div class="hero-overlay"></div>
         <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
             <p class="hero-subtitle">Cantonment English School and College</p>
-            <!-- Back to the newspaper font you liked -->
-            <h1 class="newspaper-title">CESC INTERNATIONAL RELATIONS CLUB</h1>
+            <h1 class="newspaper-title">INTERNATIONAL RELATIONS CLUB</h1>
             <div class="divider"></div>
             <p class="description">Your gateway to global affairs.</p>
         </div>
     </header>
 
-    <!-- ABOUT SECTION -->
-    <section id="about" class="section">
-        <h2 class="section-title" data-aos="fade-right">OUR VISION</h2>
-        <div class="content-box" data-aos="fade-up">
-            <!-- Taken exactly from your policy paper -->
+    <section id="about" class="section about-grid">
+        <div class="about-text" data-aos="fade-right">
+            <h2 class="section-title">OUR VISION</h2>
             <p>To develop students' awareness of historical and contemporary geopolitical developments around the world. We offer a structured academic environment where members build research, writing, debate, and negotiation skills, thereby shaping them into knowledgeable, diplomatic, and globally conscious citizens.</p>
+        </div>
+        <div class="about-image" data-aos="fade-left">
+            <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=800&q=80" alt="UN General Assembly Hall">
         </div>
     </section>
 
-    <!-- ROADMAP (SESSIONS) SECTION -->
     <section id="roadmap" class="section timeline-section">
         <h2 class="section-title" data-aos="fade-right">CLUB SESSIONS</h2>
         
@@ -62,8 +56,9 @@
             <div class="timeline-item" data-aos="fade-left">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <!-- Changed back to newspaper font -->
                     <h3 class="newspaper-subtitle">Term 1: Foundational Sessions</h3>
+                    <!-- FIXED LONG UNSPLASH LINK -->
+                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1488375634201-b85b28653a79?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="World Map"></div>
                     <ul>
                         <li>What is International Relations and Why It Matters</li>
                         <li>Foundations of International Relations</li>
@@ -76,6 +71,8 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3 class="newspaper-subtitle">Term 2: Technical Sessions</h3>
+                    <!-- FIXED LONG UNSPLASH LINK -->
+                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1676181739859-08330dea8999?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="UN Flags"></div>
                     <ul>
                         <li>Current Geopolitical Issues in South Asia</li>
                         <li>Diplomacy & Negotiation</li>
@@ -88,6 +85,7 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3 class="newspaper-subtitle">Term 3: Application Sessions</h3>
+                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1676181739500-e1291b113370?auto=format&fit=crop&w=600&q=80" alt="MUN Gavel"></div>
                     <ul>
                         <li>Resolution Drafting & MUN Workshop</li>
                         <li>Mock Model United Nations</li>
@@ -97,101 +95,22 @@
         </div>
     </section>
 
-    <!-- PANEL SECTION (HIERARCHICAL LAYOUT) -->
     <section id="panel" class="section">
         <h2 class="section-title" data-aos="fade-right">THE PANEL</h2>
-        
         <div class="organogram">
-            
-            <!-- TIER 1: CLUB IN-CHARGE -->
-            <div class="org-row tier-1" data-aos="zoom-in">
-                <div class="card tier-highlight">
-                    <div class="card-graphic"></div>
-                    <h3>Md Abul Monsor</h3>
-                    <p class="post">Club In-Charge</p>
-                </div>
-            </div>
-
-            <!-- TIER 2: CAPTAIN & VICE CAPTAIN -->
-            <div class="org-row tier-2" data-aos="zoom-in" data-aos-delay="100">
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>Aronya Rishop Dhar</h3>
-                    <p class="post">Club Captain</p>
-                </div>
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>Mohammed Abrar Shahriyar</h3>
-                    <p class="post">Vice Captain</p>
-                </div>
-            </div>
-
-            <!-- TIER 3: COORDINATORS -->
-            <div class="org-row tier-3" data-aos="zoom-in" data-aos-delay="200">
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>Ehan Rahman</h3>
-                    <p class="post">Coordinator (College)</p>
-                </div>
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>Ahmed Affan Islam</h3>
-                    <p class="post">Coordinator (School)</p>
-                </div>
-            </div>
-
-            <!-- TIER 4: DEPUTY COORDINATOR -->
-            <div class="org-row tier-4" data-aos="zoom-in" data-aos-delay="300">
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>Ariyan Morshed Chowdhury</h3>
-                    <p class="post">Deputy Coordinator (School)</p>
-                </div>
-            </div>
-
-            <!-- TIER 5: DIRECTORS (Excluding Logistics) -->
-            <div class="org-row tier-5" data-aos="zoom-in" data-aos-delay="400">
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>TBD</h3>
-                    <p class="post">Director, Administration</p>
-                </div>
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>Rahbar Ehan</h3>
-                    <p class="post">Director, Academics</p>
-                </div>
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>Jeet Chowdhury</h3>
-                    <p class="post">Director, Media</p>
-                </div>
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>TBD</h3>
-                    <p class="post">Director, PR</p>
-                </div>
-            </div>
-
-            <!-- TIER 6: LOGISTICS (SEPARATE) -->
-            <div class="org-row tier-6" data-aos="zoom-in" data-aos-delay="500">
-                <div class="card">
-                    <div class="card-graphic"></div>
-                    <h3>Ramin Morshed</h3>
-                    <p class="post">Director, Logistics</p>
-                </div>
-            </div>
-
+            <div class="org-row tier-1" data-aos="zoom-in"><div class="card tier-highlight"><div class="card-graphic"></div><h3>Md Abul Monsor</h3><p class="post">Club In-Charge</p></div></div>
+            <div class="org-row tier-2" data-aos="zoom-in" data-aos-delay="100"><div class="card"><div class="card-graphic"></div><h3>Aronya Rishop Dhar</h3><p class="post">Club Captain</p></div><div class="card"><div class="card-graphic"></div><h3>Mohammed Abrar Shahriyar</h3><p class="post">Vice Captain</p></div></div>
+            <div class="org-row tier-3" data-aos="zoom-in" data-aos-delay="200"><div class="card"><div class="card-graphic"></div><h3>Ehan Rahman</h3><p class="post">Coordinator (College)</p></div><div class="card"><div class="card-graphic"></div><h3>Ahmed Affan Islam</h3><p class="post">Coordinator (School)</p></div></div>
+            <div class="org-row tier-4" data-aos="zoom-in" data-aos-delay="300"><div class="card"><div class="card-graphic"></div><h3>Ariyan Morshed Chowdhury</h3><p class="post">Deputy Coordinator (School)</p></div></div>
+            <div class="org-row tier-5" data-aos="zoom-in" data-aos-delay="400"><div class="card"><div class="card-graphic"></div><h3>TBD</h3><p class="post">Director, Administration</p></div><div class="card"><div class="card-graphic"></div><h3>Rahbar Ehan</h3><p class="post">Director, Academics</p></div><div class="card"><div class="card-graphic"></div><h3>Jeet Chowdhury</h3><p class="post">Director, Media</p></div><div class="card"><div class="card-graphic"></div><h3>TBD</h3><p class="post">Director, PR</p></div></div>
+            <div class="org-row tier-6" data-aos="zoom-in" data-aos-delay="500"><div class="card"><div class="card-graphic"></div><h3>Ramin Morshed</h3><p class="post">Director, Logistics</p></div></div>
         </div>
     </section>
 
-
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 CESCIRC. All Rights Reserved.</p>
     </footer>
 
-    <!-- SCRIPTS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
