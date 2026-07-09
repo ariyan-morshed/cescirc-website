@@ -158,127 +158,151 @@
     <!-- THE JAVASCRIPT MAGIC -->
     <script>
         // Highly specific, real articles from prestigious IR sources
-                const articles = [
+        const articles = [
             {
-                title: "Bangladesh: Political and Economic Turmoil",
-                source: "Council on Foreign Relations (CFR)",
-                summary: "A deep dive into Bangladesh's recent political upheavals, the interim government, and how internal instability impacts its standing as a rising South Asian economy.",
-                url: "https://www.cfr.org/backgrounder/bangladesh"
-            },
-            {
-                title: "The Rohingya Crisis: A Decade of Displacement",
-                source: "United Nations High Commissioner for Refugees (UNHCR)",
-                summary: "The ongoing humanitarian challenge hosting nearly one million Rohingya refugees, and the international diplomatic pressure regarding repatriation to Myanmar.",
-                url: "https://www.unhcr.org/bangladesh-operations.html"
-            },
-            {
-                title: "India-Bangladesh Relations: The Paradox of Proximity",
-                source: "Brookings Institution",
-                summary: "How geographic isolation and shared borders create complex ties between New Delhi and Dhaka, balancing deep economic integration with political sovereignty.",
-                url: "https://www.brookings.edu/articles/india-bangladesh-relations-the-paradox-of-proximity/"
-            },
-            {
-                title: "Myanmar’s Crisis: What It Means for Bangladesh",
-                source: "Chatham House",
-                summary: "How the 2021 military coup in Myanmar spilled over into Bangladesh, affecting border security, trade routes, and exacerbating the refugee crisis.",
-                url: "https://www.chathamhouse.org/2021/04/myanmar-crisis-what-it-means-bangladesh"
-            },
-            {
-                title: "Bangladesh at 50: A Rising Middle Power",
-                source: "Lowy Institute",
-                summary: "An analysis of how Dhaka has leveraged its geostrategic location and economic growth to amplify its voice in global forums like the UN and climate summits.",
-                url: "https://www.lowyinstitute.org/publications/bangladesh-rising-middle-power"
-            },
-            {
-                title: "Bangladesh and the LDC Graduation: Challenges Ahead",
-                source: "Overseas Development Institute (ODI)",
-                summary: "The implications of Bangladesh leaving the 'Least Developed Country' status, including losing trade privileges and facing new global economic pressures.",
-                url: "https://odi.org/en/insights/bangladesh-graduating-from-least-developed-country-status-what-this-means/"
-            },
-            {
-                title: "Building Resilience Against Climate Change in Bangladesh",
-                source: "The World Bank",
-                summary: "How Bangladesh, one of the most climate-vulnerable nations, is adapting to rising sea levels in the Bay of Bengal and what it means for global climate policy.",
-                url: "https://www.worldbank.org/en/news/feature/2023/08/14/bangladesh-is-building-resilience-against-climate-change"
-            },
-            {
-                title: "The China-India Rivalry in South Asia",
-                source: "Council on Foreign Relations (CFR)",
-                summary: "How the geopolitical tug-of-war between Beijing and New Delhi directly impacts Bangladesh's infrastructure deals, port development, and diplomatic alignments.",
-                url: "https://www.cfr.org/backgrounder/china-india-rivalry"
-            },
-            {
-                title: "Bangladesh’s Garment Industry and Global Supply Chains",
-                source: "Center for Strategic & International Studies (CSIS)",
-                summary: "The pivotal role Bangladesh plays in the global fast-fashion supply chain, and how Western brands rely on Dhaka's manufacturing sector.",
-                url: "https://www.csis.org/analysis/post-pandemic-supply-chains-role-south-asia"
-            },
-            {
-                title: "Navigating the Indo-Pacific: South Asia's Geopolitical Shift",
-                source: "Lowy Institute",
-                summary: "Where Bangladesh fits into the evolving 'Indo-Pacific' strategy, balancing US/Quad overtures with its deep economic ties to China.",
-                url: "https://www.lowyinstitute.org/publications/india-china-and-indo-pacific-how-south-asia-navigates-geopolitical-shift"
-            },
-            {
-                title: "Bangladesh Economy Update: Navigating Global Headwinds",
-                source: "Asian Development Bank (ADB)",
-                summary: "Official macroeconomic data on how global inflation, energy shocks, and the war in Ukraine are impacting Bangladesh's GDP and export markets.",
-                url: "https://www.adb.org/publications/bangladesh-economy-update"
-            },
-            {
-                title: "Climate Migration in South Asia: The Bangladesh Preview",
-                source: "Brookings Institution",
-                summary: "Why Bangladesh is considered the testing ground for climate-induced displacement, and what the world can learn from Dhaka's internal migration patterns.",
-                url: "https://www.brookings.edu/research/climate-migration-in-south-asia/"
-            },
-            {
-                title: "The Stalled Repatriation of the Rohingya",
-                source: "International Crisis Group",
-                summary: "The geopolitical stalemate between Bangladesh, Myanmar, and the international community regarding the safe return of displaced refugees.",
-                url: "https://www.crisisgroup.org/asia/south-east-asia/myanmar/bangladesh-myanmar-rohingya-crisis"
-            },
-            {
-                title: "The Teesta River Dispute: Water Geopolitics",
-                source: "The Diplomat",
-                summary: "How shared rivers between India and Bangladesh act as flashpoints for domestic politics and bilateral diplomatic negotiations.",
-                url: "https://thediplomat.com/2023/09/india-bangladesh-teesta-river-dispute-water-geopolitics/"
-            },
-            {
-                title: "Digital Bangladesh: The Tech Frontier",
-                source: "World Economic Forum (WEF)",
-                summary: "How Dhaka is transitioning from a traditional manufacturing hub to a digital economy, and its role in the global IT outsourcing market.",
-                url: "https://www.weforum.org/stories/2023-05-09-how-bangladesh-became-a-digital-economy-role-model/"
-            },
-            {
-                title: "Myanmar's Civil War: Spillover Risks for Neighbors",
-                source: "International Crisis Group",
-                summary: "As Myanmar's internal conflict intensifies, the security and economic risks spreading to the Bangladesh border, including arms smuggling and refugee surges.",
-                url: "https://www.crisisgroup.org/asia/south-east-asia/myanmar/b200-myanmar-civil-war-spillover-risks-neighbors"
-            },
-            {
-                title: "The Bay of Bengal: An Ocean of Opportunity",
-                source: "The Diplomat",
-                summary: "The strategic importance of the Bay of Bengal for maritime trade, energy security, and naval competition between regional powers.",
-                url: "https://thediplomat.com/2021/11/the-bay-of-bengal-an-ocean-of-opportunity/"
-            },
-            {
-                title: "Bangladesh’s Foreign Policy: Non-Aligned in a Multipolar World",
-                source: "Institute for Defence Studies and Analyses (IDSA)",
-                summary: "A look at how Bangladesh maintains its historic 'friendship to all, malice to none' doctrine amidst the new US-China cold war.",
-                url: "https://idsa.in/issuebrief/bangladeshs-foreign-policy-dynamics-abhishek-mohan-2023"
-            },
-            {
-                title: "Energy Security in Bangladesh: The LNG Pivot",
-                source: "Institute for Energy Economics and Japan (IEEJ)",
-                summary: "How Bangladesh's transition from domestic natural gas to imported Liquefied Natural Gas (LNG) ties it to volatile global energy markets.",
-                url: "https://eneken.ieej.or.jp/data/8558.pdf"
-            },
-            {
-                title: "The Rohingya, Five Years On: A Regional Crisis",
-                source: "Foreign Policy",
-                summary: "An assessment of how the world's largest refugee camp in Cox's Bazar has altered the geopolitics of Southeast Asia and South Asia.",
-                url: "https://foreignpolicy.com/2022/08/25/rohingya-refugees-bangladesh-myanmar-genocide/"
-            }
+  title: "Balanced foreign policy essential in changing world",
+  source: "Prothom Alo",
+  summary: "A Dhaka roundtable arguing that Bangladesh needs a pragmatic, strategic, and balanced foreign policy amid intensifying major-power competition and economic pressure.",
+  url: "https://en.prothomalo.com/bangladesh/roundtable/d2gxuns9uz"
+},
+{
+  title: "Bengal Council policy brief outlines roadmap for implementing Bangladesh-US trade deal",
+  source: "The Business Standard",
+  summary: "A policy brief on how Bangladesh’s reciprocal trade agreement with the United States could affect garments, geopolitics, compliance, and relations with the EU, India, and China.",
+  url: "https://www.tbsnews.net/foreign-policy/bengal-council-policy-brief-outlines-roadmap-implementing-bangladesh-us-trade-deal?amp"
+},
+{
+  title: "India visa restart signals warmer ties, but Chinese investment could reshape Bangladesh ties",
+  source: "bdnews24",
+  summary: "An analysis of how Bangladesh must balance improved ties with India against the strategic implications of deeper Chinese investment.",
+  url: "https://bdnews24.com/business/3e88ea89c5da"
+},
+{
+  title: "Bangladesh in the Indo-Pacific: An Analysis of the Interim Government’s Foreign Policy",
+  source: "Observer Research Foundation",
+  summary: "An analysis of Bangladesh’s foreign policy under the interim government, including ties with India, China, the US, and Japan in the Indo-Pacific.",
+  url: "https://www.orfonline.org/research/bangladesh-in-the-indo-pacific-an-analysis-of-the-interim-government-s-foreign-policy"
+},
+{
+  title: "Strong relations with China will sharpen Bangladesh's negotiation skills",
+  source: "Prothom Alo",
+  summary: "An interview-based opinion piece discussing why deeper ties with China may affect Bangladesh’s bargaining position with other partners.",
+  url: "https://en.prothomalo.com/opinion/interview/m8wc1s36kv"
+},
+{
+  title: "Bangladesh courts China even as ties with India improve",
+  source: "BBC News",
+  summary: "A report on Bangladesh’s efforts to seek more Chinese investment while managing a gradual warming in relations with India.",
+  url: "https://www.bbc.com/news/articles/cy4e1lzwgvxo"
+},
+{
+  title: "What the Russia-Ukraine war means for Bangladesh's economy",
+  source: "The Daily Star",
+  summary: "An economic analysis of how the Russia-Ukraine war affects Bangladesh through import costs, exports, and global price shocks.",
+  url: "https://www.thedailystar.net/opinion/macro-mirror/news/what-the-ukraine-war-means-our-economy-2986941"
+},
+{
+  title: "What the Russia-Ukraine war means for Bangladesh's economy",
+  source: "CPD",
+  summary: "A policy piece explaining how the war may widen Bangladesh’s trade deficit and raise pressure on the currency and imports.",
+  url: "https://cpd.org.bd/what-the-russia-ukraine-war-means-for-bangladeshs-economy/"
+},
+{
+  title: "Lingering Red Sea crisis pushes up trade costs for Bangladesh",
+  source: "The Daily Star",
+  summary: "A report showing how Red Sea disruptions are raising Bangladesh’s trade costs, threatening exports and adding inflation pressure.",
+  url: "https://www.thedailystar.net/business/economy/news/lingering-red-sea-crisis-pushes-trade-costs-bangladesh-3520936"
+},
+{
+  title: "Red Sea crisis: Domino effect on Bangladesh and global supply chain",
+  source: "South Asia Monitor",
+  summary: "An explainer on how the Red Sea crisis can disrupt Bangladesh’s exports, shipping routes, and broader supply chains.",
+  url: "https://www.southasiamonitor.org/spotlight/red-sea-crisis-domino-effect-bangladesh-and-global-supply-chain"
+},
+{
+  title: "Bangladesh is helping to create a geopolitical shift in South Asia",
+  source: "Chatham House",
+  summary: "An analysis of Bangladesh’s realignment under the interim government, including closer engagement with China, Pakistan, and Turkey.",
+  url: "https://www.chathamhouse.org/2025/06/bangladesh-helping-create-geopolitical-shift-south-asia"
+},
+{
+  title: "Bangladesh's Geopolitical Moment: Between India, China, and the United States",
+  source: "Yip Institute",
+  summary: "A discussion of Bangladesh as a strategic state in the Bay of Bengal and a site of competition among India, China, and the United States.",
+  url: "https://yipinstitute.org/article/bangladeshs-geopolitical-moment-between-india-china-and-the-united-states"
+},
+{
+  title: "The Rohingya Crisis",
+  source: "Council on Foreign Relations",
+  summary: "A backgrounder on the Rohingya crisis and why Bangladesh remains central because it hosts the world’s largest Rohingya refugee population.",
+  url: "https://www.cfr.org/backgrounders/rohingya-crisis"
+},
+{
+  title: "The Rohingya Crisis and its Impact on Bangladesh-Myanmar Relations",
+  source: "Observer Research Foundation",
+  summary: "A brief on how the Rohingya issue affects trade, diplomacy, and security between Bangladesh and Myanmar.",
+  url: "https://www.orfonline.org/research/the-rohingya-crisis-and-its-impact-on-bangladesh-myanmar-relations"
+},
+{
+  title: "Climate Change and Migration Across the Bay of Bengal",
+  source: "Climate-Diplomacy.org",
+  summary: "A policy analysis of how climate change may increase migration and instability across the Bay of Bengal, affecting Bangladesh directly.",
+  url: "https://climate-diplomacy.org/magazine/environment/climate-change-and-migration-across-bay-bengal"
+},
+{
+  title: "Climate Migrants Face a Gap in International Law",
+  source: "ReliefWeb",
+  summary: "A report noting that climate pressure in Bangladesh is fueling internal displacement and urbanization challenges.",
+  url: "https://reliefweb.int/report/bangladesh/climate-migrants-face-gap-international-law"
+},
+{
+  title: "Climate Change in Bangladesh Shapes Internal Migration",
+  source: "Migration Policy Institute",
+  summary: "A policy article on how climate change drives internal migration in Bangladesh and affects broader mobility debates.",
+  url: "https://www.migrationpolicy.org/article/bangladesh-india-climate-migration"
+},
+{
+  title: "Bangladesh’s Climate Diplomacy",
+  source: "ICCCAD",
+  summary: "A discussion of Bangladesh’s climate diplomacy and its leadership role in climate-vulnerable forums and negotiation spaces.",
+  url: "https://icccad.net/dr-saleemul-huq-media/bangladeshs-climate-diplomacy/"
+},
+{
+  title: "Bangladesh-EU relations pass a new milestone with the initialling of a Partnership and Cooperation Agreement",
+  source: "European Union in Bangladesh",
+  summary: "An official EU update on the new Bangladesh-EU partnership framework covering trade, security, climate, and maritime cooperation.",
+  url: "https://www.facebook.com/EUinBangladesh/posts/bangladesh-eu-relations-pass-a-new-milestone-with-the-initialling-of-the-partner/1390332879787647/"
+},
+{
+  title: "Bangladesh, EU strike deal on trade, investment, sustainable development",
+  source: "Just Style",
+  summary: "A trade-focused report on the Bangladesh-EU partnership and its implications for apparel exports and broader cooperation.",
+  url: "https://www.just-style.com/news/bangladesh-eu-strike-deal-on-trade-investment-sustainable-development/"
+},
+{
+  title: "Energy crisis poses difficult policy trade-off challenges: GED",
+  source: "The Business Standard",
+  summary: "A report on Bangladesh’s energy crisis and how global energy prices are affecting inflation, imports, and fiscal balance.",
+  url: "https://www.tbsnews.net/bangladesh/energy/energy-crisis-poses-difficult-policy-trade-challenges-ged-1406836"
+},
+{
+  title: "How shockwaves from the Gulf are reshaping Bangladesh's economy",
+  source: "International Growth Centre",
+  summary: "An analysis of how Middle East supply shocks affect Bangladesh’s energy dependence, remittances, trade, and inflation.",
+  url: "https://www.theigc.org/blogs/energy-crisis-bangladesh-economy"
+},
+{
+  title: "Bangladesh’s Shifting Geopolitics: Why India Cannot Afford To Wait",
+  source: "Asia Society Policy Institute",
+  summary: "An analysis of Bangladesh’s shifting posture after the 2024 political transition and its implications for India, China, and Pakistan.",
+  url: "https://asiasociety.org/policy-institute/bangladeshs-shifting-geopolitics-why-india-cannot-afford-wait"
+},
+{
+  title: "Indo-Pacific: Bangladesh's Strategic Move to Geopolitics, Climate Diplomacy, and Security",
+  source: "Dirosat Journal Article",
+  summary: "A scholarly article on Bangladesh’s Indo-Pacific engagement, climate diplomacy, migration pressures, and Bay of Bengal security.",
+  url: "https://dirosat.com/index.php/i/article/view/128"
+}
         ];
 
         function loadRandomArticle() {
