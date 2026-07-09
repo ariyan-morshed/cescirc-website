@@ -43,13 +43,19 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
     border-bottom: 1px solid rgba(212, 175, 55, 0.2); box-sizing: border-box;
 }
 
-/* CIRCULAR LOGO WITH GLOW */
-.logo-wrapper { filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 20px rgba(0,0,0,0.8)); }
-.logo-img { height: 70px; display: block; border-radius: 50%; /* MAKES IT CIRCULAR */ }
+/* CIRCULAR LOGO WITH PURE RED GLOW */
+.logo-wrapper {
+    /* 3 layers of pure red glow to diffuse the edges */
+    filter: drop-shadow(0 0 5px rgba(128, 0, 0, 1)) 
+            drop-shadow(0 0 15px rgba(128, 0, 0, 0.8)) 
+            drop-shadow(0 0 40px rgba(80, 0, 0, 0.6));
+}
 
-.nav-links { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
-.nav-links a { color: #ffffff !important; text-decoration: none !important; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; font-family: 'Inter', sans-serif; font-weight: 400; }
-.nav-links a:hover { color: var(--gold) !important; }
+.logo-img { 
+    height: 70px; 
+    display: block; 
+    border-radius: 50%; /* Forces the square image into a perfect circle */
+}
 
 /* --- HERO SECTION (Real Image Background) --- */
 .hero {
