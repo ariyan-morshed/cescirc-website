@@ -27,11 +27,12 @@ h1, h2, h3, h4 {
 
 /* --- NEWSPAPER FONT CLASSES (Proper Redaction 20) --- */
 .newspaper-title {
-    font-family: 'Redaction 20', monospace; /* The heavy stamped look */
+    font-family: 'Redaction 20', monospace;
     letter-spacing: 4px;
     text-transform: uppercase;
     line-height: 1.2;
-    font-size: 4.5rem; /* Made it slightly bigger for impact */
+    font-size: 4.5rem;
+    color: #fff;
 }
 
 .newspaper-subtitle {
