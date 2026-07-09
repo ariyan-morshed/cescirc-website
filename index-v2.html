@@ -11,6 +11,9 @@
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style-v2.css">
+    
+    <!-- Z-INDEX FIX FOR CLEAN LAYERS -->
+    <style> section, .about-text, .timeline-content, .organogram { position: relative; z-index: 2; } </style>
 </head>
 <body>
 
@@ -54,7 +57,8 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3 class="newspaper-subtitle">Term 1: Foundational Sessions</h3>
-                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-D9xXmSRJppA?auto=format&fit=crop&w=600&q=80" alt="World Map"></div>
+                    <!-- FIXED LONG UNSPLASH LINK -->
+                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1656152323648-2c5104d1aad7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="World Map"></div>
                     <ul>
                         <li>What is International Relations and Why It Matters</li>
                         <li>Foundations of International Relations</li>
@@ -67,7 +71,8 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3 class="newspaper-subtitle">Term 2: Technical Sessions</h3>
-                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-mIalf1tw6-w?auto=format&fit=crop&w=600&q=80" alt="UN Flags"></div>
+                    <!-- FIXED LONG UNSPLASH LINK -->
+                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1633095975779-fd354aa0dc95?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="UN Flags"></div>
                     <ul>
                         <li>Current Geopolitical Issues in South Asia</li>
                         <li>Diplomacy & Negotiation</li>
@@ -108,10 +113,5 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
-
-    <!-- SUBTLE BACKGROUND DOODLES -->
-<div style="position: fixed; top: -50%; left: -20%; width: 140%; height: 200%; pointer-events: none; z-index: 0; overflow: hidden; font-family: 'MyRedaction', monospace; color: rgba(107, 40, 40, 0.6); font-size: 5rem; font-weight: bold; transform: rotate(-20deg); opacity: 0.2; white-space: pre-wrap; line-height: 2.5; text-transform: uppercase; word-spacing: 80px; user-select: none;">
-    DIPLOMACY &nbsp;&nbsp;&nbsp; TREATY &nbsp;&nbsp;&nbsp; GEOPOLITICS &nbsp;&nbsp;&nbsp; UN CHARTER &nbsp;&nbsp;&nbsp; SOVEREIGNTY &nbsp;&nbsp;&nbsp; VETO &nbsp;&nbsp;&nbsp; EMBARGO &nbsp;&nbsp;&nbsp; RESOLUTION &nbsp;&nbsp;&nbsp; BILATERAL &nbsp;&nbsp;&nbsp; SANCTIONS &nbsp;&nbsp;&nbsp; FOREIGN POLICY &nbsp;&nbsp;&nbsp; NEGOTIATION &nbsp;&nbsp;&nbsp; CRISIS &nbsp;&nbsp;&nbsp; PEACEKEEPING &nbsp;&nbsp;&nbsp; P5 NATIONS &nbsp;&nbsp;&nbsp; AMBASSADOR &nbsp;&nbsp;&nbsp; NGO &nbsp;&nbsp;&nbsp; HUMAN RIGHTS &nbsp;&nbsp;&nbsp; SUEZ CANAL &nbsp;&nbsp;&nbsp; COLD WAR &nbsp;&nbsp;&nbsp; DECOLONIZATION
-</div>
 </body>
 </html>
