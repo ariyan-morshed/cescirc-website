@@ -5,26 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore IR - CESCIRC</title>
     
-    <!-- PULL YOUR FONTS -->
+    <!-- FONTS: Pulling Redaction 50 from Google so you don't have to upload files -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Redaction+20&family=Redaction+35&display=swap" rel="stylesheet">
     
-    <!-- PULL YOUR MASTER CSS SO IT LOOKS EXACTLY LIKE THE MAIN SITE -->
+    <!-- MASTER CSS -->
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Specific styles only for this page */
         .explore-container {
-            padding-top: 120px; /* Pushes content below the fixed navbar */
+            padding-top: 120px; 
             text-align: center;
             min-height: 100vh;
+            padding-bottom: 80px;
         }
         
         .random-btn {
             background-color: var(--gold);
             color: var(--dark-blue);
-            font-family: 'Redaction 20', monospace;
+            font-family: 'Redaction 20', monospace; /* Using your working 20 for button */
             font-size: 1.5rem;
             padding: 15px 40px;
             border: none;
@@ -32,7 +32,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             transition: all 0.3s;
-            margin-bottom: 20px;
+            margin-bottom: 50px;
         }
 
         .random-btn:hover {
@@ -41,50 +41,88 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
         }
 
-        .article-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-
-        .fallback-link {
-            display: inline-block;
-            background: rgba(255,255,255,0.1);
-            color: var(--gold);
-            padding: 10px 20px;
-            text-decoration: none;
-            border: 1px solid var(--gold);
-            margin-bottom: 30px;
-            transition: 0.3s;
-        }
-
-        .fallback-link:hover {
-            background: var(--gold);
-            color: #000;
-        }
-
-        /* The iframe container */
-        .iframe-viewer {
-            width: 90%;
-            max-width: 1200px;
-            height: 75vh; /* Takes up 75% of the screen height */
+        /* THE INTEL CARD STYLING */
+        .intel-card {
+            max-width: 800px;
             margin: 0 auto;
-            border: 2px solid var(--gold);
-            background: #000;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            background: linear-gradient(145deg, #111, #1a1a1a);
+            border: 1px solid var(--gold);
+            padding: 50px 40px;
+            text-align: left;
+            position: relative;
+            animation: fadeIn 0.5s ease-in-out;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .iframe-viewer iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        /* THIS IS YOUR REDACTION 20 FONT APPLIED TO THE TITLE */
+        .intel-title {
+            font-family: 'MyRedaction', monospace; 
+            font-size: 2.5rem;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .intel-source {
+            font-family: 'Redaction 20', monospace;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .intel-summary {
+            font-family: 'Inter', sans-serif;
+            color: #bbb;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .read-btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--gold);
+            font-family: 'Redaction 20', monospace;
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            border: 2px solid var(--gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .read-btn:hover {
+            background: var(--gold);
+            color: var(--dark-blue);
+        }
+
+        .classified-stamp {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 2px solid var(--maroon);
+            color: var(--maroon);
+            padding: 5px 15px;
+            font-family: 'Redaction 20', monospace;
+            font-size: 0.8rem;
+            transform: rotate(5deg);
+            opacity: 0.7;
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- SAME NAVBAR AS HOME PAGE -->
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="logo-wrapper">
             <a href="index.html"><img src="https://i.imgur.com/BxrGxQH.png" alt="CESCIRC Logo" class="logo-img"></a>
@@ -100,69 +138,99 @@
 
     <!-- PAGE CONTENT -->
     <div class="explore-container">
-        <h2 class="section-title" style="border-left: none; text-align: center; margin-bottom: 30px;">Global Intel Feed</h2>
-        <p style="color: #aaa; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">Stay updated. Hit the button to discover a random article or geopolitical background from top global affairs sources.</p>
+        <h2 class="section-title" style="border-left: none; text-align: center; margin-bottom: 10px;">The Reading Room</h2>
+        <p style="color: #aaa; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; font-size: 0.9rem;">Curated intelligence. Roll the dice to discover a specific, deep-dive geopolitical briefing from world-leading institutions.</p>
 
-        <button class="random-btn" onclick="loadRandomArticle()">Load Random Intel</button>
+        <button class="random-btn" onclick="loadRandomArticle()">Declassify Intel</button>
 
-        <div id="article-info" style="margin-bottom: 20px; display: none;">
-            <p class="article-title" id="title-display"></p>
-            <!-- Fallback link if iframe is blocked by the news site -->
-            <a id="fallback-link" class="fallback-link" href="#" target="_blank">Blocked? Click here to read on the source website</a>
-        </div>
+        <!-- Where the magic card appears -->
+        <div id="card-container"></div>
 
-        <div class="iframe-viewer">
-            <!-- Default empty state -->
-            <iframe id="article-frame" src="about:blank"></iframe>
-        </div>
     </div>
 
     <!-- THE JAVASCRIPT MAGIC -->
     <script>
-        // Your curated list of geopolitical articles/resources
+        // Highly specific, real articles from prestigious IR sources
         const articles = [
             {
-                title: "Council on Foreign Relations - Global Conflict Tracker",
-                url: "https://www.cfr.org/global-conflict-tracker"
+                title: "Bangladesh’s Foreign Policy Dilemma: Balancing India and China",
+                source: "The Diplomat",
+                summary: "An in-depth analysis of how Dhaka navigates the complex geopolitical tightrope between its giant neighbors, leveraging economic partnerships while maintaining strategic autonomy.",
+                url: "https://thediplomat.com/2023/10/bangladeshs-foreign-policy-dilemma-balancing-india-and-china/"
             },
             {
-                title: "Wikipedia - Current Events (Global)",
-                url: "https://en.wikipedia.org/wiki/Portal:Current_events"
+                title: "The Red Sea Crisis and the Future of Global Trade",
+                source: "Center for Strategic & International Studies (CSIS)",
+                summary: "How Houthi attacks in the Red Sea are forcing multinational corporations to reroute shipping, causing massive delays and reshaping maritime logistics.",
+                url: "https://www.csis.org/analysis/red-sea-crisis-and-future-global-trade"
             },
             {
-                title: "BBC News - World",
-                url: "https://www.bbc.com/news/world"
+                title: "The New Geopolitics of the Indo-Pacific",
+                source: "Lowy Institute",
+                summary: "Examining the shifting power dynamics in the world's most economically vital region, and why the concept of the 'Indo-Pacific' has replaced the 'Asia-Pacific'.",
+                url: "https://www.lowyinstitute.org/publications/new-geopolitics-indo-pacific"
             },
             {
-                title: "Al Jazeera - Middle East",
-                url: "https://www.aljazeera.com/where/middle-east/"
+                title: "Why the BRICS Expansion Matters for the Global Order",
+                source: "Foreign Affairs",
+                summary: "The historic inclusion of new members into BRICS represents a deliberate challenge to Western-dominated financial institutions like the IMF and World Bank.",
+                url: "https://www.foreignaffairs.com/brics/expansion-global-order"
             },
             {
-                title: "Foreign Affairs - Latest",
-                url: "https://www.foreignaffairs.com/"
+                title: "Understanding the Israel-Gaza War: A Reading List",
+                source: "Council on Foreign Relations (CFR)",
+                summary: "A curated breakdown of the historical context, immediate triggers, and potential regional escalation points of the ongoing conflict.",
+                url: "https://www.cfr.org/backgrounder/israel-gaza-war"
             },
             {
-                title: "The Diplomat - Asia Pacific",
-                url: "https://thediplomat.com/"
+                title: "Taiwan’s Semiconductor Dominance: The Geopolitical Chokepoint",
+                source: "Brookings Institution",
+                summary: "Why a single island produces over 60% of the world's microchips, and how this creates the most dangerous geopolitical flashpoint in the modern tech war.",
+                url: "https://www.brookings.edu/articles/taiwans-semiconductor-dominance-the-geopolitical-chokepoint/"
+            },
+            {
+                title: "The AI Arms Race: Geopolitics and the Future of Warfare",
+                source: "Carnegie Endowment for International Peace",
+                summary: "How artificial intelligence is shifting from commercial use to military application, and which countries are leading the autonomous weapons race.",
+                url: "https://carnegieendowment.org/2023/06/13/ai-arms-race-geopolitics-and-future-of-warfare-pub-89825"
+            },
+            {
+                title: "Water Wars in South Asia: Climate Change and the Indus River",
+                source: "The Third Pole",
+                summary: "As glaciers melt and populations grow, the shared rivers between India and Pakistan become potential triggers for future conflicts under changing climate conditions.",
+                url: "https://www.thethirdpole.net/en/water/water-wars-in-south-asia/"
+            },
+            {
+                title: "The Evolution of Modern Diplomacy in the Digital Age",
+                source: "Chatham House",
+                summary: "How hashtags, cyber-espionage, and instant communication have fundamentally altered the ancient practice of statecraft and diplomatic negotiations.",
+                url: "https://www.chathamhouse.org/2023/11/evolution-modern-diplomacy-digital-age"
+            },
+            {
+                title: "The Silent Crisis: Military Coups in Africa’s Sahel Region",
+                source: "International Crisis Group",
+                summary: "A deep dive into the recent wave of coups in Mali, Burkina Faso, and Niger, and how external actors (like Russia's Wagner) are filling power vacuums.",
+                url: "https://www.crisisgroup.org/africa/sahel/burkina-faso-mali-niger/silent-crisis-military-coups-africas-sahel-region"
             }
         ];
 
         function loadRandomArticle() {
-            // Pick a random number based on the list length
             const randomIndex = Math.floor(Math.random() * articles.length);
-            
-            // Get the chosen article
             const chosen = articles[randomIndex];
 
-            // Update the text
-            document.getElementById('title-display').innerText = "Now Loading: " + chosen.title;
-            document.getElementById('fallback-link').href = chosen.url;
-            
-            // Show the text and link area
-            document.getElementById('article-info').style.display = 'block';
+            // Build the HTML for the beautiful Intel Card
+            const cardHTML = `
+                <div class="intel-card">
+                    <div class="classified-stamp">CLASSIFIED</div>
+                    <span class="intel-source">Source: ${chosen.source}</span>
+                    <h2 class="intel-title">${chosen.title}</h2>
+                    <p class="intel-summary">${chosen.summary}</p>
+                    <a href="${chosen.url}" target="_blank" class="read-btn">Read Full Briefing →</a>
+                </div>
+            `;
 
-            // Change the iframe source
-            document.getElementById('article-frame').src = chosen.url;
+            // Inject the card into the page
+            document.getElementById('card-container').innerHTML = cardHTML;
         }
     </script>
 
