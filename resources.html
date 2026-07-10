@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="resources">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources & Library - CESCIRC</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Redaction+20&family=Redaction+35&display=swap" rel="stylesheet>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet>
+    <link rel="stylesheet" href="style-v2.css">
+    
+    <style>
+        .res-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 25px; 
+            margin-top: 30px; 
+            padding-bottom: 50px; 
+        }
+
+        .res-card { 
+            background: rgba(90, 31, 31, 0.6); 
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 30px; 
+            width: 320px; /* Fixed width so they don't stretch */
+            transition: transform 0.3s, box-shadow 0.3s; 
+            display: flex;
+        }
+
+        .res-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4); 
+            border-color: var(--accent-hover); 
+        }
+
+        .res-icon { 
+            width: 60px; 
+            height: 60px; 
+            background: var(--bg-secondary); 
+            border: 1px solid var(--border-color); 
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent-primary); 
+            font-family: 'MyRedaction', monospace; 
+            font-size: 1.5rem; 
+            flex-shrink: 0; 
+            margin-right: 20px; 
+        }
+
+        .res-content h3 { 
+            font-family: 'MyRedaction', monospace; 
+            color: var(--text-primary); 
+            font-size: 1.2rem; 
+            margin: 0 0 10px 0; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+
+        .res-desc { 
+            color: var(--text-secondary); 
+            font-size: 0.9rem; 
+            margin-bottom: 15px; 
+            line-height: 1.6; 
+        }
+
+        .res-btn { 
+            display: inline-block;
+            background: transparent; 
+            color: var(--accent-primary); 
+            padding: 8px 20px; 
+            border: 1px solid var(--accent-primary); 
+            text-decoration: none; 
+            text-transform: uppercase; 
+            font-family: 'MyRedaction', monospace; 
+            font-size: 0.8rem; 
+            transition: all 0.3s; 
+        }
+
+        .res-btn:hover { 
+            background: var(--accent-primary); 
+            color: var(--bg-shadow); 
+        }
+
+        /* Fixes for small screens */
+        @media (max-width: 768px) { .res-card { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <!-- V2 TOP BAR -->
+    <nav class="navbar">
+        <div class="logo-wrapper">
+            <a href="index.html"><img src="https://i.imgur.com/BxrGxQH.png" alt="CESCIRC Logo" class="logo-img"></a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#roadmap">Sessions</a></li>
+            <li class="dropdown">
+                <a href="panel-main.html" class="dropbtn">The Panel <span class="arrow-down">▼</span></a>
+                <div class="mega-menu">
+                    <div class="mega-menu-inner">
+                        <div class="mega-menu-col">
+                            <a href="panel-main.html" class="mega-menu-title">Main Governing Body</a>
+                            <a href="panel-main.html#club-in-charge">Club In-Charge</a>
+                            <a href="panel-main.html#captain">Club Captain</a>
+                            <a href="panel-main.html#coordinators">Coordinators</a>
+                            <a href="panel-main.html#deputy-coordinator">Deputy Coordinator</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-admin.html" class="mega-menu-title">Dept. of Administration</a>
+                            <a href="panel-admin.html#director">Director</a>
+                            <a href="panel-admin.html#secretary">Secretary</a>
+                            <a href="panel-admin.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-academics.html" class="mega-menu-title">Dept. of Academics</a>
+                            <a href="panel-academics.html#director">Director</a>
+                            <a href="panel-academics.html#secretary">Secretary</a>
+                            <a href="panel-academics.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-media.html" class="mega-menu-title">Dept. of Media & Graphics</a>
+                            <a href="panel-media.html#director">Director</a>
+                            <a href="panel-media.html#secretary">Secretary</a>
+                            <a href="panel-media.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-prong.html" class="mega-menu-title">Dept. of Public Relations</a>
+                            <a href="panel-prong.html#director">Director</a>
+                            <a href="panel-prong.html#secretary">Secretary</a>
+                            <a href="panel-prong.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-logistics.html" class="mega-menu-title">Dept. of Logistics</a>
+                            <a href="panel-logistics.html#director">Director</a>
+                            <a href="panel-logistics.html#secretary">Secretary</a>
+                            <a href="panel-logistics.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="articles.html" class="dropbtn">Explore IR <span class="arrow-down">▼</span></a>
+                <div class="mega-menu mega-menu-slim">
+                    <div class="mega-menu-col">
+                        <a href="articles.html" class="mega-menu-title">The Reading Room</a>
+                        <a href="news.html">Latest Articles</a>
+                    </div>
+                    <div class="mega-menu-col">
+                        <a href="resources.html" class="mega-menu-title">Resources & Library</a>
+                        <a href="gallery.html">Photo Gallery</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="section">
+        <h2 class="section-title" data-aos="fade-right">RESOURCES & LIBRARY</h2>
+        <p class="alumni-intro" data-aos="fade-up">Essential documents, research papers, and links curated by the Academics & Documentation department for your IR journey.</p>
+        
+        <div class="res-grid">
+            <!-- RESOURCE 1 -->
+            <div class="res-card" data-aos="zoom-in">
+                <div class="res-icon">PDF</div>
+                <div class="res-content">
+                    <h3>The UN Charter</h3>
+                    <p class="res-desc">The foundational document of international law and diplomacy.</p>
+                    <a href="https://www.un.org/en/about-us/un-charter/" target="_blank" class="res-btn">Visit Site →</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE 2 -->
+            <div class="res-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="res-icon">🔍</div>
+                <div class="res-content">
+                    <h3>CFR Backgrounders</h3>
+                    <p class="res-desc">The Council on Foreign Relations backgrounder on every major geopolitical crisis.</p>
+                    <a href="https://www.cfr.org/backgrounders/" target="_blank" class="res-btn">Visit Site →</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE 3 -->
+            <div class="res-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="res-icon">🌐</div>
+                <div class="res-content">
+                    <strong>World Factbook</strong>
+                    <p class="res-desc">The CIA World Factbook for country profiles, flags, and historical data.</p>
+                    <a href="https://www.cia.gov/the-world-factbook/" target="_blank" class="res-btn">Visit Site →</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE 4 -->
+            <div class="res-card" data-aos="zoom-in" data-aos-delay="300">
+                <div class="res-icon">📖</div>
+                <p class="res-content">
+                    <h3>MUN Procedure Guide</h3>
+                    <p class="res-desc">The official rules of procedure for Model UN conferences.</p>
+                    <a href="https://www.un.org/un-un-mun-understanding-the-rules-of-procedure" target="_blank" class="res-btn">Visit Site →</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE 5 -->
+            <div class="res-card" data-aos="zoom-in" data-aos-delay="400">
+                <div class="res-icon">⚖️</div>
+                <p class="res-content">
+                    <h3>ICJJ Diplomacy Dictionary</h3>
+                    <p class="res-desc">Definitions of diplomatic terms.</p>
+                    <a href="https://icjj.org/dictionary" target="_blank" class="res-btn">Visit Site →</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE 6 -->
+            <div class="res-card" data-aos="zoom-in" data-aos-delay="500">
+                <div class="res-icon">🇧🇧</div>
+                <p class="resources-footer">
+                    <h3>Chatham House Research</h3>
+                    <p class="res-desc">World-class geopolitical analysis from a top-tier global affairs think tank.</p>
+                    <a href="https://www.chathamhouse.org/" target="_blank" class="res-btn">Visit Site →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 class="footer-title">CESCIRC</h3>
+                <p class="footer-text">The International Relations Club of Cantonment English School and College. Developing students’ awareness of global affairs, diplomacy, and geopolitics.</p>
+            </div>
+            <div class="footer-col">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">Our Vision</a></li>
+                    <li><a href="index.html#roadmap">Sessions</a></li>
+                    <a href="panel-main.html" class="dropbtn" style="margin-top: 10px;">The Panel <span class="arrow-down">▼</span></a>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3 class="footer-title">Useful Links</h3>
+                <ul class="footer-links">
+                    <li><a href="https://www.un.org/en/" target="_blank">United Nations</a></li>
+                    <a href="https://www.mofa.gov.bd/" target="_blank">MoFA, Bangladesh</a></li>
+                    <a href="https://www.cfr.org/" target="_blank" class="dropbtn" style="margin-top: 10px;">Explore IR <span class="arrow-down">▼</span></a>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CESCIRC. All Rights Reserved. Cantonment English School and College.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="Mega-Menu">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CESCIRC - International Relations Club</title>
+    <title>CESCIRC - International Relations Club</head>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
@@ -13,32 +13,117 @@
     <link rel="stylesheet" href="style-v2.css">
     
     <!-- Z-INDEX FIX FOR CLEAN LAYERS -->
-    <style> section, .about-text, .timeline-content, .organogram { position: relative; z-index: 2; } </style>
+    <style> section, .about-text, .timeline-content, .organogram, .events-grid, .alumni-grid { position: relative; z-index: 2; } </style>
 </head>
 <body>
 
+    <!-- V2 TOP BAR -->
     <nav class="navbar">
         <div class="logo-wrapper">
             <a href="index.html"><img src="https://i.imgur.com/BxrGxQH.png" alt="CESCIRC Logo" class="logo-img"></a>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#roadmap">Sessions</a></li>
-            <li><a href="index.html#panel">The Panel</a></li>
-            <li><a href="articles.html" style="color: var(--accent-hover) !important;">Explore IR</a></li>
+            <li><a href="#home">Home</a></li>
+            
+            <!-- MEGA-MENU FOR PANEL -->
+            <li class="dropdown">
+                <a href="panel-main.html" class="dropbtn">
+                    The Panel 
+                    <span class="arrow-down">▼</span>
+                </a>
+                <div class="mega-menu">
+                    <div class="mega-menu-inner">
+                        <div class="mega-menu-col">
+                            <a href="panel-main.html" class="mega-menu-title">Main Governing Body</a>
+                            <a href="panel-main.html#club-in-charge">Club In-Charge</a>
+                            <a href="panel-main.html#captain">Club Captain</a>
+                            <a href="panel-main.html#coordinators">Coordinators</a>
+                            <a href="panel-main.html#deputy-coordinator">Deputy Coordinator</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-admin.html" class="mega-menu-title">Dept. of Administration</a>
+                            <a href="panel-admin.html#director">Director</a>
+                            <a href="panel-admin.html#secretary">Secretary</a>
+                            <a href="panel-admin.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-academics.html" class="mega-menu-title">Dept. of Academics</a>
+                            <a href="panel-academics.html#director">Director</a>
+                            <a href="panel-academics.html#secretary">Secretary</a>
+                            <a href="panel-academics.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-media.html" class="mega-menu-title">Dept. of Media & Graphics</a>
+                            <a href="panel-media.html#director">Director</a>
+                            <a href="panel-media.html#secretary">Secretary</a>
+                            <a href="panel-media.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-pr.html" class="mega-menu-title">Dept. of Public Relations</a>
+                            <a href="panel-pr.html#director">Director</a>
+                            <a href="panel-pron.html#secretary">Secretary</a>
+                            <a href="panel-pr.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                        <div class="mega-menu-col">
+                            <a href="panel-logistics.html" class="mega-menu-title">Dept. of Logistics</a>
+                            <a href="panel-logistics.html#director">Director</a>
+                            <a href="panel-logistics.html#secretary">Secretary</a>
+                            <a href="panel-logistics.html#deputy-secretary">Deputy Secretary</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- MEGA-MENU FOR EXPLORE IR -->
+            <li class="dropdown">
+                <a href="articles.html" class="dropbtn">
+                    Explore IR 
+                    <span class="arrow-down">▼</span>
+                </a>
+                <div class="mega-menu mega-menu-slim">
+                    <div class="mega-menu-col">
+                        <a href="articles.html" class="mega-menu-title">The Reading Room</a>
+                        <a href="news.html">Latest Articles</a>
+                    </div>
+                    <div class="mega-menu-col">
+                        <a href="resources.html" class="mega-menu-title">Resources & Library</a>
+                        <a href="gallery.html">Photo Gallery</a>
+                    </div>
+                </div>
+            </li>
         </ul>
     </nav>
 
+    <!-- HERO SECTION (With Animated Counters) -->
     <header id="home" class="hero">
         <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
             <p class="hero-subtitle">Cantonment English School and College</p>
             <h1 class="newspaper-title">INTERNATIONAL RELATIONS CLUB</h1>
+            
+            <!-- ANIMATED COUNTERS -->
+            <div class="counter-box">
+                <div class="counter-item">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke="currentColor"><path d="M12 2L2 22l10-10Z"/><path d="M10 10H14M2 10L14 6H2Z"/></svg>
+                    <div>
+                        <span class="counter" data-target="200">0</span>
+                        <p class="counter-label">Petition Signatures</p>
+                    </div>
+                </div>
+                <div class="counter-item">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M8 12h8v8h-8M16 12h-8" stroke-linecap="round"/></svg>
+                    <div>
+                        <span class="counter" data-target="5">0</span>
+                        <p class="counter-label">Core Departments</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="divider"></div>
             <p class="description">Your gateway to global affairs.</p>
         </div>
     </header>
 
+    <!-- ABOUT SECTION (Frosted Glass) -->
     <section id="about" class="section about-grid">
         <div class="about-text" data-aos="fade-right">
             <h2 class="section-title">OUR VISION</h2>
@@ -49,16 +134,15 @@
         </div>
     </section>
 
+    <!-- ROADMAP (Sessions) -->
     <section id="roadmap" class="section timeline-section">
         <h2 class="section-title" data-aos="fade-right">CLUB SESSIONS</h2>
-        
         <div class="timeline">
             <div class="timeline-item" data-aos="fade-left">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3 class="newspaper-subtitle">Term 1: Foundational Sessions</h3>
-                    <!-- FIXED LONG UNSPLASH LINK -->
-                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1488375634201-b85b28653a79?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="World Map"></div>
+                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1488375634201-b85b28653a79?q=80&w=1429&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="World Map"></div>
                     <ul>
                         <li>What is International Relations and Why It Matters</li>
                         <li>Foundations of International Relations</li>
@@ -71,8 +155,7 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3 class="newspaper-subtitle">Term 2: Technical Sessions</h3>
-                    <!-- FIXED LONG UNSPLASH LINK -->
-                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1633095975779-fd354aa0dc95?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="UN Flags"></div>
+                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1676181739859-08330dea8999?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="UN Flags"></div>
                     <ul>
                         <li>Current Geopolitical Issues in South Asia</li>
                         <li>Diplomacy & Negotiation</li>
@@ -85,7 +168,7 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3 class="newspaper-subtitle">Term 3: Application Sessions</h3>
-                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1676181739859-08330dea8999?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="MUN Gavel"></div>
+                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1676181739500-e1291b113370?auto=format&fit=crop&w=600&q=80" alt="MUN Gavel"></div>
                     <ul>
                         <li>Resolution Drafting & MUN Workshop</li>
                         <li>Mock Model United Nations</li>
@@ -95,20 +178,83 @@
         </div>
     </section>
 
-    <section id="panel" class="section">
-        <h2 class="section-title" data-aos="fade-right">THE PANEL</h2>
-        <div class="organogram">
-            <div class="org-row tier-1" data-aos="zoom-in"><div class="card tier-highlight"><div class="card-graphic"></div><h3>Md Abul Monsor</h3><p class="post">Club In-Charge</p></div></div>
-            <div class="org-row tier-2" data-aos="zoom-in" data-aos-delay="100"><div class="card"><div class="card-graphic"></div><h3>Aronya Rishop Dhar</h3><p class="post">Club Captain</p></div><div class="card"><div class="card-graphic"></div><h3>Mohammed Abrar Shahriyar</h3><p class="post">Vice Captain</p></div></div>
-            <div class="org-row tier-3" data-aos="zoom-in" data-aos-delay="200"><div class="card"><div class="card-graphic"></div><h3>Ehan Rahman</h3><p class="post">Coordinator (College)</p></div><div class="card"><div class="card-graphic"></div><h3>Ahmed Affan Islam</h3><p class="post">Coordinator (School)</p></div></div>
-            <div class="org-row tier-4" data-aos="zoom-in" data-aos-delay="300"><div class="card"><div class="card-graphic"></div><h3>Ariyan Morshed Chowdhury</h3><p class="post">Deputy Coordinator (School)</p></div></div>
-            <div class="org-row tier-5" data-aos="zoom-in" data-aos-delay="400"><div class="card"><div class="card-graphic"></div><h3>TBD</h3><p class="post">Director, Administration</p></div><div class="card"><div class="card-graphic"></div><h3>Rahbar Ehan</h3><p class="post">Director, Academics</p></div><div class="card"><div class="card-graphic"></div><h3>Jeet Chowdhury</h3><p class="post">Director, Media</p></div><div class="card"><div class="card-graphic"></div><h3>TBD</h3><p class="post">Director, PR</p></div></div>
-            <div class="org-row tier-6" data-aos="zoom-in" data-aos-delay="500"><div class="card"><div class="card-graphic"></div><h3>Ramin Morshed</h3><p class="post">Director, Logistics</p></div></div>
+    <!-- NEW: UPCOMING EVENTS SECTION -->
+    <section class="section">
+        <h2 class="section-title" data-aos="fade-right">UPCOMING EVENTS</h2>
+        <div class="events-grid">
+            <div class="event-card" data-aos="fade-up">
+                <div class="event-date"><span>01</span><span>September</span></div>
+                <h3 class="event-title">Current Geopolitics Discussion</h3>
+                <p class="event-desc">An open forum analyzing recent shifts in South Asian geopolitics. All members are encouraged to prepare a 3-minute opening statement.</p>
+            </div>
+            <div class="event-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="event-date"><span>15</span><span>September</span></div>
+                <h3 class="event-title">Diplomacy & Negotiation Workshop</h3>
+                <p class="event-desc">An interactive workshop teaching the art of diplomatic speaking, resolution writing, and strategic alliances.</p>
+            </div>
+            <div class="event-card" data-aos="up" data-aos-delay="200">
+                <div class="event-date"><span>01</span><span>October</span></div>
+                <h3 class="event-title">Mock Model United Nations</h3>
+                <p class="event-desc">Our internal training conference. Builds confidence before external competitions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: ALUMNI SPOTLIGHT SECTION -->
+    <section class="section">
+        <h2 class="section-title" data-aos="fade-right">ALUMNI SPOTLIGHT</h2>
+        <p class="alumni-intro" data-aos="fade-up">Past executives carry the CESCIRC legacy forward.</p>
+        
+        <div class="alumni-grid">
+            <div class="alumni-card" data-aos="zoom-in">
+                <div class="alumni-img"></div>
+                <h3>Aronya Rishop Dhar</h3>
+                <p class="alumni-role">Founding Member / Former Club Captain</p>
+                <p class="alumni-desc">Now pursuing International Relations at a top-tier university.</p>
+            </div>
+            <div class="alumni-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="alumni-img"></div>
+                <h3>TBD</h3>
+                <p class="alumni-role">Former Executive Member</p>
+                <p class="alumni-desc">Description of what they are doing now.</p>
+            </div>
+            <div class="alumni-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="alumni-img"></div>
+                <h3>TBD</h3>
+                <p class="alumni-role">Former Department Head</p>
+                <p class="alumni-desc">Description of what they are doing now.</p>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 CESCIRC. All Rights Reserved.</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 class="footer-title">CESCIRC</h3>
+                <p class="footer-text">The International Relations Club of Cantonment English School and College. Developing students’ awareness of global affairs, diplomacy, and geopolitics.</p>
+            </div>
+            <div class="footer-col">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">Our Vision</a></li>
+                    <li><a href="index.html#roadmap">Sessions</a></li>
+                    <li><a href="panel-main.html">The Panel</a></li>
+                    <a href="articles.html" class="dropbtn" style="margin-top: 10px;">Explore IR <span class="arrow-down">▼</span></a>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3 class="footer-title">Useful Links</h3>
+                <ul class="footer-links">
+                    <li><a href="https://www.un.org/en/" target="_blank">United Nations</a></li>
+                    <li><a href="https://www.mofa.gov.bd/" target="_blank">MoFA, Bangladesh</a></li>
+                    <a href="https://www.cfr.org/" target="_blank" class="dropbtn" style="margin-top: 10px;">Explore IR <span class="arrow-down">▼</span></a>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CESCIRC. All Rights Reserved. Cantonment English School and College.</p>
+        </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
