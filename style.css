@@ -143,118 +143,12 @@ h1, h2, h3, h4 { font-family: 'MyRedaction', monospace; text-transform: uppercas
 .card h3 { color: var(--text-primary); font-size: 1.3rem; margin: 15px 10px 5px 10px; }
 .card .post { color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 15px; font-family: 'Inter', sans-serif; font-weight: 700; }
 
-/* --- MEGA FOOTER --- */
-footer { 
-    background: var(--bg-shadow); 
-    color: var(--text-secondary); 
-    border-top: 2px solid var(--accent-primary); 
-    position: relative; 
-    overflow: hidden;
-}
+/* --- FOOTER --- */
+footer { text-align: center; padding: 30px; background: var(--bg-shadow); color: var(--text-secondary); font-size: 0.9rem; border-top: 2px solid var(--accent-primary); position: relative; overflow: hidden;}
+/* Subtle gold glow at the top of the footer */
+footer::before { content: ''; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 60%; height: 40px; background: radial-gradient(ellipse, rgba(201, 163, 78, 0.1) 0%, transparent 70%); }
+footer p { margin: 0; position: relative; z-index: 2; }
 
-.footer-grid {
-    display: grid; 
-    grid-template-columns: 1.5fr 1fr 1.5fr; /* Gives the 'About' column more space */
-    gap: 40px; 
-    padding: 60px 10% 40px 10%; /* Top/side padding, less bottom padding */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Subtle divider */
-}
-
-.footer-title { 
-    font-family: 'MyRedaction', monospace; 
-    color: var(--accent-primary); 
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    font-size: 1.2rem; 
-    margin-bottom: 25px; 
-    padding-bottom: 15px; 
-    border-bottom: 1px solid rgba(255,255,255, 0.1); 
-}
-
-.footer-text { 
-    font-size: 0.95rem; 
-    line-height: 1.8; 
-    margin: 0; 
-    color: #888; 
-}
-
-.footer-links { 
-    list-style: none; 
-    padding: 0; 
-    margin: 0; 
-}
-
-.footer-links li { 
-    margin-bottom: 12px; 
-}
-
-.footer-links a { 
-    color: #888; 
-    text-decoration: none; 
-    transition: color 0.3s; 
-    position: relative; 
-    display: inline-block; 
-    padding-left: 15px; 
-}
-
-/* The little arrow that appears on hover */
-.footer-links a::before { 
-    content: "→"; 
-    position: absolute; 
-    left: 0; 
-    opacity: 0; 
-    transition: all 0.3s; 
-}
-
-.footer-links a:hover { 
-    color: var(--accent-hover); 
-}
-
-.footer-links a:hover::before { 
-    opacity: 1; 
-    left: -5px; 
-}
-
-.footer-bottom { 
-    text-align: center; 
-    padding: 25px 10%; 
-    background: rgba(0, 0, 0, 0.2); 
-}
-
-.footer-bottom p { 
-    margin: 0; 
-    font-size: 0.85rem; 
-    position: relative; 
-    z-index: 2; 
-}
-
-/* --- FIX: THE 250px BRICK WALL FOR PANEL CARDS --- */
-.organogram .card { 
-    width: 250px !important; 
-    min-width: 250px !important; 
-    max-width: 250px !important;
-    flex: 0 0 250px !important; 
-    flex-shrink: 0 !important;
-    background: linear-gradient(180deg, #7a3232 0%, var(--bg-secondary) 40%, var(--bg-primary) 100%); 
-    border: 1px solid var(--border-color); 
-    overflow: hidden; text-align: center; transition: all 0.3s; 
-    display: flex; flex-direction: column; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05); 
-}
-
-/* --- MOBILE RULES --- */
-@media (max-width: 78px) {
-    .footer-grid { 
-        grid-template-columns: 1fr; /* Stacks the 3 columns on mobile */
-        text-align: center; 
-    }
-    
-    .footer-col { 
-        margin-bottom: 40px; 
-    }
-
-    .footer-links a::before { display: none; } /* Hides the hover arrows on mobile to keep it clean */
-}
 /* --- MOBILE RULES --- */
 @media (max-width: 768px) {
     .navbar { flex-direction: column; gap: 15px; padding: 15px; align-items: center !important; text-align: center; }
