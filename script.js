@@ -10,14 +10,16 @@ const speed = 200; // The animation speed
 const updateCount = () => {
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
-        const countTo = parseInt(target);
-        const inc = target / speed;
-        
-        if(countTo < speed) {
-            counter.innerText = 1;
+        const speedValue = 200;
+        const inc = target / speedValue;
+
+        const current = +counter.innerText;
+
+        if (current < target) {
+            counter.innerText = Math.ceil(current + inc);
+            setTimeout(updateCount, 20);
         } else {
-            const incVal = Math.ceil(countTo / speed);
-            counter.innerText = Math.floor(100 + (incVal * (1 - Math.pow(1 - (1/speed), Math.pow(1 - (1/speed), Math.floor((Date.now() - +new Date().getTime()) / (1000/speed))))) 
+            counter.innerText = target;
         }
     });
 }
