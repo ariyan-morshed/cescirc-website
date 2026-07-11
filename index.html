@@ -10,7 +10,47 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-
+    <!-- CLERK AUTHENTICATION (Instance Direct Load) -->
+    <script
+      async
+      crossorigin="anonymous"
+      data-clerk-publishable-key="pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA"
+      src="https://current-iguana-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+      type="text/javascript"
+    ></script>
+    <style>
+        /* Force Clerk to match CESCIRC V2 Theme */
+        #clerk-auth button {
+            background: transparent !important;
+            color: var(--accent-primary) !important;
+            border: 1px solid var(--accent-primary) !important;
+            font-family: 'Inter', sans-serif !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            font-size: 0.8rem !important;
+            padding: 8px 15px !important;
+            border-radius: 4px !important;
+            transition: all 0.3s !important;
+            cursor: pointer !important;
+            box-shadow: none !important;
+        }
+        #clerk-auth button:hover {
+            background: var(--accent-primary) !important;
+            color: var(--bg-primary) !important;
+        }
+        /* Hide Clerk branding & style signed in text */
+        .clerk-branding { display: none !important; }
+        #clerk-auth > div:not(.clerk-branding) { 
+            color: var(--text-secondary) !important; 
+            font-family: 'Inter', sans-serif !important; 
+            font-size: 0.8rem !important; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+    </style>
 </head>
 <body>
 
@@ -32,7 +72,8 @@
                 </div>
             </li>
             <li><a href="articles.html">Explore IR</a></li>
-            <li><div id="clerk-user-button" style="display: flex; align-items: center;"></div></li>
+            <!-- Updated Clerk Container -->
+            <li><div id="clerk-auth" style="display: flex; align-items: center;"></div></li>
         </ul>
     </nav>
 
@@ -139,46 +180,24 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
     
-    <!-- CLERK STEALTH LOADER v2 -->
-    <style>
-        /* Force Clerk to match CESCIRC V2 Theme */
-        #clerk-user-button button, #clerk-user-button a { background: transparent !important; color: var(--accent-primary) !important; border: 1px solid var(--accent-primary) !important; font-family: 'Inter', sans-serif !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-size: 0.8rem !important; padding: 8px 15px !important; border-radius: 4px !important; transition: all 0.3s !important; cursor: pointer !important; box-shadow: none !important; text-decoration: none !important; }
-        #clerk-user-button button:hover, #clerk-user-button a:hover { background: var(--accent-primary) !important; color: var(--bg-primary) !important; text-shadow: none !important; }
-        .clerk-branding { display: none !important; }
-        #clerk-user-button img { border: 2px solid var(--accent-primary) !important; border-radius: 50% !important; }
-    </style>
+    <!-- CLERK INITIALIZATION (Working Instance Method) -->
     <script>
-        // Wait until the page is completely idle before trying to load Clerk
-        window.addEventListener('load', function() {
-            setTimeout(async function() {
-                try {
-                    // 1. Inject script secretly
-                    const script = document.createElement('script');
-                    script.src = 'https://cdn.clerk.io/clerk.js';
-                    document.head.appendChild(script);
-                    await new Promise(resolve => script.onload = resolve);
-                    
-                    // 2. Initialize
-                    const clerk = window.Clerk;
-                    clerk.publishableKey = "pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA";
-                    await clerk.load();
-                    
-                    // 3. Clear fallback and render real button
-                    const userButtonDiv = document.getElementById('clerk-user-button');
-                    userButtonDiv.innerHTML = ''; 
-                    if (clerk.user) {
-                        clerk.mountUserButton(userButtonDiv, { afterSignOutUrl: window.location.href });
-                    } else {
-                        const signInComponent = await clerk.createSignInComponent();
-                        userButtonDiv.appendChild(signInComponent);
-                    }
-                } catch (error) {
-                    console.error("Network is blocking Clerk.", error);
-                    // Show a clear message instead of a broken link
-                    document.getElementById('clerk-user-button').innerHTML = '<span style="font-size: 0.7rem; color: var(--text-secondary); border: 1px solid rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px;">Auth Blocked</span>';
-                }
-            }, 1000); // 1 second delay
-        });
+      window.addEventListener('load', async function () {
+        await window.Clerk.load();
+
+        const container = document.getElementById('clerk-auth');
+
+        if (window.Clerk.user) {
+          container.innerHTML = `Signed in as ${window.Clerk.user.firstName}`;
+          // optional: add a sign-out button
+          const btn = document.createElement('button');
+          btn.textContent = 'Sign out';
+          btn.onclick = () => window.Clerk.signOut();
+          container.appendChild(btn);
+        } else {
+          window.Clerk.mountSignIn(container);
+        }
+      });
     </script>
 </body>
 </html>
