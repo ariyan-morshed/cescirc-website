@@ -32,6 +32,7 @@ const observer = new IntersectionObserver((entries) => {
             updateCount();
             observer.unobserve(entry.target);
         }
-    }, observerOptions);
+    });
+}, observerOptions);
 
 counters.forEach(counter => observer.observe(counter));
