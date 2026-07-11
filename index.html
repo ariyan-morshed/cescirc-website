@@ -3,112 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CESCIRC - International Relations Club</title>
-    
+    <title>CESCIRC | International Relations Club</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Redaction+20&family=Redaction+35&display=swap" rel="stylesheet">
-    
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Z-INDEX FIX FOR CLEAN LAYERS -->
-    <style> section, .about-text, .timeline-content, .organogram { position: relative; z-index: 2; } </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
 
+    <!-- NAVIGATION -->
     <nav class="navbar">
         <div class="logo-wrapper">
-            <a href="index.html"><img src="https://i.imgur.com/BxrGxQH.png" alt="CESCIRC Logo" class="logo-img"></a>
+            <a href="index.html"><img src="CESC.png" alt="CESCIRC Logo" class="logo-img"></a>
         </div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#roadmap">Sessions</a></li>
-            <li><a href="index.html#panel">The Panel</a></li>
-            <li><a href="articles.html" style="color: var(--accent-hover) !important;">Explore IR</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Panels ▾</a>
+                <div class="dropdown-menu">
+                    <a href="panel-main.html">Main Panel</a>
+                    <a href="panel-admin.html">Administration</a>
+                    <a href="panel-academics.html">Academics & Documentation</a>
+                    <a href="panel-media.html">Media & Graphics</a>
+                    <a href="panel-pr.html">Public Relations</a>
+                    <a href="panel-logistics.html">Logistics</a>
+                </div>
+            </li>
+            <li><a href="explore-ir.html">Explore IR</a></li>
+            <li><a href="newsroom.html">Newsroom</a></li>
+            <li><a href="resources.html">Library</a></li>
         </ul>
     </nav>
 
-    <header id="home" class="hero">
+    <!-- HERO SECTION -->
+    <section class="hero">
         <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-            <p class="hero-subtitle">Cantonment English School and College</p>
-            <h1 class="newspaper-title">INTERNATIONAL RELATIONS CLUB</h1>
+            <p class="hero-subtitle">Cantonment English School & College</p>
+            <h1>International Relations Club</h1>
             <div class="divider"></div>
-            <p class="description">Your gateway to global affairs.</p>
-        </div>
-    </header>
-
-    <section id="about" class="section about-grid">
-        <div class="about-text" data-aos="fade-right">
-            <h2 class="section-title">OUR VISION</h2>
-            <p>To develop students' awareness of historical and contemporary geopolitical developments around the world. We offer a structured academic environment where members build research, writing, debate, and negotiation skills, thereby shaping them into knowledgeable, diplomatic, and globally conscious citizens.</p>
-        </div>
-        <div class="about-image" data-aos="fade-left">
-            <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=800&q=80" alt="UN General Assembly Hall">
+            <p class="description">"Deciphering the complex geopolitical matrix to forge the diplomats of tomorrow."</p>
         </div>
     </section>
 
-    <section id="roadmap" class="section timeline-section">
-        <h2 class="section-title" data-aos="fade-right">CLUB SESSIONS</h2>
-        
-        <div class="timeline">
-            <div class="timeline-item" data-aos="fade-left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3 class="newspaper-subtitle">Term 1: Foundational Sessions</h3>
-                    <!-- FIXED LONG UNSPLASH LINK -->
-                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1488375634201-b85b28653a79?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="World Map"></div>
-                    <ul>
-                        <li>What is International Relations and Why It Matters</li>
-                        <li>Foundations of International Relations</li>
-                        <li>Understanding World Politics</li>
-                    </ul>
-                </div>
+    <!-- ABOUT / VISION SPLIT -->
+    <section id="about" class="section">
+        <div class="about-grid" data-aos="fade-up" data-aos-duration="800">
+            <div class="about-text">
+                <h2 class="section-title" style="margin-top:0;">Our Vision</h2>
+                <p>The CESC International Relations Club serves as the premier academic arena for developing diplomatic acumen, geopolitical awareness, and rigorous research capabilities. We transcend standard curriculum limits, molding students into analytical global citizens prepared for the complexities of international affairs.</p>
             </div>
-            
-            <div class="timeline-item" data-aos="fade-right">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3 class="newspaper-subtitle">Term 2: Technical Sessions</h3>
-                    <!-- FIXED LONG UNSPLASH LINK -->
-                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1633095975779-fd354aa0dc95?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="UN Flags"></div>
-                    <ul>
-                        <li>Current Geopolitical Issues in South Asia</li>
-                        <li>Diplomacy & Negotiation</li>
-                        <li>Introduction to Model United Nations</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timeline-item" data-aos="fade-left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h3 class="newspaper-subtitle">Term 3: Application Sessions</h3>
-                    <div class="timeline-image"><img src="https://images.unsplash.com/photo-1676181739859-08330dea8999?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="MUN Gavel"></div>
-                    <ul>
-                        <li>Resolution Drafting & MUN Workshop</li>
-                        <li>Mock Model United Nations</li>
-                    </ul>
-                </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Geopolitics Vision">
             </div>
         </div>
     </section>
 
-    <section id="panel" class="section">
-        <h2 class="section-title" data-aos="fade-right">THE PANEL</h2>
-        <div class="organogram">
-            <div class="org-row tier-1" data-aos="zoom-in"><div class="card tier-highlight"><div class="card-graphic"></div><h3>Md Abul Monsor</h3><p class="post">Club In-Charge</p></div></div>
-            <div class="org-row tier-2" data-aos="zoom-in" data-aos-delay="100"><div class="card"><div class="card-graphic"></div><h3>Aronya Rishop Dhar</h3><p class="post">Club Captain</p></div><div class="card"><div class="card-graphic"></div><h3>Mohammed Abrar Shahriyar</h3><p class="post">Vice Captain</p></div></div>
-            <div class="org-row tier-3" data-aos="zoom-in" data-aos-delay="200"><div class="card"><div class="card-graphic"></div><h3>Ehan Rahman</h3><p class="post">Coordinator (College)</p></div><div class="card"><div class="card-graphic"></div><h3>Ahmed Affan Islam</h3><p class="post">Coordinator (School)</p></div></div>
-            <div class="org-row tier-4" data-aos="zoom-in" data-aos-delay="300"><div class="card"><div class="card-graphic"></div><h3>Ariyan Morshed Chowdhury</h3><p class="post">Deputy Coordinator (School)</p></div></div>
-            <div class="org-row tier-5" data-aos="zoom-in" data-aos-delay="400"><div class="card"><div class="card-graphic"></div><h3>TBD</h3><p class="post">Director, Administration</p></div><div class="card"><div class="card-graphic"></div><h3>Rahbar Ehan</h3><p class="post">Director, Academics</p></div><div class="card"><div class="card-graphic"></div><h3>Jeet Chowdhury</h3><p class="post">Director, Media</p></div><div class="card"><div class="card-graphic"></div><h3>TBD</h3><p class="post">Director, PR</p></div></div>
-            <div class="org-row tier-6" data-aos="zoom-in" data-aos-delay="500"><div class="card"><div class="card-graphic"></div><h3>Ramin Morshed</h3><p class="post">Director, Logistics</p></div></div>
+    <!-- MEGA FOOTER -->
+    <footer class="mega-footer">
+        <div class="footer-grid">
+            <div class="footer-col footer-about">
+                <h4>About CESCIRC</h4>
+                <p>The International Relations Club of Cantonment English School and College focuses on developing students' awareness of global affairs, diplomacy, and geopolitics through structured academic environments, MUN conferences, and rigorous research.</p>
+            </div>
+            <div class="footer-col footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="panel-main.html">Governing Body</a></li>
+                    <li><a href="explore-ir.html">Explore IR</a></li>
+                    <li><a href="newsroom.html">Newsroom</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-links">
+                <h4>Useful External Links</h4>
+                <ul>
+                    <li><a href="https://www.un.org/en/about-us/un-charter" target="_blank">UN Charter</a></li>
+                    <li><a href="https://www.mofa.gov.bd/" target="_blank">Bangladesh MoFA</a></li>
+                    <li><a href="https://www.cfr.org/" target="_blank">Council on Foreign Relations</a></li>
+                    <li><a href="https://www.chathamhouse.org/" target="_blank">Chatham House</a></li>
+                </ul>
+            </div>
         </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 CESCIRC. All Rights Reserved.</p>
+        <div class="footer-bottom">
+            © 2026 CESCIRC. All Rights Reserved. | Designed by <span>Ariyan Morshed Chowdhury</span>
+        </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

@@ -3,141 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dept. of Media & Graphics - CESCIRC</title>
-    
-    <link rel="preconnect" href="fonts.googleapis.com>
-    <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Redaction+20&family=Redaction+35&display=swap" rel="stylesheet>
-    
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet>
-    <link rel="stylesheet" href="style-v2.css>
-    
-    <style> section, .timeline-content, .organogram { position: relative; z-index: 2; } </style>
+    <title>Media Panel | CESCIRC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="logo-wrapper">
-            <a href="index.html"><img src="https://i.imgur.com/BxrGxQH.png" alt="logo" class="logo-img"></a>
-        </div>
-        <ul class="nav-links>
+        <div class="logo-wrapper"><a href="index.html"><img src="CESC.png" alt="CESCIRC Logo" class="logo-img"></a></div>
+        <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#roadmap">Sessions</a></li>
-            <li class="dropdown">
-                <a href="panel-main.html" class="dropbtn">The Panel <span class="arrow-down">▼</span></a>
-                <div class="mega-menu">
-                    <div class="mega-menu-inner">
-                        <div class="mega-menu-col">
-                            <a href="panel-main.html" class="mega-menu-title">Main Governing Body</a>
-                            <a href="panel-main.html#club-in-charge">Club In-Charge</a>
-                            <a href="panel-main.html#captain">Club Captain</a>
-                            <a href="panel-main.html#coordinators">Coordinators</a>
-                            <a href="panel-main.html#deputy-coordinator">Deputy Coordinator</a>
-                        </div>
-                        <div class="mega-menu-col">
-                            <a href="panel-admin.html" class="mega-menu-title">Dept. of Administration</a>
-                            <a href="panel-admin.html#director">Director</a>
-                            <a href="panel-admin.html#secretary">Secretary</a>
-                            <a href="panel-admin.html#deputy-secretary">Deputy Secretary</a>
-                        </div>
-                        <div class="mega-menu-col">
-                            <a href="panel-academics.html" class="mega-menu-title">Dept. of Academics</a>
-                            <a href="panel-academics.html#director">Director</a>
-                            <a href="panel-academics.html#secretary">Secretary</a>
-                            <a href="panel-academics.html#deputy-secretary">Deputy Secretary</a>
-                        </div>
-                        <div class="span class="mega-menu-col">
-                            <a href="panel-media.html" class="mega-menu-title">Dept. of Media & Graphics</a>
-                            <a href="panel-media.html#director">Director</a>
-                            <a href="panel-media.html#secretary">Secretary</a>
-                            <a href="panel-media.html#deputy-secretary">Deputy Secretary</a>
-                        </div>
-                        <div class="span class="mega-menu-col">
-                            <a href="panel-pr.html" class="mega-menu-title">Dept. of Public Relations</a>
-                            <a href="panel.html#director">Director</a>
-                            <a href="panel.html#secretary">Secretary</a>
-                            <a href="panel.html#deputy-secretary">Deputy Secretary</a>
-                        </div>
-                        <div class="span class="mega-menu-col">
-                            <a href="panel-logistics.html" class="mega-menu-title">Dept. of Logistics</a>
-                            <a href="panel-logistics.html#director">Director</a>
-                            <a href="panel-logistics.html#secretary">Secretary</a>
-                            <a href="panel-logistics.html#deputy-secretary">Deputy Secretary</a>
-                        </div>
-                    </div>
+            <li class="dropdown"><a href="#" class="dropdown-toggle">Panels ▾</a>
+                <div class="dropdown-menu">
+                    <a href="panel-main.html">Main Panel</a><a href="panel-admin.html">Administration</a><a href="panel-academics.html">Academics & Documentation</a><a href="panel-media.html">Media & Graphics</a><a href="panel-pr.html">Public Relations</a><a href="panel-logistics.html">Logistics</a>
                 </div>
             </li>
-            <li class="dropdown">
-                <a href="articles.html" class="dropbtn">Explore IR <span class="arrow-down">▼</span></a>
-                <div class="mega-menu mega-menu-slim">
-                    <div class="mega-menu-col">
-                        <a href="articles.html" class="mega-menu-title">The Reading Room</a>
-                        <a href="news.html">Latest Articles</a>
-                    </div>
-                    <div class="span class="mega-menu-col">
-                        <a href="resources.html" class="mega-menu-title">Resources & Library</a>
-                        <a href="gallery.html">Photo Gallery</a>
-                    </div>
-                </div>
-            </li>
+            <li><a href="explore-ir.html">Explore IR</a></li><li><a href="newsroom.html">Newsroom</a></li><li><a href="resources.html">Library</a></li>
         </ul>
     </nav>
 
-    <!-- PANEL SECTION -->
-    <section class="section">
-        <h2 class="section-title" data-aos="fade-right">DEPARTMENT OF MEDIA & GRAPHICS</h2>
-        
+    <section class="section" style="margin-top: 100px;">
+        <h2 class="section-title" data-aos="fade-right">Dept. of Media & Graphics</h2>
+        <p style="color: var(--text-secondary); margin-top: -30px; margin-bottom: 50px; font-style: italic;" data-aos="fade-up">Session 2026</p>
+
         <div class="organogram">
-            <!-- DIRECTOR -->
-            <div class="org-row tier-1" data-aos="zoom-in">
-                <div class="card tier-highlight"><div class="card-graphic"></div><h3 id="director">Jeet Chowdhury</h3><p class="post">Director</p></div></div>
-            
-            <!-- SECRETARY & DEPUTY SECRETARY -->
-            <div class="org-row tier-2" data-aos="zoom-in" data-aos-delay="100">
-                <div class="card"><div class="card-graphic></div><h3 id="secretary">Ahmmed Nohan</h3><p class="post">Secretary</p></div>
-                <div class="card"><div class="card-graphic></div><h3 id="deputy-secretary">TBD</h3><p class="post">Deputy Secretary</p></div>
+            <div class="org-row">
+                <div class="card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-graphic"></div>
+                    <h3>Jeet Chowdhury</h3>
+                    <p class="post">Director</p>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-graphic"></div>
+                    <h3>Ahmmed Nohan</h3>
+                    <p class="post">Secretary</p>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-graphic"></div>
+                    <h3>TBD</h3>
+                    <p class="post">Deputy Secretary</p>
+                </div>
             </div>
-            
-            <!-- 2 EXECUTIVE MEMBERS -->
-            <div class="org-row tier-3" data-aos="zoom-in" data-aos-delay="200">
-                <div class="card"><div class="card-graphic></div><h3>TBD</h3><p class="post">Executive Member</p></div>
-                <div class="card"><div class="card-graphic></div><h3>TBD</h3><p class="post">Executive Member</p></div>
+            <div class="org-row">
+                <div class="card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-graphic"></div>
+                    <h3>TBD</h3>
+                    <p class="post">Executive Member</p>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card-graphic"></div>
+                    <h3>TBD</h3>
+                    <p class="post">Executive Member</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="footer-grid>
-            <div class="footer-col">
-                <h3 class="footer-title">CESCIRC</h3>
-                <p class="footer-text">The International Relations Club of Cantonment English School and College. Developing students’ awareness of global affairs, diplomacy, and geopolitics.</p>
-            </div>
-            <div class="footer-col">
-                <h3 class="footer-title">Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <a href="index.html#about">Our Vision</a></li>
-                    <a href="index.html#roadmap">Sessions</a></li>
-                    <a href="panel-main.html" class="dropbtn" style="margin-top:10px;">The Panel <span class="arrow-down">▼</span></a>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3 class="footer-title">Useful Links</h3>
-                <ul class="footer-links>
-                    <li><a href="https://www.un.org/en/" target="_blank">United Nations</a></li>
-                    <a href="www.mofa.gov.bd/" target="_blank">MoFA, Bangladesh</a></li>
-                    <a href="www.cfr.org/" target="_blank" class="dropbtn" style="margin-top:10px;">Explore IR <span class="arrow-down">▼</span></a>
-                </ul>
-            </div>
+    <footer class="mega-footer">
+        <div class="footer-grid">
+            <div class="footer-col footer-about"><h4>About CESCIRC</h4><p>The International Relations Club of Cantonment English School and College focuses on developing students' awareness of global affairs, diplomacy, and geopolitics.</p></div>
+            <div class="footer-col footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="panel-main.html">Governing Body</a></li><li><a href="explore-ir.html">Explore IR</a></li></ul></div>
+            <div class="footer-col footer-links"><h4>Useful External Links</h4><ul><li><a href="https://www.un.org/en/about-us/un-charter" target="_blank">UN Charter</a></li><li><a href="https://www.mofa.gov.bd/" target="_blank">Bangladesh MoFA</a></li></ul></div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 CESCIRC. All Rights Reserved. Cantonment English School and College.</p>
-        </div>
+        <div class="footer-bottom">© 2026 CESCIRC. All Rights Reserved. | Designed by <span>Ariyan Morshed Chowdhury</span></div>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <li><a href="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=800&q=80" alt="UN General Assembly Hall"></a></li>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
