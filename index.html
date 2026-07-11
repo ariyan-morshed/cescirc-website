@@ -12,7 +12,7 @@
 
 
     <!-- CLERK AUTHENTICATION -->
-    <script src="https://cdn.clerk.io/clerk.js?v=1" type="text/javascript"></script>
+<script data-cfasync="false" src="https://cdn.clerk.io/clerk.js?v=1" type="text/javascript"></script>
     <script>
         window.Clerk = window.Clerk || {};
         window.Clerk.publishableKey = "pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA";
@@ -63,7 +63,7 @@
                 </div>
             </li>
             <li><a href="articles.html">Explore IR</a></li>
-            <li style="display: flex; align-items: center;"><a href="https://current-iguan-48.clerk.accounts.dev/sign-in" target="_blank" style="color: var(--accent-primary) !important; border: 1px solid var(--accent-primary) !important; padding: 8px 15px; text-transform: uppercase; font-size: 0.8rem; text-decoration: none !important; letter-spacing: 1px; border-radius: 4px;">Sign In</a></li>
+            <li><div id="clerk-user-button" style="display: flex; align-items: center;"></div></li>
         </ul>
     </nav>
 
@@ -170,8 +170,8 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
     
-    <!-- CLERK INITIALIZATION (Foolproof Method) -->
-    <script>
+    <!-- CLERK INITIALIZATION -->
+    <script data-cfasync="false">
         async function clerkInit() {
             const clerk = window.Clerk;
             await clerk.load();
@@ -179,16 +179,12 @@
             const userButtonDiv = document.getElementById('clerk-user-button');
             
             if (clerk.user) {
-                // If logged in, show the user avatar/menu
                 clerk.mountUserButton(userButtonDiv, { 
                     afterSignOutUrl: window.location.href 
                 });
             } else {
-                // Force create a manual button to bypass Dev Instance glitches
-                const loginBtn = document.createElement('button');
-                loginBtn.innerText = 'Sign In';
-                loginBtn.onclick = () => clerk.openSignIn({ redirectUrl: window.location.href });
-                userButtonDiv.appendChild(loginBtn);
+                const signInComponent = await clerk.createSignInComponent();
+                userButtonDiv.appendChild(signInComponent);
             }
         }
         clerkInit();
