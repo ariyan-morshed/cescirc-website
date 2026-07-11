@@ -170,7 +170,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
     
-    <!-- CLERK INITIALIZATION -->
+    <!-- CLERK INITIALIZATION (Foolproof Method) -->
     <script>
         async function clerkInit() {
             const clerk = window.Clerk;
@@ -184,9 +184,11 @@
                     afterSignOutUrl: window.location.href 
                 });
             } else {
-                // If not logged in, show the Sign In button
-                const signInComponent = await clerk.createSignInComponent();
-                userButtonDiv.appendChild(signInComponent);
+                // Force create a manual button to bypass Dev Instance glitches
+                const loginBtn = document.createElement('button');
+                loginBtn.innerText = 'Sign In';
+                loginBtn.onclick = () => clerk.openSignIn({ redirectUrl: window.location.href });
+                userButtonDiv.appendChild(loginBtn);
             }
         }
         clerkInit();
