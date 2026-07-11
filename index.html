@@ -49,6 +49,8 @@
             display: flex; 
             align-items: center; 
             gap: 10px; 
+
+        .clerk-branding, .clerk-external-badge { display: none !important; }
         }
     </style>
 </head>
@@ -180,7 +182,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
     
-    <!-- CLERK INITIALIZATION (Working Instance Method) -->
+    <!-- CLERK INITIALIZATION (Centered Modal Method) -->
     <script>
       window.addEventListener('load', async function () {
         await window.Clerk.load();
@@ -189,13 +191,17 @@
 
         if (window.Clerk.user) {
           container.innerHTML = `Signed in as ${window.Clerk.user.firstName}`;
-          // optional: add a sign-out button
           const btn = document.createElement('button');
           btn.textContent = 'Sign out';
-          btn.onclick = () => window.Clerk.signOut();
+          btn.onclick = () => window.Clerk.signOut({ redirectUrl: window.location.href });
           container.appendChild(btn);
         } else {
-          window.Clerk.mountSignIn(container);
+          // Create a normal button in the navbar
+          const btn = document.createElement('button');
+          btn.textContent = 'Sign In';
+          // When clicked, open the centered modal popup
+          btn.onclick = () => window.Clerk.openSignIn();
+          container.appendChild(btn);
         }
       });
     </script>
