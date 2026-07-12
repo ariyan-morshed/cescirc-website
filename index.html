@@ -10,17 +10,16 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- CLERK AUTHENTICATION (Instance Direct Load) -->
-    <script
-      async
-      crossorigin="anonymous"
-      data-clerk-publishable-key="pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA"
-      src="https://current-iguana-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
-      type="text/javascript"
-    ></script>
+
+    <!-- CLERK AUTHENTICATION -->
+    <script src="https://cdn.clerk.io/clerk.js?v=1" type="text/javascript"></script>
+    <script>
+        window.Clerk = window.Clerk || {};
+        window.Clerk.publishableKey = "pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA";
+    </script>
     <style>
         /* Force Clerk to match CESCIRC V2 Theme */
-        #clerk-auth button {
+        #clerk-user-button button {
             background: transparent !important;
             color: var(--accent-primary) !important;
             border: 1px solid var(--accent-primary) !important;
@@ -34,25 +33,15 @@
             cursor: pointer !important;
             box-shadow: none !important;
         }
-        #clerk-auth button:hover {
+        #clerk-user-button button:hover {
             background: var(--accent-primary) !important;
             color: var(--bg-primary) !important;
+            text-shadow: none !important;
         }
-        /* Hide Clerk branding & style signed in text */
         .clerk-branding { display: none !important; }
-        #clerk-auth > div:not(.clerk-branding) { 
-            color: var(--text-secondary) !important; 
-            font-family: 'Inter', sans-serif !important; 
-            font-size: 0.8rem !important; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-
-        .clerk-branding, .clerk-external-badge { display: none !important; }
-        }
+        #clerk-user-button img { border: 2px solid var(--accent-primary) !important; border-radius: 50% !important; }
     </style>
+
 </head>
 <body>
 
@@ -74,8 +63,7 @@
                 </div>
             </li>
             <li><a href="articles.html">Explore IR</a></li>
-            <!-- Updated Clerk Container -->
-            <li><div id="clerk-auth" style="display: flex; align-items: center;"></div></li>
+            <li style="display: flex; align-items: center;"><a href="https://current-iguan-48.clerk.accounts.dev/sign-in" target="_blank" style="color: var(--accent-primary) !important; border: 1px solid var(--accent-primary) !important; padding: 8px 15px; text-transform: uppercase; font-size: 0.8rem; text-decoration: none !important; letter-spacing: 1px; border-radius: 4px;">Sign In</a></li>
         </ul>
     </nav>
 
@@ -182,24 +170,38 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
     
-    <!-- CLERK INITIALIZATION (Centered Modal Method) -->
+    <!-- CLERK LOGIC (Fixed Overlap & Auto-Refresh) -->
     <script>
       window.addEventListener('load', async function () {
         await window.Clerk.load();
-
         const container = document.getElementById('clerk-auth');
 
         if (window.Clerk.user) {
-          container.innerHTML = `Signed in as ${window.Clerk.user.firstName}`;
+          const user = window.Clerk.user;
+          
+          // Added margin-right: 15px to fix the overlap
+          // Check if they are stuck in the waiting room
+          const role = user.publicMetadata?.role || 'unverified';
+          const statusText = role === 'unverified' ? 'Pending Approval' : `Signed in as ${user.firstName}`;
+          const statusColor = role === 'unverified' ? '#ff4d4d' : 'var(--text-secondary)';
+          
+          container.innerHTML = `<span style="margin-right: 15px; font-size: 0.8rem; color: ${statusColor}; text-transform: uppercase; letter-spacing: 1px;">${statusText}</span>`;
+          
           const btn = document.createElement('button');
           btn.textContent = 'Sign out';
-          btn.onclick = () => window.Clerk.signOut({ redirectUrl: window.location.href });
+          // Forces page reload automatically after signing out
+          btn.onclick = () => user.signOut().then(() => window.location.reload());
           container.appendChild(btn);
+
+          // Broadcast roles to the rest of the website
+          window.cescircUser = {
+            role: user.publicMetadata?.role || 'unverified',
+            department: user.publicMetadata?.department || 'none'
+          };
+
         } else {
-          // Create a normal button in the navbar
           const btn = document.createElement('button');
           btn.textContent = 'Sign In';
-          // When clicked, open the centered modal popup
           btn.onclick = () => window.Clerk.openSignIn();
           container.appendChild(btn);
         }

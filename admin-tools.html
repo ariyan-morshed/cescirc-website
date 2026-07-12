@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Tools | CESCIRC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- CLERK AUTH -->
+    <script async crossorigin="anonymous" data-clerk-publishable-key="pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA" src="https://current-iguana-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
+
+    <style>
+        .admin-container { padding: 120px 10% 60px 10%; max-width: 1200px; margin: 0 auto; display: none; }
+        .admin-title { color: var(--accent-hover); font-size: 2.5rem; margin-bottom: 40px; border-left: 5px solid var(--accent-primary); padding-left: 20px; }
+        .access-denied { text-align: center; padding-top: 150px; display: none; color: var(--text-secondary); }
+        .access-denied h2 { color: #ff4d4d; margin-bottom: 10px; font-family: 'MyRedaction', monospace; }
+        
+        .user-table { width: 100%; border-collapse: collapse; background: rgba(42, 14, 14, 0.6); border: 1px solid var(--border-color); }
+        .user-table th, .user-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        .user-table th { color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; background: rgba(0,0,0,0.2); }
+        .user-table tr:hover { background: rgba(201, 163, 78, 0.05); }
+        
+        .admin-select, .admin-btn {
+            background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);
+            padding: 8px 12px; font-size: 0.85rem; border-radius: 4px; font-family: 'Inter', sans-serif;
+        }
+        .admin-btn { background: var(--accent-primary); color: var(--bg-primary); border: none; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .admin-btn:hover { background: var(--accent-hover); }
+        .status-msg { margin-top: 20px; font-weight: 600; display: none; }
+        .status-success { color: #4caf50; }
+        .status-error { color: #ff4d4d; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-wrapper"><a href="index.html"><img src="CESC.png" alt="CESCIRC Logo" class="logo-img"></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="admin-tools.html" style="color: var(--accent-hover) !important;">Admin Tools</a></li>
+            <li><div id="clerk-auth" style="display: flex; align-items: center;"></div></li>
+        </ul>
+    </nav>
+
+    <div class="access-denied" id="access-denied">
+        <h2>ACCESS DENIED</h2>
+        <p>You do not have the required security clearance to view this page.</p>
+    </div>
+
+    <div class="admin-container" id="admin-dashboard">
+        <h1 class="admin-title">Personnel Management</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 30px;">Assign ranks and departments. Changes take effect immediately.</p>
+
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Member Name</th>
+                    <th>Current Rank</th>
+                    <th>Current Dept</th>
+                    <th>Assign Rank</th>
+                    <th>Assign Dept</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="user-list-body">
+                <!-- Populated by JavaScript -->
+            </tbody>
+        </table>
+
+        <div id="status-msg" class="status-msg"></div>
+    </div>
+
+    <script>
+      window.addEventListener('load', async function () {
+        await window.Clerk.load();
+        const container = document.getElementById('clerk-auth');
+        const dashboard = document.getElementById('admin-dashboard');
+        const denied = document.getElementById('access-denied');
+
+        if (window.Clerk.user) {
+          const user = window.Clerk.user;
+          container.innerHTML = `<span style="margin-right: 15px; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Signed in as ${user.firstName}</span>`;
+          const btn = document.createElement('button'); btn.textContent = 'Sign out';
+          btn.onclick = () => user.signOut().then(() => window.location.reload());
+          container.appendChild(btn);
+
+          // ONLY Top 5 can see this page
+          if (user.publicMetadata?.role === 'top5') {
+            dashboard.style.display = 'block';
+            loadUsers();
+          } else {
+            denied.style.display = 'block';
+          }
+        } else {
+          denied.style.display = 'block';
+          const btn = document.createElement('button'); btn.textContent = 'Sign In';
+          btn.onclick = () => window.Clerk.openSignIn();
+          container.appendChild(btn);
+        }
+
+        async function loadUsers() {
+          try {
+            const token = await window.Clerk.session.getToken();
+            const res = await fetch('/api/users', {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await res.json();
+            const tbody = document.getElementById('user-list-body');
+            tbody.innerHTML = '';
+
+            data.data.forEach(u => {
+                const role = u.publicMetadata?.role || 'unassigned';
+                const dept = u.publicMetadata?.department || 'unassigned';
+                const name = u.firstName + ' ' + (u.lastName || '');
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                  <td style="font-weight: 600;">${name}</td>
+                  <td>${role}</td>
+                  <td>${dept}</td>
+                  <td>
+                    <select class="admin-select" id="role-${u.id}">
+                        <option value="unverified" ${role==='unverified'?'selected':''}>Unverified (Waiting Room)</option>
+                        <option value="member" ${role==='member'?'selected':''}>Member (Sec/DSec/Exec)</option>
+                        <option value="director" ${role==='director'?'selected':''}>Director</option>
+                        <option value="top5" ${role==='top5'?'selected':''}>Top 5</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="admin-select" id="dept-${u.id}">
+                        <option value="none" ${dept==='none'?'selected':''}>None</option>
+                        <option value="admin_dept" ${dept==='admin_dept'?'selected':''}>Administration</option>
+                        <option value="academics_dept" ${dept==='academics_dept'?'selected':''}>Academics & Doc.</option>
+                        <option value="media_dept" ${dept==='media_dept'?'selected':''}>Media & Graphics</option>
+                        <option value="pr_dept" ${dept==='pr_dept'?'selected':''}>Public Relations</option>
+                        <option value="logistics_dept" ${dept==='logistics_dept'?'selected':''}>Logistics</option>
+                        <option value="all_depts" ${dept==='all_depts'?'selected':''}>All Depts (Top 5)</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="admin-btn" onclick="saveUser('${u.id}')">Save</button>
+                  </td>
+                `;
+                tbody.appendChild(row);
+              });
+          } catch (err) {
+            alert("Error loading users.");
+            console.error(err);
+          }
+        }
+
+        async function saveUser(userId) {
+          const newRole = document.getElementById(`role-${userId}`).value;
+          const newDept = document.getElementById(`dept-${userId}`).value;
+          const statusDiv = document.getElementById('status-msg');
+
+          try {
+            const token = await window.Clerk.session.getToken();
+            const res = await fetch('/api/assign-role', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+              body: JSON.stringify({ userId, role: newRole, department: newDept })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+              statusDiv.innerText = "Update successful!";
+              statusDiv.className = "status-msg status-success";
+              loadUsers();
+            } else {
+              throw new Error(data.error || "Failed to update");
+            }
+          } catch (err) {
+            statusDiv.innerText = "Error: " + err.message;
+            statusDiv.className = "status-msg status-error";
+          }
+          statusDiv.style.display = 'block';
+          setTimeout(() => statusDiv.style.display = 'none', 4000);
+        }
+      });
+    </script>
+</body>
+</html>
