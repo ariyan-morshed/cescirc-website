@@ -101,6 +101,7 @@
           container.appendChild(btn);
         }
 
+
         async function loadUsers() {
           try {
             const token = await window.Clerk.session.getToken();
@@ -108,14 +109,27 @@
               headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
+            
+            // DEBUG: Log the raw data to the console so we can see what Clerk returned
+            console.log("RAW CLERK DATA:", data);
+
             const tbody = document.getElementById('user-list-body');
             tbody.innerHTML = '';
 
-            // SAFETY CHECK: Did the Worker return a valid list?
-            if (data.data && Array.isArray(data.data)) {
-                data.data.forEach(u => {
-                    const role = u.publicMetadata?.role || 'unassigned';
-                    const dept = u.publicMetadata?.department || 'unassigned';
+            // BULLETPROOF PARSER: Handle whatever format Clerk decides to send
+            let usersArray = null;
+            if (Array.isArray(data)) {
+                usersArray = data; // If Clerk sent the array directly
+            } else if (data.data && Array.isArray(data.data)) {
+                usersArray = data.data; // If Clerk wrapped it in { data: [...] }
+            } else if (data.response && Array.isArray(data.response)) {
+                usersArray = data.response; // Fallback format
+            }
+
+            if (usersArray && usersArray.length > 0) {
+                usersArray.forEach(u => {
+                    const role = u.public_metadata?.role || 'unassigned';
+                    const dept = u.public_metadata?.department || 'unassigned';
                     const name = u.firstName + ' ' + (u.lastName || '');
 
                     const row = document.createElement('tr');
@@ -149,9 +163,7 @@
                     tbody.appendChild(row);
                 });
             } else {
-                // If the worker failed, print the exact error it sent back
-                console.error("Worker Error Details:", data);
-                alert("Worker Error: " + (data.error || data.message || JSON.stringify(data)));
+                alert("Could not find user list. Check the Console (F12) for 'RAW CLERK DATA' to see what Clerk sent back.");
             }
           } catch (err) {
             console.error("Fetch Failed:", err);
