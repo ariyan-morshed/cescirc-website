@@ -10,38 +10,15 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-
-    <!-- CLERK AUTHENTICATION -->
-    <script src="https://cdn.clerk.io/clerk.js?v=1" type="text/javascript"></script>
-    <script>
-        window.Clerk = window.Clerk || {};
-        window.Clerk.publishableKey = "pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA";
-    </script>
+    <!-- CLERK AUTH (Correct Instance URL) -->
+    <script async crossorigin="anonymous" data-clerk-publishable-key="pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA" src="https://current-iguana-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
     <style>
         /* Force Clerk to match CESCIRC V2 Theme */
-        #clerk-user-button button {
-            background: transparent !important;
-            color: var(--accent-primary) !important;
-            border: 1px solid var(--accent-primary) !important;
-            font-family: 'Inter', sans-serif !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1px !important;
-            font-size: 0.8rem !important;
-            padding: 8px 15px !important;
-            border-radius: 4px !important;
-            transition: all 0.3s !important;
-            cursor: pointer !important;
-            box-shadow: none !important;
-        }
-        #clerk-user-button button:hover {
-            background: var(--accent-primary) !important;
-            color: var(--bg-primary) !important;
-            text-shadow: none !important;
-        }
-        .clerk-branding { display: none !important; }
-        #clerk-user-button img { border: 2px solid var(--accent-primary) !important; border-radius: 50% !important; }
+        #clerk-auth button { background: transparent !important; color: var(--accent-primary) !important; border: 1px solid var(--accent-primary) !important; font-family: 'Inter', sans-serif !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-size: 0.8rem !important; padding: 8px 15px !important; border-radius: 4px !important; transition: all 0.3s !important; cursor: pointer !important; box-shadow: none !important; }
+        #clerk-auth button:hover { background: var(--accent-primary) !important; color: var(--bg-primary) !important; }
+        .clerk-branding, .clerk-external-badge { display: none !important; }
+        #clerk-auth > span { margin-right: 15px; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
     </style>
-
 </head>
 <body>
 
@@ -63,7 +40,8 @@
                 </div>
             </li>
             <li><a href="articles.html">Explore IR</a></li>
-            <li style="display: flex; align-items: center;"><a href="https://current-iguan-48.clerk.accounts.dev/sign-in" target="_blank" style="color: var(--accent-primary) !important; border: 1px solid var(--accent-primary) !important; padding: 8px 15px; text-transform: uppercase; font-size: 0.8rem; text-decoration: none !important; letter-spacing: 1px; border-radius: 4px;">Sign In</a></li>
+            <!-- Correct Clerk Container -->
+            <li><div id="clerk-auth" style="display: flex; align-items: center;"></div></li>
         </ul>
     </nav>
 
@@ -170,7 +148,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
     
-    <!-- CLERK LOGIC (Fixed Overlap & Auto-Refresh) -->
+    <!-- CLERK LOGIC (Final Unified Version) -->
     <script>
       window.addEventListener('load', async function () {
         await window.Clerk.load();
@@ -179,8 +157,7 @@
         if (window.Clerk.user) {
           const user = window.Clerk.user;
           
-          // Added margin-right: 15px to fix the overlap
-          // Check if they are stuck in the waiting room
+          // Waiting Room UI Check
           const role = user.publicMetadata?.role || 'unverified';
           const statusText = role === 'unverified' ? 'Pending Approval' : `Signed in as ${user.firstName}`;
           const statusColor = role === 'unverified' ? '#ff4d4d' : 'var(--text-secondary)';
@@ -189,7 +166,6 @@
           
           const btn = document.createElement('button');
           btn.textContent = 'Sign out';
-          // Forces page reload automatically after signing out
           btn.onclick = () => user.signOut().then(() => window.location.reload());
           container.appendChild(btn);
 
