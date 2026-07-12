@@ -111,44 +111,51 @@
             const tbody = document.getElementById('user-list-body');
             tbody.innerHTML = '';
 
-            data.data.forEach(u => {
-                const role = u.publicMetadata?.role || 'unassigned';
-                const dept = u.publicMetadata?.department || 'unassigned';
-                const name = u.firstName + ' ' + (u.lastName || '');
+            // SAFETY CHECK: Did the Worker return a valid list?
+            if (data.data && Array.isArray(data.data)) {
+                data.data.forEach(u => {
+                    const role = u.publicMetadata?.role || 'unassigned';
+                    const dept = u.publicMetadata?.department || 'unassigned';
+                    const name = u.firstName + ' ' + (u.lastName || '');
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                  <td style="font-weight: 600;">${name}</td>
-                  <td>${role}</td>
-                  <td>${dept}</td>
-                  <td>
-                    <select class="admin-select" id="role-${u.id}">
-                        <option value="unverified" ${role==='unverified'?'selected':''}>Unverified (Waiting Room)</option>
-                        <option value="member" ${role==='member'?'selected':''}>Member (Sec/DSec/Exec)</option>
-                        <option value="director" ${role==='director'?'selected':''}>Director</option>
-                        <option value="top5" ${role==='top5'?'selected':''}>Top 5</option>
-                    </select>
-                  </td>
-                  <td>
-                    <select class="admin-select" id="dept-${u.id}">
-                        <option value="none" ${dept==='none'?'selected':''}>None</option>
-                        <option value="admin_dept" ${dept==='admin_dept'?'selected':''}>Administration</option>
-                        <option value="academics_dept" ${dept==='academics_dept'?'selected':''}>Academics & Doc.</option>
-                        <option value="media_dept" ${dept==='media_dept'?'selected':''}>Media & Graphics</option>
-                        <option value="pr_dept" ${dept==='pr_dept'?'selected':''}>Public Relations</option>
-                        <option value="logistics_dept" ${dept==='logistics_dept'?'selected':''}>Logistics</option>
-                        <option value="all_depts" ${dept==='all_depts'?'selected':''}>All Depts (Top 5)</option>
-                    </select>
-                  </td>
-                  <td>
-                    <button class="admin-btn" onclick="saveUser('${u.id}')">Save</button>
-                  </td>
-                `;
-                tbody.appendChild(row);
-              });
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                      <td style="font-weight: 600;">${name}</td>
+                      <td>${role}</td>
+                      <td>${dept}</td>
+                      <td>
+                        <select class="admin-select" id="role-${u.id}">
+                            <option value="unverified" ${role==='unverified'?'selected':''}>Unverified (Waiting Room)</option>
+                            <option value="member" ${role==='member'?'selected':''}>Member (Sec/DSec/Exec)</option>
+                            <option value="director" ${role==='director'?'selected':''}>Director</option>
+                            <option value="top5" ${role==='top5'?'selected':''}>Top 5</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select class="admin-select" id="dept-${u.id}">
+                            <option value="none" ${dept==='none'?'selected':''}>None</option>
+                            <option value="admin_dept" ${dept==='admin_dept'?'selected':''}>Administration</option>
+                            <option value="academics_dept" ${dept==='academics_dept'?'selected':''}>Academics & Doc.</option>
+                            <option value="media_dept" ${dept==='media_dept'?'selected':''}>Media & Graphics</option>
+                            <option value="pr_dept" ${dept==='pr_dept'?'selected':''}>Public Relations</option>
+                            <option value="logistics_dept" ${dept==='logistics_dept'?'selected':''}>Logistics</option>
+                            <option value="all_depts" ${dept==='all_depts'?'selected':''}>All Depts (Top 5)</option>
+                        </select>
+                      </td>
+                      <td>
+                        <button class="admin-btn" onclick="saveUser('${u.id}')">Save</button>
+                      </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                // If the worker failed, print the exact error it sent back
+                console.error("Worker Error Details:", data);
+                alert("Worker Error: " + (data.error || data.message || JSON.stringify(data)));
+            }
           } catch (err) {
-            alert("Error loading users.");
-            console.error(err);
+            console.error("Fetch Failed:", err);
+            alert("Network Error: " + err.message);
           }
         }
 
