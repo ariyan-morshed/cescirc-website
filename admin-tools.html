@@ -112,7 +112,13 @@
             const res = await fetch('/api/users', {
               headers: { 'Authorization': `Bearer ${token}` }
             });
-            const data = await res.json();
+            // SAFETY: Prevent crash if Worker returns a broken/error page
+            let data;
+            try {
+                data = await res.json();
+            } catch (e) {
+                throw new Error("Server crashed. Check Cloudflare Worker logs.");
+            }
             
             // DEBUG: Log the raw data to the console so we can see what Clerk returned
             console.log("RAW CLERK DATA:", data);
