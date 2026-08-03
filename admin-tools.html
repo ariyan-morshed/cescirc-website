@@ -181,7 +181,7 @@
           }
         }
 
-        async function saveUser(userId) {
+        window.saveUser = async function(userId) {
           const newRole = document.getElementById(`role-${userId}`).value;
           const newDept = document.getElementById(`dept-${userId}`).value;
           const statusDiv = document.getElementById('status-msg');
