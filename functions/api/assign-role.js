@@ -35,7 +35,7 @@ export async function onRequestPost(context) {
         const verifyData = await verifyRes.json();
 
         // 3. Check the actual database role
-        if (verifyData.public_metadata?.role !== "admin") {
+        if (verifyData.public_metadata?.role !== "top5") {
             return new Response("Forbidden: You are not an admin", { status: 403 });
         }
 
