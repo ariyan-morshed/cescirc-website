@@ -32,6 +32,10 @@
         .status-msg { margin-top: 20px; font-weight: 600; display: none; }
         .status-success { color: #4caf50; }
         .status-error { color: #ff4d4d; }
+        
+        /* Add this block for the navbar button */
+        #clerk-auth button { background: transparent !important; color: var(--accent-primary) !important; border: 1px solid var(--accent-primary) !important; font-family: 'Inter', sans-serif !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-size: 0.8rem !important; padding: 8px 15px !important; border-radius: 4px !important; transition: all 0.3s !important; cursor: pointer !important; box-shadow: none !important; }
+        #clerk-auth button:hover { background: var(--accent-primary) !important; color: var(--bg-primary) !important; }
     </style>
 </head>
 <body>
@@ -130,7 +134,7 @@
                 usersArray.forEach(u => {
                     const role = u.public_metadata?.role || 'unassigned';
                     const dept = u.public_metadata?.department || 'unassigned';
-                    const name = u.firstName + ' ' + (u.lastName || '');
+                    const name = (u.first_name || '') + ' ' + (u.last_name || '');
 
                     const row = document.createElement('tr');
                     row.innerHTML = `
