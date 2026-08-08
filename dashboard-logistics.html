@@ -22,7 +22,7 @@
         .dash-header h1 { font-size: 2.5rem; color: var(--accent-hover); margin: 0 0 10px 0; }
         .motto-box { background: rgba(90, 31, 31, 0.4); backdrop-filter: blur(10px); border: 1px solid var(--border-color); padding: 25px; text-align: center; margin-bottom: 50px; border-radius: 8px; }
         .motto-box p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; color: var(--text-secondary); margin: 0; }
-        .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px; }
         .dash-card { background: rgba(42, 14, 14, 0.6); border: 1px solid var(--border-color); padding: 30px; border-radius: 8px; }
         .dash-card h3 { color: var(--accent-hover); font-size: 1.2rem; margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
         .leader-name { color: var(--text-primary); font-weight: 600; display: block; margin-bottom: 5px; }
@@ -58,7 +58,7 @@
         <div class="dash-grid">
             <div class="dash-card">
                 <h3>Department Leadership</h3>
-                <span class="leader-name">Ramin Morshed</span><span class="leader-post">Director</span>
+                <span class="leader-name">Muhammed Ramin Morshed</span><span class="leader-post">Director</span>
                 <hr style="border-color: var(--border-color); margin: 15px 0;">
                 <span class="leader-name">Juhayer Mahatab Jisan</span><span class="leader-post">Secretary</span>
                 <hr style="border-color: var(--border-color); margin: 15px 0;">
@@ -104,7 +104,12 @@
           const dept = user.publicMetadata?.department || 'none';
           container.innerHTML = `<span style="margin-right: 15px; font-size: 0.8rem; color: ${role === 'unverified' ? '#ff4d4d' : 'var(--text-secondary)'}; text-transform: uppercase; letter-spacing: 1px;">${role === 'unverified' ? 'Pending Approval' : user.firstName}</span>`;
           const btn = document.createElement('button'); btn.textContent = 'Sign out';
-          btn.onclick = () => user.signOut().catch(() => {}).finally(() => window.location.href = '/');
+          btn.onclick = () => {
+              let redirected = false;
+              const forceRedirect = () => { if (!redirected) { redirected = true; window.location.href = '/'; } };
+              setTimeout(forceRedirect, 1500);
+              try { user.signOut().then(forceRedirect).catch(forceRedirect); } catch (e) { forceRedirect(); }
+          };
           container.appendChild(btn);
           if (role === 'unverified') { denied.style.display = 'block'; return; }
           if (role === 'top5' || dept === 'logistics_dept') { dashboard.style.display = 'block'; if (role === 'top5' || role === 'director') { adminControls.style.display = 'block'; sendBtn.style.display = 'inline-block'; } }
