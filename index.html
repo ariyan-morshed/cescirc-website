@@ -10,10 +10,9 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- CLERK AUTH (Correct Instance URL) -->
+    <!-- CLERK AUTH -->
     <script async crossorigin="anonymous" data-clerk-publishable-key="pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA" src="https://current-iguana-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
     <style>
-        /* Force Clerk to match CESCIRC V2 Theme */
         #clerk-auth button { background: transparent !important; color: var(--accent-primary) !important; border: 1px solid var(--accent-primary) !important; font-family: 'Inter', sans-serif !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-size: 0.8rem !important; padding: 8px 15px !important; border-radius: 4px !important; transition: all 0.3s !important; cursor: pointer !important; box-shadow: none !important; }
         #clerk-auth button:hover { background: var(--accent-primary) !important; color: var(--bg-primary) !important; }
         .clerk-branding, .clerk-external-badge { display: none !important; }
@@ -31,22 +30,21 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle">Panels ▾</a>
                 <div class="dropdown-menu">
-                    <a href="panel-main.html">Main Panel (Public)</a>
-                    <a href="panel-admin.html">Administration (Public)</a>
-                    <a href="panel-academics.html">Academics (Public)</a>
-                    <a href="panel-media.html">Media (Public)</a>
-                    <a href="panel-pr.html">PR (Public)</a>
-                    <a href="panel-logistics.html">Logistics (Public)</a>
-                    <hr style="border-color: var(--border-color); margin: 5px 0;">
-                    <a href="dashboard-admin.html" style="color: var(--accent-hover) !important;">Admin Dashboard</a>
-                    <a href="dashboard-academics.html" style="color: var(--accent-hover) !important;">Academics Dashboard</a>
-                    <a href="dashboard-media.html" style="color: var(--accent-hover) !important;">Media Dashboard</a>
-                    <a href="dashboard-pr.html" style="color: var(--accent-hover) !important;">PR Dashboard</a>
-                    <a href="dashboard-logistics.html" style="color: var(--accent-hover) !important;">Logistics Dashboard</a>
+                    <a href="panel-main.html">Main Panel</a>
+                    <a href="panel-admin.html">Administration</a>
+                    <a href="panel-academics.html">Academics & Doc.</a>
+                    <a href="panel-media.html">Media & Graphics</a>
+                    <a href="panel-pr.html">Public Relations</a>
+                    <a href="panel-logistics.html">Logistics</a>
+                    <hr id="dash-separator" style="border-color: var(--border-color); margin: 5px 0; display: none;">
+                    <a id="dash-admin" href="dashboard-admin.html" style="color: var(--accent-hover) !important; display: none;">Admin Dashboard</a>
+                    <a id="dash-academics" href="dashboard-academics.html" style="color: var(--accent-hover) !important; display: none;">Academics Dashboard</a>
+                    <a id="dash-media" href="dashboard-media.html" style="color: var(--accent-hover) !important; display: none;">Media Dashboard</a>
+                    <a id="dash-pr" href="dashboard-pr.html" style="color: var(--accent-hover) !important; display: none;">PR Dashboard</a>
+                    <a id="dash-logistics" href="dashboard-logistics.html" style="color: var(--accent-hover) !important; display: none;">Logistics Dashboard</a>
                 </div>
             </li>
             <li><a href="articles.html">Explore IR</a></li>
-            <!-- Correct Clerk Container -->
             <li><div id="clerk-auth" style="display: flex; align-items: center;"></div></li>
         </ul>
     </nav>
@@ -79,7 +77,7 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <div class="timeline-image">
-                        <img src="https://images.unsplash.com/photo-1488375634201-b85b28653a79?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="World Map">
+                        <img src="https://images.unsplash.com/photo-1488375634201-b85b28653a79?q=80&w=1170&auto=format&fit=crop" alt="World Map">
                     </div>
                     <h3>Phase I: Foundational</h3>
                     <ul>
@@ -94,7 +92,7 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <div class="timeline-image">
-                        <img src="https://images.unsplash.com/photo-1633095975779-fd354aa0dc95?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="UN Flags">
+                        <img src="https://images.unsplash.com/photo-1633095975779-fd354aa0dc95?q=80&w=1126&auto=format&fit=crop" alt="UN Flags">
                     </div>
                     <h3>Phase II: Technical</h3>
                     <ul>
@@ -109,7 +107,7 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <div class="timeline-image">
-                        <img src="https://images.unsplash.com/photo-1676181739859-08330dea8999?q=80&w=1126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="MUN Gavel">
+                        <img src="https://images.unsplash.com/photo-1676181739859-08330dea8999?q=80&w=1126&auto=format&fit=crop" alt="MUN Gavel">
                     </div>
                     <h3>Phase III: Application</h3>
                     <ul>
@@ -154,17 +152,41 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
     
-    <!-- CLERK LOGIC (Final Unified Version) -->
+    <!-- CLERK LOGIC & COUNTER LOGIC -->
     <script>
+      // Counter Logic moved here to keep script.js clean per Briefing Rule #4
+      const counters = document.querySelectorAll('.counter');
+      const speed = 200;
+      const updateCount = () => {
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const inc = target / speed;
+            const current = +counter.innerText;
+            if (current < target) {
+                counter.innerText = Math.ceil(current + inc);
+                setTimeout(updateCount, 20);
+            } else {
+                counter.innerText = target;
+            }
+        });
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { updateCount(); observer.unobserve(entry.target); }
+        });
+      }, { threshold: 0.5 });
+      counters.forEach(c => observer.observe(c));
+
+      // Clerk Logic
       window.addEventListener('load', async function () {
         await window.Clerk.load();
         const container = document.getElementById('clerk-auth');
 
         if (window.Clerk.user) {
           const user = window.Clerk.user;
-          
-          // Waiting Room UI Check
           const role = user.publicMetadata?.role || 'unverified';
+          const dept = user.publicMetadata?.department || 'none';
+          
           const statusText = role === 'unverified' ? 'Pending Approval' : `Signed in as ${user.firstName}`;
           const statusColor = role === 'unverified' ? '#ff4d4d' : 'var(--text-secondary)';
           
@@ -172,14 +194,26 @@
           
           const btn = document.createElement('button');
           btn.textContent = 'Sign out';
-          btn.onclick = () => user.signOut().then(() => window.location.reload());
+          btn.onclick = () => user.signOut().catch(() => {}).finally(() => window.location.href = '/');
           container.appendChild(btn);
 
-          // Broadcast roles to the rest of the website
-          window.cescircUser = {
-            role: user.publicMetadata?.role || 'unverified',
-            department: user.publicMetadata?.department || 'none'
-          };
+          // Dashboard Visibility Logic
+          const dashLinks = ['admin', 'academics', 'media', 'pr', 'logistics'];
+          const separator = document.getElementById('dash-separator');
+          let showSeparator = false;
+
+          if (role !== 'unverified') {
+            if (role === 'top5' || dept === 'all_depts') {
+                dashLinks.forEach(d => { const el = document.getElementById('dash-' + d); if(el) el.style.display = 'block'; });
+                showSeparator = true;
+            } else if (dept && dept.endsWith('_dept')) {
+                const deptName = dept.replace('_dept', '');
+                const el = document.getElementById('dash-' + deptName);
+                if (el) el.style.display = 'block';
+                showSeparator = true;
+            }
+          }
+          if (separator) separator.style.display = showSeparator ? 'block' : 'none';
 
         } else {
           const btn = document.createElement('button');
