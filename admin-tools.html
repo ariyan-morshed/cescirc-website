@@ -115,9 +115,25 @@
         async function loadUsers() {
           try {
             const token = await window.Clerk.session.getToken();
-            const res = await fetch('/api/users', { headers: { 'Authorization': `Bearer ${token}` } });
-            let data;
-            try { data = await res.json(); } catch (e) { throw new Error("Server crashed. Check Cloudflare Worker logs."); }
+        const res = await fetch('/api/users', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        // SAFETY: Handle 403 Forbidden gracefully
+        if (!res.ok) {
+            if (res.status === 403) {
+                throw new Error("Access Denied: You are not Top 5.");
+            } else {
+                throw new Error("Server returned an error.");
+            }
+        }
+
+        let data;
+        try {
+            data = await res.json();
+        } catch (e) {
+            throw new Error("Server crashed. Check Cloudflare Worker logs.");
+        }
             console.log("RAW CLERK DATA:", data);
             const tbody = document.getElementById('user-list-body');
             tbody.innerHTML = '';
