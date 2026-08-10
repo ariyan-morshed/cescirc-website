@@ -4,10 +4,10 @@ export async function onRequestGet(context) {
     const dept = url.searchParams.get('dept');
 
     try {
-        let query = 'SELECT * FROM tasks ORDER BY created_at DESC';
+        let query = 'SELECT * FROM tasks ORDER BY status ASC, created_at DESC'; // Pending first, then completed
         let params = [];
         if (dept) {
-            query = 'SELECT * FROM tasks WHERE dept = ? ORDER BY created_at DESC';
+            query = 'SELECT * FROM tasks WHERE dept = ? ORDER BY status ASC, created_at DESC';
             params.push(dept);
         }
 
@@ -23,16 +23,37 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
     const { request, env } = context;
     try {
-        const { text, dept } = await request.json();
+        const { text, description, dept } = await request.json();
         if (!text || !dept) {
             return new Response(JSON.stringify({ error: 'Missing text or dept' }), { status: 400 });
         }
 
         const result = await env.DB.prepare(
-            'INSERT INTO tasks (text, dept, status) VALUES (?, ?, ?)'
-        ).bind(text, dept, 'pending').run();
+            'INSERT INTO tasks (text, description, dept, status) VALUES (?, ?, ?, ?)'
+        ).bind(text, description || null, dept, 'pending').run();
 
         return new Response(JSON.stringify({ success: true, id: result.meta.last_row_id }), {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    }
+}
+
+// NEW: Handle marking a task as completed
+export async function onRequestPatch(context) {
+    const { request, env } = context;
+    try {
+        const { id } = await request.json();
+        if (!id) {
+            return new Response(JSON.stringify({ error: 'Missing task ID' }), { status: 400 });
+        }
+
+        await env.DB.prepare(
+            'UPDATE tasks SET status = ? WHERE id = ?'
+        ).bind('completed', id).run();
+
+        return new Response(JSON.stringify({ success: true }), {
             headers: { 'Content-Type': 'application/json' }
         });
     } catch (err) {
