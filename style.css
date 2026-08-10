@@ -205,3 +205,39 @@ footer p { margin: 0; position: relative; z-index: 2; }
     .footer-grid { grid-template-columns: 1fr; text-align: center; }
     .footer-links a:hover { padding-left: 0; }
 }
+/* =========================================== */
+/* FINAL BULLETPROOF FIXES (MOBILE & DROPDOWN) */
+/* =========================================== */
+
+/* 1. FIX DROPDOWN PUSHING NAVBAR HEIGHT (Desktop & Mobile) */
+/* Forces the dropdown to float OVER the content instead of stretching the navbar */
+.nav-links > li.dropdown { position: relative; }
+.dropdown-menu { 
+    position: absolute !important; 
+    display: none !important; 
+    top: 100% !important; 
+    left: 50% !important; 
+    transform: translateX(-50%) !important; 
+    width: max-content !important; 
+    min-width: 280px !important; 
+    max-width: 320px !important; 
+    z-index: 9999 !important; 
+    box-shadow: 0 15px 30px rgba(0,0,0,0.8) !important;
+}
+.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu { 
+    display: block !important; 
+}
+
+/* 2. FIX CARDS FILLING SCREEN ON MOBILE */
+@media (max-width: 768px) {
+    .organogram .card { 
+        width: 85% !important; 
+        max-width: 320px !important; 
+        flex: none !important; 
+    }
+    /* Ensure navbar dropdown centers nicely on narrow screens */
+    .dropdown-menu {
+        width: 90vw !important;
+        max-width: 320px !important;
+    }
+}
