@@ -241,3 +241,10 @@ footer p { margin: 0; position: relative; z-index: 2; }
         max-width: 320px !important;
     }
 }
+/* Task Details & Completion Styles */
+.task-item { flex-direction: column; align-items: flex-start; }
+.task-header { display: flex; justify-content: space-between; width: 100%; align-items: center; }
+.task-details { color: var(--text-secondary); font-size: 0.85rem; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color); width: 100%; }
+.task-complete-btn { background: transparent; color: #4caf50; border: 1px solid #4caf50; padding: 4px 10px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: 0.3s; margin-left: 15px; }
+.task-complete-btn:hover { background: #4caf50; color: var(--bg-primary); }
+.task-desc-input { margin-bottom: 10px; min-height: 60px; resize: vertical; }
