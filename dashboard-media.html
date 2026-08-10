@@ -67,9 +67,13 @@
             <div class="dash-card">
                 <h3>Active Objectives</h3>
                 <ul class="task-list" id="task-list">
-                    <li class="task-item"><span class="task-text">Design promotional posters for Session 1</span> <span class="task-status">In Progress</span></li>
+                    <!-- Tasks will now load here dynamically from the database -->
                 </ul>
-                <div class="admin-only" id="admin-controls"><input type="text" class="dash-input" id="new-task" placeholder="Add new objective..."><button class="dash-btn" onclick="addTask()">Assign Task</button></div>
+                <div class="admin-only" id="admin-controls">
+                    <input type="text" class="dash-input" id="new-task" placeholder="Task title...">
+                    <textarea class="dash-input task-desc-input" id="new-task-desc" placeholder="Optional details or instructions..."></textarea>
+                    <button class="dash-btn" onclick="addTask()">Assign Task</button>
+                </div>
             </div>
         </div>
         <div class="dash-card" style="margin-top: 30px;">
@@ -98,6 +102,8 @@
         const denied = document.getElementById('access-denied');
         const adminControls = document.getElementById('admin-controls');
         const sendBtn = document.getElementById('send-btn');
+        const deptCode = 'admin_dept'; // CHANGE THIS FOR EACH DEPARTMENT
+
         if (window.Clerk.user) {
           const user = window.Clerk.user;
           const role = user.publicMetadata?.role || 'unverified';
@@ -105,23 +111,83 @@
           container.innerHTML = `<span style="margin-right: 15px; font-size: 0.8rem; color: ${role === 'unverified' ? '#ff4d4d' : 'var(--text-secondary)'}; text-transform: uppercase; letter-spacing: 1px;">${role === 'unverified' ? 'Pending Approval' : user.firstName}</span>`;
           const btn = document.createElement('button'); btn.textContent = 'Sign out';
           btn.onclick = async () => {
-              try {
-                  // 1. Wait for Clerk to fully destroy the session
-                  await window.Clerk.signOut();
-              } catch (e) {
-                  console.error("Sign out error:", e);
-              } finally {
-                  // 2. Force a hard reload to the home page with a timestamp to bypass cache
-                  window.location.href = '/?t=' + Date.now();
-              }
+              try { await window.Clerk.signOut(); } catch (e) { console.error("Sign out error:", e); }
+              finally { window.location.href = '/?t=' + Date.now(); }
           };
           container.appendChild(btn);
           if (role === 'unverified') { denied.style.display = 'block'; return; }
-          if (role === 'top5' || dept === 'media_dept') { dashboard.style.display = 'block'; if (role === 'top5' || role === 'director') { adminControls.style.display = 'block'; sendBtn.style.display = 'inline-block'; } }
-          else { denied.style.display = 'block'; }
+          if (role === 'top5' || dept === deptCode) {
+              dashboard.style.display = 'block';
+              if (role === 'top5' || role === 'director') { adminControls.style.display = 'block'; sendBtn.style.display = 'inline-block'; }
+              loadTasks(deptCode, role); // Pass role to loadTasks
+          } else { denied.style.display = 'block'; }
         } else { denied.style.display = 'block'; const btn = document.createElement('button'); btn.textContent = 'Sign In'; btn.onclick = () => window.Clerk.openSignIn(); container.appendChild(btn); }
       });
-      window.addTask = function() { const input = document.getElementById('new-task'); if (!input.value.trim()) return; const list = document.getElementById('task-list'); const li = document.createElement('li'); li.className = 'task-item'; li.innerHTML = `<span class="task-text">${input.value}</span> <span class="task-status">Assigned</span>`; list.appendChild(li); input.value = ''; };
+
+      async function loadTasks(deptCode, role) {
+          try {
+              const res = await fetch(`/api/tasks?dept=${deptCode}`);
+              const tasks = await res.json();
+              const list = document.getElementById('task-list');
+              list.innerHTML = '';
+              if (tasks.length > 0) {
+                  tasks.forEach(t => {
+                      const li = document.createElement('li');
+                      li.className = 'task-item';
+                      if (t.status === 'completed') li.classList.add('status-completed');
+                      
+                      let actions = `<span class="task-status">${t.status.charAt(0).toUpperCase() + t.status.slice(1)}</span>`;
+                      // Show complete button only if pending and user is director/top5
+                      if (t.status === 'pending' && (role === 'top5' || role === 'director')) {
+                          actions = `<button class="task-complete-btn" onclick="completeTask(${t.id}, '${deptCode}')">Mark Completed</button>`;
+                      }
+
+                      li.innerHTML = `
+                          <div class="task-header">
+                              <span class="task-text">${t.text}</span>
+                              ${actions}
+                          </div>
+                          ${t.description ? `<div class="task-details">${t.description}</div>` : ''}
+                      `;
+                      list.appendChild(li);
+                  });
+              } else {
+                  list.innerHTML = '<li style="color: var(--text-secondary); font-size: 0.9rem;">No active objectives.</li>';
+              }
+          } catch (e) { console.error(e); }
+      }
+
+      window.addTask = async function() {
+          const input = document.getElementById('new-task');
+          const descInput = document.getElementById('new-task-desc');
+          if (!input.value.trim()) return;
+          const deptCode = 'admin_dept'; // CHANGE THIS FOR EACH DEPARTMENT
+          try {
+              await fetch('/api/tasks', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ 
+                      text: input.value, 
+                      description: descInput.value, 
+                      dept: deptCode 
+                  })
+              });
+              input.value = '';
+              descInput.value = '';
+              loadTasks(deptCode, window.Clerk.user?.publicMetadata?.role || 'unverified');
+          } catch (e) { alert('Error saving task to database.'); }
+      };
+
+      window.completeTask = async function(taskId, deptCode) {
+          try {
+              await fetch('/api/tasks', {
+                  method: 'PATCH',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ id: taskId })
+              });
+              loadTasks(deptCode, window.Clerk.user?.publicMetadata?.role || 'unverified');
+          } catch (e) { alert('Error updating task status.'); }
+      };
     </script>
 </body>
 </html>
