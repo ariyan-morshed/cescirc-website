@@ -4,7 +4,7 @@ export async function onRequestGet(context) {
     const dept = url.searchParams.get('dept');
 
     try {
-        let query = 'SELECT * FROM tasks ORDER BY status ASC, created_at DESC'; // Pending first, then completed
+        let query = 'SELECT * FROM tasks ORDER BY status ASC, created_at DESC';
         let params = [];
         if (dept) {
             query = 'SELECT * FROM tasks WHERE dept = ? ORDER BY status ASC, created_at DESC';
@@ -40,8 +40,29 @@ export async function onRequestPost(context) {
     }
 }
 
-// NEW: Handle marking a task as completed
+// Handle updating task status (Complete / Undo)
 export async function onRequestPatch(context) {
+    const { request, env } = context;
+    try {
+        const { id, status } = await request.json();
+        if (!id || !status) {
+            return new Response(JSON.stringify({ error: 'Missing task ID or status' }), { status: 400 });
+        }
+
+        await env.DB.prepare(
+            'UPDATE tasks SET status = ? WHERE id = ?'
+        ).bind(status, id).run();
+
+        return new Response(JSON.stringify({ success: true }), {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    }
+}
+
+// Handle deleting a task
+export async function onRequestDelete(context) {
     const { request, env } = context;
     try {
         const { id } = await request.json();
@@ -50,8 +71,8 @@ export async function onRequestPatch(context) {
         }
 
         await env.DB.prepare(
-            'UPDATE tasks SET status = ? WHERE id = ?'
-        ).bind('completed', id).run();
+            'DELETE FROM tasks WHERE id = ?'
+        ).bind(id).run();
 
         return new Response(JSON.stringify({ success: true }), {
             headers: { 'Content-Type': 'application/json' }
