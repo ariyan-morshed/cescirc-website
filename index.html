@@ -192,9 +192,18 @@
           
           container.innerHTML = `<span style="margin-right: 15px; font-size: 0.8rem; color: ${statusColor}; text-transform: uppercase; letter-spacing: 1px;">${statusText}</span>`;
           
-          const btn = document.createElement('button');
-          btn.textContent = 'Sign out';
-          btn.onclick = () => user.signOut().catch(() => {}).finally(() => window.location.href = '/');
+          const btn = document.createElement('button'); btn.textContent = 'Sign out';
+          btn.onclick = async () => {
+              try {
+                  // 1. Wait for Clerk to fully destroy the session
+                  await window.Clerk.signOut();
+              } catch (e) {
+                  console.error("Sign out error:", e);
+              } finally {
+                  // 2. Force a hard reload to the home page with a timestamp to bypass cache
+                  window.location.href = '/?t=' + Date.now();
+              }
+          };
           container.appendChild(btn);
 
           // Dashboard Visibility Logic
