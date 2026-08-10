@@ -144,7 +144,8 @@ h1, h2, h3, h4 { font-family: 'MyRedaction', monospace; text-transform: uppercas
 .tier-highlight { /* Gold outline removed so it only appears on hover */ }
 
 .card-graphic { 
-    width: 100%; height: 200px; 
+    width: 100%; 
+    aspect-ratio: 4 / 5; /* FORCES STRICT 4:5 PORTRAIT RATIO */
     background: radial-gradient(circle at center, var(--bg-shadow) 0%, #1a0808 100%); 
     border-bottom: 3px solid var(--accent-primary); 
     display: flex; align-items: center; justify-content: center; 
@@ -154,7 +155,7 @@ h1, h2, h3, h4 { font-family: 'MyRedaction', monospace; text-transform: uppercas
 }
 /* Abstract background element for cards */
 .card-graphic::after { content: ''; position: absolute; width: 120%; height: 120%; background: radial-gradient(circle, rgba(201, 163, 78, 0.05) 0%, transparent 60%); top: -10%; left: -10%; }
-.card-graphic img { width: 100%; height: 100%; object-fit: cover; }
+.card-graphic img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 
 .card h3 { color: var(--text-primary); font-size: 1.3rem; margin: 15px 10px 5px 10px; }
 .card .post { color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 15px; font-family: 'Inter', sans-serif; font-weight: 700; }
@@ -195,7 +196,6 @@ footer p { margin: 0; position: relative; z-index: 2; }
     .section-title { font-size: 2rem; margin-bottom: 30px; }
     .org-row { flex-direction: column; align-items: center; }
     .organogram .card { width: 100%; max-width: 100%; flex: 1 1 auto; overflow: visible; }
-    .card-graphic { height: 150px; }
     .timeline { padding-left: 25px; }
     .timeline::before { left: 0; }
     .timeline-dot { left: -31px; width: 12px; height: 12px; }
