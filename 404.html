@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Access Denied | CESCIRC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; background: var(--bg-shadow); overflow: hidden; }
+        .denied-box { padding: 40px; border: 1px solid #ff4d4d; background: rgba(90, 31, 31, 0.3); backdrop-filter: blur(10px); max-width: 500px; position: relative; }
+        .denied-box::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px); pointer-events: none; }
+        h1 { font-family: 'MyRedaction', monospace; font-size: 5rem; color: #ff4d4d; margin: 0 0 10px 0; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,77,77,0.4); }
+        h2 { font-family: 'MyRedaction', monospace; color: var(--text-secondary); margin: 0 0 20px 0; letter-spacing: 1px; }
+        p { font-family: 'Inter', sans-serif; color: var(--text-primary); margin: 0 0 30px 0; line-height: 1.6; }
+        a { display: inline-block; color: var(--bg-shadow); background: var(--accent-primary); padding: 12px 25px; text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; transition: 0.2s; }
+        a:hover { background: var(--accent-hover); }
+        .signature { margin-top: 40px; font-size: 0.75rem; color: var(--text-secondary); opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <div class="denied-box">
+        <h1>404</h1>
+        <h2>// ACCESS DENIED</h2>
+        <p>The file or directory you requested does not exist, or you lack the required security clearance to view this intelligence.</p>
+        <a href="/">Return to Safety</a>
+        <div class="signature">System Intercepted by The Architect</div>
+    </div>
+</body>
+</html>

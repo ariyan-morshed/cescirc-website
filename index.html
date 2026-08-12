@@ -1,18 +1,4 @@
 <!DOCTYPE html>
-<!--
-=================================================================================================
-   CCCCC  EEEEE  SSSSS  CCCCC  IIIII  RRRRR    CCCCC
-  C       E      S      C        I    R    R  C
-  C       EEE    SSSSS  C        I    RRRRR   C
-  C       E          S  C        I    R   R   C
-   CCCCC  EEEEE  SSSSS   CCCCC IIIII  R    R   CCCCC
-
-  Designed & Architected by: Ariyan Morshed Chowdhury (The Architect)
-  
-  If you are reading this, you know your way around code.
-  We are always looking for talent. Reach out!
-=================================================================================================
--->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -290,19 +276,22 @@
         // Reset text
         ['t1','t2','t3','t4','t5'].forEach(id => document.getElementById(id).classList.remove('show'));
         
-        // Typewriter sequence
-        setTimeout(() => document.getElementById('t1').classList.add('show'), 300);
-        setTimeout(() => document.getElementById('t2').classList.add('show'), 1000);
-        setTimeout(() => document.getElementById('t3').classList.add('show'), 1800);
-        setTimeout(() => document.getElementById('t4').classList.add('show'), 2500);
-        setTimeout(() => document.getElementById('t5').classList.add('show'), 3200);
+        // Typewriter sequence (Compressed slightly to fit 5s)
+        setTimeout(() => document.getElementById('t1').classList.add('show'), 200);
+        setTimeout(() => document.getElementById('t2').classList.add('show'), 800);
+        setTimeout(() => document.getElementById('t3').classList.add('show'), 1500);
+        setTimeout(() => document.getElementById('t4').classList.add('show'), 2100);
+        setTimeout(() => document.getElementById('t5').classList.add('show'), 2700);
         
-        // Fade out
+        // Fade out starts at 4.5s, completing exactly at 5s
         setTimeout(() => {
           term.style.transition = 'opacity 0.5s';
           term.style.opacity = '0';
-          setTimeout(() => { term.classList.remove('active'); term.style.opacity = '1'; }, 500);
-        }, 5500);
+          setTimeout(() => { 
+            term.classList.remove('active'); 
+            term.style.opacity = '1'; 
+          }, 500);
+        }, 4500);
       }
     </script>
 
@@ -332,21 +321,31 @@
     <script>
       let logoClicks = 0;
       let clickTimer;
-      document.querySelector('.logo-img').addEventListener('click', function(e) {
-        // Prevent navigation on the 5th click
-        if (logoClicks === 3) e.preventDefault();
-        
-        logoClicks++;
-        clearTimeout(clickTimer);
-        clickTimer = setTimeout(() => { logoClicks = 0; }, 1000); // Reset if they stop clicking
-
-        if (logoClicks === 5) {
-          const folder = document.getElementById('architect-folder');
-          folder.classList.add('show');
-          logoClicks = 0;
-          setTimeout(() => folder.classList.remove('show'), 4000);
-        }
-      });
+      const logoLink = document.querySelector('.logo-wrapper a');
+      if (logoLink) {
+        logoLink.addEventListener('click', function(e) {
+          e.preventDefault(); // Stop instant navigation
+          logoClicks++;
+          
+          // If they clicked 5 times, trigger the easter egg
+          if (logoClicks === 5) {
+            clearTimeout(clickTimer);
+            logoClicks = 0;
+            const folder = document.getElementById('architect-folder');
+            if (folder) {
+              folder.classList.add('show');
+              setTimeout(() => folder.classList.remove('show'), 4000);
+            }
+          } else {
+            // Otherwise, wait 300ms. If no more clicks, navigate normally.
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+              window.location.href = logoLink.getAttribute('href');
+              logoClicks = 0;
+            }, 300); 
+          }
+        });
+      }
     </script>
 </body>
 </html>
