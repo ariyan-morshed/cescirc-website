@@ -179,89 +179,70 @@ footer { text-align: center; padding: 30px; background: var(--bg-shadow); color:
 footer::before { content: ''; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 60%; height: 40px; background: radial-gradient(ellipse, rgba(201, 163, 78, 0.1) 0%, transparent 70%); }
 footer p { margin: 0; position: relative; z-index: 2; }
 
-/* --- MOBILE RULES --- */
+/* ========================================= */
+/* UNIFIED MOBILE RULES & FIXES               */
+/* ========================================= */
 @media (max-width: 768px) {
-    .navbar { flex-direction: column; gap: 15px; padding: 15px; align-items: center !important; text-align: center; }
+    /* Fix Navbar Stacking */
+    .navbar { flex-direction: column; gap: 10px; padding: 10px 15px; align-items: center !important; text-align: center; }
+    .logo-img { height: 50px; }
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
     
-    /* V3 ADDITION: Dropdown Mobile */
-    .dropdown-menu { position: static; box-shadow: none; border: 1px solid var(--border-color); background: rgba(42, 14, 14, 0.9); width: 100%; min-width: unset; }
-    
+    /* Fix Dropdown Pushing Navbar Height */
+    .nav-links > li.dropdown { position: relative; }
+    .dropdown-menu { 
+        position: absolute !important; 
+        display: none !important; 
+        top: 100% !important; 
+        left: 50% !important; 
+        transform: translateX(-50%) !important; 
+        width: 90vw !important; 
+        max-width: 320px !important; 
+        z-index: 9999 !important; 
+        box-shadow: 0 15px 30px rgba(0,0,0,0.8) !important;
+    }
+    .dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu { 
+        display: block !important; 
+    }
+
+    /* Fix Hero & Text */
     .hero-content h1, .newspaper-title { font-size: 2rem !important; letter-spacing: 2px !important; }
     .newspaper-subtitle { font-size: 1.2rem; }
     .description { font-size: 1rem; }
     .about-grid { grid-template-columns: 1fr; gap: 30px; }
     .about-image img { height: 250px; }
+
+    /* Fix Sections & Padding (Pushes content below stacked navbar) */
+    .section, .dash-container, .situation-container, .explore-container, .admin-container {
+        padding-top: 160px !important; 
+    }
     .section { padding: 60px 20px; }
     .section-title { font-size: 2rem; margin-bottom: 30px; }
+
+    /* Fix Organogram Cards */
     .org-row { flex-direction: column; align-items: center; }
-    .organogram .card { width: 100%; max-width: 100%; flex: 1 1 auto; overflow: visible; }
+    .organogram .card { 
+        width: 85% !important; 
+        max-width: 320px !important; 
+        flex: none !important; 
+        overflow: visible; 
+    }
+    .card-graphic { aspect-ratio: 4 / 5; height: auto; } /* Enforce 4:5 ratio */
+
+    /* Fix Timeline */
     .timeline { padding-left: 25px; }
     .timeline::before { left: 0; }
     .timeline-dot { left: -31px; width: 12px; height: 12px; }
     .timeline-content h3 { font-size: 1.4rem; }
     
-    /* V3 ADDITION: Footer Mobile */
+    /* Fix Footer */
     .footer-grid { grid-template-columns: 1fr; text-align: center; }
     .footer-links a:hover { padding-left: 0; }
+
+    /* Fix Comms Grid */
+    .comms-grid { grid-template-columns: 1fr; }
+    .pending-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .composer-box { padding: 26px 20px 24px 20px; }
+    .confirm-actions { flex-direction: column; }
+    .viewer-content { padding: 20px; }
 }
-/* =========================================== */
-/* FINAL BULLETPROOF FIXES (MOBILE & DROPDOWN) */
-/* =========================================== */
-
-/* 1. FIX DROPDOWN PUSHING NAVBAR HEIGHT (Desktop & Mobile) */
-/* Forces the dropdown to float OVER the content instead of stretching the navbar */
-.nav-links > li.dropdown { position: relative; }
-.dropdown-menu { 
-    position: absolute !important; 
-    display: none !important; 
-    top: 100% !important; 
-    left: 50% !important; 
-    transform: translateX(-50%) !important; 
-    width: max-content !important; 
-    min-width: 280px !important; 
-    max-width: 320px !important; 
-    z-index: 9999 !important; 
-    box-shadow: 0 15px 30px rgba(0,0,0,0.8) !important;
-}
-.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu { 
-    display: block !important; 
-}
-
-/* 2. FIX CARDS FILLING SCREEN ON MOBILE */
-@media (max-width: 768px) {
-    .organogram .card { 
-        width: 85% !important; 
-        max-width: 320px !important; 
-        flex: none !important; 
-    }
-    /* Ensure navbar dropdown centers nicely on narrow screens */
-    .dropdown-menu {
-        width: 90vw !important;
-        max-width: 320px !important;
-    }
-}
-/* Task Details & Completion Styles */
-.task-item { flex-direction: column; align-items: flex-start; }
-.task-header { display: flex; justify-content: space-between; width: 100%; align-items: center; }
-.task-details { color: var(--text-secondary); font-size: 0.85rem; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color); width: 100%; }
-.task-complete-btn { background: transparent; color: #4caf50; border: 1px solid #4caf50; padding: 4px 10px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: 0.3s; margin-left: 15px; }
-.task-complete-btn:hover { background: #4caf50; color: var(--bg-primary); }
-.task-desc-input { margin-bottom: 10px; min-height: 60px; resize: vertical; }
-
-/* Task Action Buttons (Undo/Delete) */
-.task-actions { display: flex; align-items: center; gap: 8px; }
-.task-undo-btn { background: transparent; color: var(--accent-primary); border: 1px solid var(--accent-primary); padding: 4px 10px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
-.task-undo-btn:hover { background: var(--accent-primary); color: var(--bg-primary); }
-.task-delete-btn { background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 4px 10px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
-.task-delete-btn:hover { background: #ff4d4d; color: var(--bg-primary); }
-
-/* Comms & Inbox Layout */
-.comms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 768px) { .comms-grid { grid-template-columns: 1fr; } }
-
-.inbox-list { list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto; }
-.inbox-item { background: rgba(90, 31, 31, 0.3); border-left: 4px solid var(--accent-primary); padding: 12px 15px; margin-bottom: 10px; border-radius: 0 4px 4px 0; }
-.inbox-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-.inbox-subject { color: var(--accent-hover); font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; }
-.inbox-body { font-size: 0.85rem; color: var(--text-primary); line-height: 1.4; }
