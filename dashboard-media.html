@@ -37,6 +37,19 @@
         .dash-btn { background: var(--accent-primary); color: var(--bg-primary); border: none; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.3s; width: auto; padding: 12px 25px; }
         .dash-btn:hover { background: var(--accent-hover); }
         @media (max-width: 768px) { .dash-header { grid-template-columns: 1fr; text-align: center; } .dash-header img { max-width: 120px; margin-bottom: 20px; } .dash-grid { grid-template-columns: 1fr; } .dash-container { padding: 100px 20px 40px 20px; } }
+	/* Toast Notifications */
+	#toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+	.toast { background: var(--bg-shadow); color: var(--text-primary); border: 1px solid var(--accent-primary); border-left: 5px solid var(--accent-primary); padding: 15px 25px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 0.9rem; min-width: 250px; animation: slideIn 0.3s ease-out forwards; }
+	.toast.success { border-left-color: #4caf50; }
+	.toast.error { border-left-color: #ff4d4d; }
+	@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+	/* Loading Skeletons */
+	.skeleton-box { background: linear-gradient(90deg, rgba(90,31,31,0.2) 25%, rgba(138,106,46,0.1) 50%, rgba(90,31,31,0.2) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; margin-bottom: 10px; height: 60px; }
+	@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+	/* Live Update Text */
+	.live-update-text { font-size: 0.75rem; color: var(--text-secondary); font-style: italic; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -81,7 +94,8 @@
             <div class="comms-grid">
                 <!-- Inbox Side -->
                 <div>
-                    <p style="font-size: 0.85rem; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Department Inbox</p>
+                    <p style="font-size: 0.85rem; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Department Inbox</p>
+		    <p id="live-update" class="live-update-text">Loading...</p>
                     <ul class="inbox-list" id="inbox-list">
                         <li style="color: var(--text-secondary); font-size: 0.9rem;">Loading messages...</li>
                     </ul>
@@ -148,18 +162,34 @@
                   commsControls.style.display = 'block'; 
               }
               loadTasks(deptCode, role);
-              loadMessages(deptCode, role); // Pass role to loadMessages
+              loadMessages(deptCode, role);
+              // AUTO-REFRESH INBOX EVERY 30 SECONDS
+              setInterval(() => loadMessages(deptCode, role), 30000); 
               window.cescircSender = { name: senderName, dept: deptName };
           } else { denied.style.display = 'block'; }
         } else { denied.style.display = 'block'; const btn = document.createElement('button'); btn.textContent = 'Sign In'; btn.onclick = () => window.Clerk.openSignIn(); container.appendChild(btn); }
       });
 
+      // --- TOAST HELPER ---
+      function showToast(msg, type = 'success') {
+          const container = document.getElementById('toast-container') || (() => {
+              const d = document.createElement('div'); d.id = 'toast-container'; document.body.appendChild(d); return d;
+          })();
+          const t = document.createElement('div');
+          t.className = `toast ${type}`;
+          t.innerText = msg;
+          container.appendChild(t);
+          setTimeout(() => t.style.opacity = '0', 3000);
+          setTimeout(() => t.remove(), 3500);
+      }
+
       // --- TASKS LOGIC ---
       async function loadTasks(deptCode, role) {
+          const list = document.getElementById('task-list');
+          list.innerHTML = '<div class="skeleton-box"></div><div class="skeleton-box"></div>'; // Skeletons
           try {
               const res = await fetch(`/api/tasks?dept=${deptCode}`);
               const tasks = await res.json();
-              const list = document.getElementById('task-list');
               list.innerHTML = '';
               if (tasks.length > 0) {
                   tasks.forEach(t => {
@@ -181,26 +211,28 @@
                       list.appendChild(li);
                   });
               } else { list.innerHTML = '<li style="color: var(--text-secondary); font-size: 0.9rem;">No active objectives.</li>'; }
-          } catch (e) { console.error(e); }
+          } catch (e) { console.error(e); list.innerHTML = '<li style="color: #ff4d4d;">Error loading tasks.</li>'; }
       }
 
       window.addTask = async function() {
           const input = document.getElementById('new-task');
           const descInput = document.getElementById('new-task-desc');
-          if (!input.value.trim()) return;
-          const deptCode = 'media_dept'; // CHANGE THIS
+          if (!input.value.trim()) return showToast('Task title is required.', 'error');
+          const deptCode = 'media_dept'; // CHANGE THIS FOR EACH DEPARTMENT
           try {
               await fetch('/api/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: input.value, description: descInput.value, dept: deptCode }) });
               input.value = ''; descInput.value = '';
               loadTasks(deptCode, window.Clerk.user?.publicMetadata?.role || 'unverified');
-          } catch (e) { alert('Error saving task.'); }
+              showToast('Objective assigned successfully.');
+          } catch (e) { showToast('Error saving task.', 'error'); }
       };
 
       window.toggleTaskStatus = async function(taskId, newStatus, deptCode) {
           try {
               await fetch('/api/tasks', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: taskId, status: newStatus }) });
               loadTasks(deptCode, window.Clerk.user?.publicMetadata?.role || 'unverified');
-          } catch (e) { alert('Error updating task.'); }
+              showToast(`Task marked as ${newStatus}.`);
+          } catch (e) { showToast('Error updating task.', 'error'); }
       };
 
       window.deleteTask = async function(taskId, deptCode) {
@@ -208,27 +240,27 @@
           try {
               await fetch('/api/tasks', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: taskId }) });
               loadTasks(deptCode, window.Clerk.user?.publicMetadata?.role || 'unverified');
-          } catch (e) { alert('Error deleting task.'); }
+              showToast('Objective deleted.', 'error');
+          } catch (e) { showToast('Error deleting task.', 'error'); }
       };
 
       // --- MESSAGES LOGIC ---
       async function loadMessages(deptCode, role) {
+          const list = document.getElementById('inbox-list');
+          list.innerHTML = '<div class="skeleton-box"></div><div class="skeleton-box"></div>'; // Skeletons
           try {
               const res = await fetch(`/api/messages?dept=${deptCode}`);
               const messages = await res.json();
-              const list = document.getElementById('inbox-list');
               list.innerHTML = '';
               if (messages.length > 0) {
                   messages.forEach(m => {
                       const li = document.createElement('li');
                       li.className = 'inbox-item';
-                      const date = new Date(m.created_at).toLocaleDateString();
-                      
+                      const date = new Date(m.created_at).toLocaleString(); // Full date & time
                       let deleteHtml = '';
                       if (role === 'top5' || role === 'director') {
                           deleteHtml = `<button class="task-delete-btn" onclick="deleteMessage(${m.id}, '${deptCode}')" style="margin-top: 10px;">Delete</button>`;
                       }
-
                       li.innerHTML = `
                           <div class="inbox-meta"><span>From: ${m.sender_name} (${m.sender_dept})</span><span>${date}</span></div>
                           <div class="inbox-subject">${m.subject}</div>
@@ -238,17 +270,20 @@
                       list.appendChild(li);
                   });
               } else { list.innerHTML = '<li style="color: var(--text-secondary); font-size: 0.9rem;">Inbox is empty.</li>'; }
-          } catch (e) { console.error(e); }
+              
+              // Update Live Text
+              const liveText = document.getElementById('live-update');
+              if (liveText) liveText.innerText = `Last updated: ${new Date().toLocaleTimeString()}`;
+          } catch (e) { console.error(e); list.innerHTML = '<li style="color: #ff4d4d;">Error loading messages.</li>'; }
       }
 
       window.sendMessage = async function() {
           const targetSelect = document.getElementById('target-dept');
           const subjectInput = document.getElementById('msg-subject');
           const bodyInput = document.getElementById('msg-body');
-          if (!subjectInput.value.trim() || !bodyInput.value.trim()) return alert('Subject and body are required.');
+          if (!subjectInput.value.trim() || !bodyInput.value.trim()) return showToast('Subject and body are required.', 'error');
 
           const targetDept = targetSelect.value;
-          
           try {
               await fetch('/api/messages', {
                   method: 'POST',
@@ -262,11 +297,10 @@
                   })
               });
               subjectInput.value = ''; bodyInput.value = '';
-              // If sending to own dept, reload inbox
-              const deptCode = 'media_dept'; // CHANGE THIS
+              const deptCode = 'media_dept'; // CHANGE THIS FOR EACH DEPARTMENT
               if (targetDept === deptCode) loadMessages(deptCode, window.Clerk.user?.publicMetadata?.role || 'unverified');
-              alert('Message transmitted successfully.');
-          } catch (e) { alert('Error saving message to inbox.'); }
+              showToast('Message transmitted successfully.');
+          } catch (e) { showToast('Error saving message to inbox.', 'error'); }
       };
 
       window.deleteMessage = async function(messageId, deptCode) {
@@ -274,7 +308,8 @@
           try {
               await fetch('/api/messages', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: messageId }) });
               loadMessages(deptCode, window.Clerk.user?.publicMetadata?.role || 'unverified');
-          } catch (e) { alert('Error deleting message.'); }
+              showToast('Message deleted.', 'error');
+          } catch (e) { showToast('Error deleting message.', 'error'); }
       };
     </script>
 </body>
