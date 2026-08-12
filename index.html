@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+<!--
+=================================================================================================
+   CCCCC  EEEEE  SSSSS  CCCCC  IIIII  RRRRR    CCCCC
+  C       E      S      C        I    R    R  C
+  C       EEE    SSSSS  C        I    RRRRR   C
+  C       E          S  C        I    R   R   C
+   CCCCC  EEEEE  SSSSS   CCCCC IIIII  R    R   CCCCC
+
+  Designed & Architected by: Ariyan Morshed Chowdhury (The Architect)
+  
+  If you are reading this, you know your way around code.
+  We are always looking for talent. Reach out!
+=================================================================================================
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -229,6 +243,108 @@
           btn.textContent = 'Sign In';
           btn.onclick = () => window.Clerk.openSignIn();
           container.appendChild(btn);
+        }
+      });
+    </script>
+    <style>
+      .architect-terminal {
+        position: fixed; inset: 0; background: #000; z-index: 9999;
+        display: none; flex-direction: column; justify-content: center; align-items: center;
+        font-family: 'Courier New', monospace; color: #0f0; text-align: left;
+        padding: 40px; overflow: hidden;
+      }
+      .architect-terminal.active { display: flex; animation: glitchIn 0.3s; }
+      .term-text { font-size: 1.2rem; margin-bottom: 10px; opacity: 0; }
+      .term-text.show { opacity: 1; animation: flicker 0.1s; }
+      @keyframes glitchIn { 0% { opacity: 0; transform: scale(1.1); filter: blur(10px); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
+      @keyframes flicker { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+    </style>
+
+    <div class="architect-terminal" id="architect-terminal">
+      <div class="term-text" id="t1">> ESTABLISHING SECURE CONNECTION...</div>
+      <div class="term-text" id="t2">> BYPASSING CESCIRC FIREWALL...</div>
+      <div class="term-text" id="t3">> CREDENTIALS ACCEPTED.</div>
+      <div class="term-text" id="t4" style="color: var(--accent-hover); font-weight: bold;">> WELCOME, ARCHITECT.</div>
+      <div class="term-text" id="t5" style="color: #fff; font-size: 0.9rem;">> SYSTEM DESIGNED BY: ARIYAN MORSHED CHOWDHURY</div>
+    </div>
+
+    <script>
+      let konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+      let konamiIndex = 0;
+      document.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex] || e.key.toLowerCase() === konamiCode[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            triggerArchitectProtocol();
+            konamiIndex = 0;
+          }
+        } else {
+          konamiIndex = 0;
+        }
+      });
+
+      function triggerArchitectProtocol() {
+        const term = document.getElementById('architect-terminal');
+        term.classList.add('active');
+        
+        // Reset text
+        ['t1','t2','t3','t4','t5'].forEach(id => document.getElementById(id).classList.remove('show'));
+        
+        // Typewriter sequence
+        setTimeout(() => document.getElementById('t1').classList.add('show'), 300);
+        setTimeout(() => document.getElementById('t2').classList.add('show'), 1000);
+        setTimeout(() => document.getElementById('t3').classList.add('show'), 1800);
+        setTimeout(() => document.getElementById('t4').classList.add('show'), 2500);
+        setTimeout(() => document.getElementById('t5').classList.add('show'), 3200);
+        
+        // Fade out
+        setTimeout(() => {
+          term.style.transition = 'opacity 0.5s';
+          term.style.opacity = '0';
+          setTimeout(() => { term.classList.remove('active'); term.style.opacity = '1'; }, 500);
+        }, 5500);
+      }
+    </script>
+
+    <style>
+      .architect-folder {
+        position: fixed; bottom: -300px; left: 50%; transform: translateX(-50%);
+        width: 350px; max-width: 90vw; background: var(--bg-primary); 
+        border: 2px solid var(--accent-primary); border-radius: 8px; padding: 30px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.8); z-index: 9998; transition: bottom 0.4s ease-out;
+      }
+      .architect-folder.show { bottom: 50px; }
+      .architect-folder h3 { font-family: 'MyRedaction', monospace; color: var(--accent-hover); margin: 0 0 15px 0; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+      .architect-folder p { font-family: 'Inter', sans-serif; color: var(--text-secondary); font-size: 0.9rem; margin: 0 0 5px 0; }
+      .redacted { background: #000; color: transparent; padding: 2px 5px; border-radius: 2px; user-select: none; }
+      .stamp { position: absolute; top: 20px; right: 20px; border: 3px solid #ff4d4d; color: #ff4d4d; font-family: 'MyRedaction', monospace; padding: 5px 15px; transform: rotate(-15deg); font-size: 1.2rem; font-weight: bold; opacity: 0.8; }
+    </style>
+
+    <div class="architect-folder" id="architect-folder">
+      <div class="stamp">CLASSIFIED</div>
+      <h3>SYS_CORE_DUMP.txt</h3>
+      <p>Origin: CESCIRC HQ</p>
+      <p>Clearance Level: Architect</p>
+      <p>Identity: <span class="redacted">Ariyan Morshed Chowdhury</span></p>
+      <p>Status: <span style="color: #4caf50;">ONLINE</span></p>
+    </div>
+
+    <script>
+      let logoClicks = 0;
+      let clickTimer;
+      document.querySelector('.logo-img').addEventListener('click', function(e) {
+        // Prevent navigation on the 5th click
+        if (logoClicks === 3) e.preventDefault();
+        
+        logoClicks++;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => { logoClicks = 0; }, 1000); // Reset if they stop clicking
+
+        if (logoClicks === 5) {
+          const folder = document.getElementById('architect-folder');
+          folder.classList.add('show');
+          logoClicks = 0;
+          setTimeout(() => folder.classList.remove('show'), 4000);
         }
       });
     </script>
