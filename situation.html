@@ -72,6 +72,8 @@
         .p-btn-approve:hover { background: #66d16a; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
         .p-btn-deny { background: transparent; color: #ff8080; border: 1px solid rgba(255,77,77,0.5); }
         .p-btn-deny:hover { background: rgba(255,77,77,0.15); }
+        .p-btn-preview { background: transparent; color: var(--accent-primary); border: 1px solid var(--accent-primary); }
+        .p-btn-preview:hover { background: rgba(201,163,78,0.15); }
         .queue-empty { color: var(--text-secondary); font-size: 0.85rem; text-align: center; padding: 10px 0; }
 
         /* ============ Post grid ============ */
@@ -98,13 +100,28 @@
         .post-banner { position: relative; height: 200px; width: 100%; overflow: hidden; background: var(--bg-shadow); border-bottom: 3px solid var(--accent-primary); }
         .post-banner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
         .post-card:hover .post-banner img { transform: scale(1.05); }
-        .post-banner.placeholder {
+        
+        /* Premium Placeholder */
+        .post-banner.placeholder, .viewer-banner.placeholder {
+            background-color: var(--bg-shadow);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(201,163,78,0.15) 0%, transparent 60%),
+                linear-gradient(rgba(201, 163, 78, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201, 163, 78, 0.04) 1px, transparent 1px);
+            background-size: 100% 100%, 25px 25px, 25px 25px;
             display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle at 50% 40%, rgba(201,163,78,0.1), var(--bg-shadow) 80%);
+            position: relative;
         }
-        .post-banner.placeholder span {
-            font-family: 'MyRedaction', monospace; letter-spacing: 6px; text-transform: uppercase;
-            color: rgba(212, 198, 172, 0.2); font-size: 1.5rem;
+        .post-banner.placeholder::after, .viewer-banner.placeholder::after {
+            content: 'CESCIRC';
+            font-family: 'MyRedaction', monospace;
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            color: rgba(212, 198, 172, 0.15);
+            text-transform: uppercase;
+            border: 1px solid rgba(212, 198, 172, 0.1);
+            padding: 10px 30px;
+            border-radius: 4px;
         }
 
         .pin-badge {
@@ -231,8 +248,6 @@
             position: relative; overflow: hidden; max-height: 85vh; display: flex; flex-direction: column;
         }
         .viewer-banner { width: 100%; height: 250px; object-fit: cover; border-bottom: 3px solid var(--accent-primary); background: var(--bg-shadow); }
-        .viewer-banner.placeholder { height: 120px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, rgba(201,163,78,0.1), var(--bg-shadow) 80%); }
-        .viewer-banner.placeholder span { font-family: 'MyRedaction', monospace; letter-spacing: 6px; color: rgba(212, 198, 172, 0.2); font-size: 1.5rem; }
         .viewer-content { padding: 30px 40px; overflow-y: auto; }
         .viewer-close { position: absolute; top: 15px; right: 15px; z-index: 5; background: rgba(20,8,8,0.8); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 50%; width: 36px; height: 36px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .viewer-close:hover { background: #ff4d4d; border-color: #ff4d4d; color: white; }
@@ -417,6 +432,7 @@
         let currentUser = null;
         let currentRole = 'unverified';
         let allPosts = [];
+        let allPendingPosts = [];
 
         window.addEventListener('load', async function () {
             await window.Clerk.load();
@@ -479,6 +495,7 @@
                 });
                 const data = await res.json();
                 const posts = Array.isArray(data) ? data : (data.data || []);
+                allPendingPosts = posts; // Save to global variable
                 renderPendingList(posts);
             } catch (err) {
                 list.innerHTML = `<div class="queue-empty">Could not load the pending queue.</div>`;
@@ -520,9 +537,10 @@
             const canManage = currentRole === 'top5' || (currentUser && post.author_id === currentUser.id);
             const canPin = currentRole === 'top5';
 
+            // Fixed Banner HTML with onerror fallback
             const bannerHtml = post.banner_url
-                ? `<div class="post-banner"><img src="${escapeHtml(post.banner_url)}" alt=""></div>`
-                : `<div class="post-banner placeholder"><span>CESCIRC</span></div>`;
+                ? `<div class="post-banner"><img src="${escapeHtml(post.banner_url)}" alt="" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.add('placeholder');"></div>`
+                : `<div class="post-banner placeholder"></div>`;
 
             const bodyHtml = window.marked ? marked.parse(post.body_markdown || '') : escapeHtml(post.body_markdown || '');
 
@@ -566,6 +584,7 @@
                         <span class="p-meta">${escapeHtml(post.author_name)} · ${formatDate(post.created_at)}</span>
                     </div>
                     <div class="p-actions">
+                        <button class="p-btn p-btn-preview" onclick="openViewer('${post.id}')">Preview</button>
                         <button class="p-btn p-btn-approve" onclick="approvePost('${post.id}')">Approve</button>
                         <button class="p-btn p-btn-deny" onclick="deletePost('${post.id}', true)">Delete</button>
                     </div>
@@ -639,7 +658,9 @@
 
         // ============ Viewer (Popup) ============
         function openViewer(id) {
-            const post = allPosts.find(p => p.id === id);
+            // Check approved posts first, then pending posts
+            let post = allPosts.find(p => String(p.id) === String(id));
+            if (!post) post = allPendingPosts.find(p => String(p.id) === String(id));
             if (!post) return;
 
             document.getElementById('viewer-headline').innerText = post.headline;
@@ -648,9 +669,9 @@
 
             const bannerWrap = document.getElementById('viewer-banner-wrap');
             if (post.banner_url) {
-                bannerWrap.innerHTML = `<img src="${escapeHtml(post.banner_url)}" class="viewer-banner" alt="">`;
+                bannerWrap.innerHTML = `<img src="${escapeHtml(post.banner_url)}" class="viewer-banner" alt="" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.add('placeholder');">`;
             } else {
-                bannerWrap.innerHTML = `<div class="viewer-banner placeholder"><span>CESCIRC</span></div>`;
+                bannerWrap.innerHTML = `<div class="viewer-banner placeholder"></div>`;
             }
 
             document.getElementById('viewer-overlay').classList.add('open');
@@ -722,11 +743,11 @@
             loadApproved();
         }
         async function deletePost(id, fromQueue) {
+            if (!confirm('PERMANENT DELETE WARNING: Are you sure you want to erase this briefing? This cannot be undone.')) return;
             await postAction('delete', id);
             if (fromQueue) loadPending();
             loadApproved();
         }
-
         async function postAction(action, postId) {
             try {
                 const token = await window.Clerk.session.getToken();
