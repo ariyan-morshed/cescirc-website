@@ -82,10 +82,30 @@
         </div>
         <div class="dash-card" style="margin-top: 30px;">
             <h3>Inter-Department Communications</h3>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 15px;">Send a secure message to another department head.</p>
-            <select class="dash-select" id="target-dept"><option value="academics_dept">Academics & Doc.</option><option value="media_dept">Media & Graphics</option><option value="pr_dept">Public Relations</option><option value="logistics_dept">Logistics</option></select>
-            <textarea class="dash-input" id="comms-msg" rows="3" placeholder="Type your message here..."></textarea>
-            <button class="dash-btn admin-only" id="send-btn">Send Message</button>
+            <div class="comms-grid">
+                <!-- Inbox Side -->
+                <div>
+                    <p style="font-size: 0.85rem; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Department Inbox</p>
+                    <ul class="inbox-list" id="inbox-list">
+                        <li style="color: var(--text-secondary); font-size: 0.9rem;">Loading messages...</li>
+                    </ul>
+                </div>
+                
+                <!-- Compose Side -->
+                <div class="admin-only" id="admin-controls-comms">
+                    <p style="font-size: 0.85rem; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Send Secure Message</p>
+                    <select class="dash-select" id="target-dept">
+                        <option value="admin_dept">Administration</option>
+                        <option value="academics_dept">Academics & Doc.</option>
+                        <option value="media_dept">Media & Graphics</option>
+                        <option value="pr_dept">Public Relations</option>
+                        <option value="logistics_dept">Logistics</option>
+                    </select>
+                    <input type="text" class="dash-input" id="msg-subject" placeholder="Subject...">
+                    <textarea class="dash-input" id="msg-body" rows="4" placeholder="Type your message here..."></textarea>
+                    <button class="dash-btn" onclick="sendMessage()">Transmit Message</button>
+                </div>
+            </div>
         </div>
     </div>
 

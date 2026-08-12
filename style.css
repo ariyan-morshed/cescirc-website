@@ -255,3 +255,13 @@ footer p { margin: 0; position: relative; z-index: 2; }
 .task-undo-btn:hover { background: var(--accent-primary); color: var(--bg-primary); }
 .task-delete-btn { background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 4px 10px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
 .task-delete-btn:hover { background: #ff4d4d; color: var(--bg-primary); }
+
+/* Comms & Inbox Layout */
+.comms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 768px) { .comms-grid { grid-template-columns: 1fr; } }
+
+.inbox-list { list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto; }
+.inbox-item { background: rgba(90, 31, 31, 0.3); border-left: 4px solid var(--accent-primary); padding: 12px 15px; margin-bottom: 10px; border-radius: 0 4px 4px 0; }
+.inbox-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+.inbox-subject { color: var(--accent-hover); font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; }
+.inbox-body { font-size: 0.85rem; color: var(--text-primary); line-height: 1.4; }
