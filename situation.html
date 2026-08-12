@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Situation Room | CESCIRC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script async crossorigin="anonymous" data-clerk-publishable-key="pk_test_Y3VycmVudC1pZ3VhbmEtNDguY2xlcmsuYWNjb3VudHMuZGV2JA" src="https://current-iguana-48.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
+    
+    <!-- Lightweight Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+
+    <style>
+        #clerk-auth button { background: transparent !important; color: var(--accent-primary) !important; border: 1px solid var(--accent-primary) !important; font-family: 'Inter', sans-serif !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-size: 0.8rem !important; padding: 8px 15px !important; border-radius: 4px !important; transition: all 0.3s !important; cursor: pointer !important; box-shadow: none !important; }
+        #clerk-auth button:hover { background: var(--accent-primary) !important; color: var(--bg-primary) !important; }
+        .clerk-branding, .clerk-external-badge { display: none !important; }
+        #clerk-auth > span { margin-right: 15px; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+        .situation-container { padding: 120px 10% 60px 10%; max-width: 1200px; margin: 0 auto; }
+        .situation-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; }
+        .situation-header h1 { font-size: 3rem; color: var(--accent-hover); margin: 0; }
+        .add-post-btn { background: var(--accent-primary); color: var(--bg-primary); border: none; padding: 10px 20px; font-family: 'Inter', sans-serif; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 4px; font-size: 0.9rem; display: none; }
+        .add-post-btn:hover { background: var(--accent-hover); }
+
+        /* Pending Approval Box (Top 5 Only) */
+        .pending-box { background: rgba(42, 14, 14, 0.8); border: 1px solid #ff4d4d; padding: 20px; margin-bottom: 40px; border-radius: 8px; display: none; }
+        .pending-box h3 { color: #ff4d4d; margin-top: 0; }
+        .pending-item { background: rgba(90, 31, 31, 0.5); padding: 15px; border-radius: 4px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+
+        /* Post Grid */
+        .post-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        @media (max-width: 768px) { .post-grid { grid-template-columns: 1fr; } .situation-header { flex-direction: column; gap: 15px; text-align: center; } }
+
+        .post-card { background: linear-gradient(180deg, #7a3232 0%, var(--bg-secondary) 40%, var(--bg-primary) 100%); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; }
+        .post-card:hover { transform: translateY(-5px); border-color: var(--accent-hover); }
+        .post-banner { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--accent-primary); }
+        .post-content { padding: 20px; }
+        .post-headline { font-family: 'MyRedaction', monospace; font-size: 1.5rem; color: var(--text-primary); margin: 0 0 10px 0; line-height: 1.3; }
+        .post-meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; }
+        .post-body { font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; max-height: 150px; overflow: hidden; position: relative; }
+        .post-body::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; background: linear-gradient(transparent, var(--bg-primary)); }
+        .post-body p { margin: 0 0 10px 0; }
+        .post-body h1, .post-body h2, .post-body h3 { color: var(--accent-hover); font-family: 'Inter', sans-serif; }
+        
+        .pin-badge { position: absolute; top: 10px; right: 10px; background: var(--accent-primary); color: var(--bg-primary); padding: 5px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; z-index: 2; }
+        .post-menu { position: absolute; top: 10px; right: 10px; z-index: 3; }
+        .menu-btn { background: rgba(0,0,0,0.6); color: var(--text-primary); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 1.2rem; line-height: 1; display: flex; align-items: center; justify-content: center; }
+        .menu-dropdown { position: absolute; right: 0; top: 35px; background: var(--bg-shadow); border: 1px solid var(--accent-primary); border-radius: 4px; display: none; flex-direction: column; z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .menu-dropdown button { background: none; border: none; color: var(--text-primary); padding: 10px 15px; text-align: left; cursor: pointer; font-size: 0.85rem; width: 120px; font-family: 'Inter', sans-serif; }
+        .menu-dropdown button:hover { background: rgba(201, 163, 78, 0.2); }
+
+        /* Composer Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9998; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .composer-box { background: var(--bg-secondary); border: 1px solid var(--accent-primary); border-radius: 8px; padding: 30px; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .composer-box h2 { color: var(--accent-hover); margin-top: 0; }
+        .composer-input { width: 100%; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 12px; font-family: 'Inter', sans-serif; font-size: 0.9rem; border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; }
+        .composer-toolbar { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
+        .toolbar-btn { background: var(--bg-primary); color: var(--accent-primary); border: 1px solid var(--border-color); padding: 5px 10px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; font-weight: 700; }
+        .toolbar-btn:hover { background: var(--border-color); }
+        .composer-textarea { min-height: 200px; resize: vertical; }
+        .composer-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+        .btn-primary { background: var(--accent-primary); color: var(--bg-primary); border: none; padding: 10px 20px; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 4px; }
+        .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); padding: 10px 20px; cursor: pointer; border-radius: 4px; }
+        .btn-danger { background: #ff4d4d; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; }
+
+        .preview-box { background: var(--bg-primary); padding: 20px; border-radius: 4px; margin-top: 15px; display: none; }
+        .preview-box h3 { color: var(--accent-hover); margin-top: 0; }
+        
+        /* Confirm Modal */
+        .confirm-modal { background: var(--bg-shadow); border: 1px solid var(--accent-primary); padding: 30px; border-radius: 8px; text-align: center; max-width: 400px; }
+        .confirm-modal p { margin-bottom: 20px; color: var(--text-primary); }
+        .confirm-actions { display: flex; gap: 15px; justify-content: center; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-wrapper"><a href="index.html"><img src="CESC.png" alt="CESCIRC Logo" class="logo-img"></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle">Panels ▾</a>
+                <div class="dropdown-menu">
+                    <a href="panel-main.html">Main Panel</a><a href="panel-admin.html">Administration</a><a href="panel-academics.html">Academics & Documentation</a><a href="panel-media.html">Media & Graphics</a><a href="panel-pr.html">Public Relations</a><a href="panel-logistics.html">Logistics</a>
+                </div>
+            </li>
+            <li><a href="articles.html">Explore IR</a></li>
+            <li><a href="situation.html" style="color: var(--accent-hover) !important;">Situation Room</a></li>
+            <li><div id="clerk-auth" style="display: flex; align-items: center;"></div></li>
+        </ul>
+    </nav>
+
+    <div class="situation-container">
+        <div class="situation-header">
+            <h1>The Situation Room</h1>
+            <button class="add-post-btn" id="open-composer-btn" onclick="openComposer()">+ New Briefing</button>
+        </div>
+
+        <!-- Top 5 Pending Approvals -->
+        <div class="pending-box" id="pending-box">
+            <h3>⚠️ Pending Authorization</h3>
+            <div id="pending-list"></div>
+        </div>
+
+        <div class="post-grid" id="post-grid">
+            <p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1;">Loading intelligence...</p>
+        </div>
+    </div>
+
+    <!-- Composer Modal -->
+    <div class="modal-overlay" id="composer-modal">
+        <div class="composer-box">
+            <h2>Draft New Briefing</h2>
+            <input type="text" class="composer-input" id="post-author" placeholder="Author Name (e.g., Ariyan M.)">
+            <input type="text" class="composer-input" id="post-headline" placeholder="Headline...">
+            <input type="text" class="composer-input" id="post-banner-url" placeholder="Banner Image URL (Optional - use ImgBB)">
+            
+            <div class="composer-toolbar">
+                <button class="toolbar-btn" onclick="insertMarkdown('**', '**')"><b>B</b></button>
+                <button class="toolbar-btn" onclick="insertMarkdown('*', '*')"><i>I</i></button>
+                <button class="toolbar-btn" onclick="insertMarkdown('# ', '')">H1</button>
+                <button class="toolbar-btn" onclick="insertMarkdown('## ', '')">H2</button>
+                <button class="toolbar-btn" onclick="insertMarkdown('- ', '')">• List</button>
+                <button class="toolbar-btn" onclick="insertMarkdown('> ', '')">"</button>
+                <button class="toolbar-btn" onclick="insertLink()">🔗</button>
+            </div>
+            <textarea class="composer-input composer-textarea" id="post-body" placeholder="Write the briefing here..."></textarea>
+
+            <div class="composer-actions">
+                <button class="btn-secondary" onclick="togglePreview()">Preview</button>
+                <button class="btn-primary" onclick="openConfirmModal()">Submit for Authorization</button>
+                <button class="btn-secondary" onclick="closeComposer()">Cancel</button>
+            </div>
+
+            <div class="preview-box" id="preview-box">
+                <h3>Preview</h3>
+                <div id="preview-content" style="color: var(--text-primary);"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Submit Modal -->
+    <div class="modal-overlay" id="confirm-modal" style="z-index: 9999;">
+        <div class="confirm-modal">
+            <p>⚠️ This briefing will be submitted to the Top 5 for authorization. Do you wish to proceed?</p>
+            <div class="confirm-actions">
+                <button class="btn-primary" style="background: #4caf50;" onclick="submitPost()">Yes, Submit</button>
+                <button class="btn-danger" style="background: #ff4d4d;" onclick="closeConfirmModal()">No, Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mega-footer">
+        <div class="footer-grid">
+            <div class="footer-col footer-about"><h4>About CESCIRC</h4><p>Starting its journey in 2026, the CESC International Relations Club was entirely conceptualized and built by the students of Cantonment English School and College.</p></div>
+            <div class="footer-col footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="panel-main.html">Governing Body</a></li><li><a href="articles.html">Explore IR</a></li></ul></div>
+            <div class="footer-col footer-links"><h4>Useful External Links</h4><ul><li><a href="https://cesc.edu.bd" target="_blank">CESC Official Website</a></li><li><a href="https://www.un.org/en/about-us/un-charter" target="_blank">UN Charter</a></li><li><a href="https://www.mofa.gov.bd/" target="_blank">Bangladesh MoFA</a></li><li><a href="https://www.cfr.org/" target="_blank">Council on Foreign Relations</a></li><li><a href="https://www.chathamhouse.org/" target="_blank">Chatham House</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">© 2026 CESCIRC. All Rights Reserved. | Designed by <span>Ariyan Morshed Chowdhury</span></div>
+    </footer>
+
+    <script>
+      let currentRole = 'unverified';
+      let currentUserId = '';
+
+      window.addEventListener('load', async function () {
+        await window.Clerk.load();
+        const container = document.getElementById('clerk-auth');
+        const composerBtn = document.getElementById('open-composer-btn');
+
+        if (window.Clerk.user) {
+          const user = window.Clerk.user;
+          currentRole = user.publicMetadata?.role || 'unverified';
+          currentUserId = user.id;
+          
+          container.innerHTML = `<span style="margin-right: 15px; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Signed in as ${user.firstName}</span>`;
+          const btn = document.createElement('button'); btn.textContent = 'Sign out';
+          btn.onclick = async () => {
+              try { await window.Clerk.signOut(); } catch (e) { console.error("Sign out error:", e); }
+              finally { window.location.href = '/?t=' + Date.now(); }
+          };
+          container.appendChild(btn);
+
+          if (currentRole !== 'unverified') {
+              composerBtn.style.display = 'block';
+              document.getElementById('post-author').value = user.firstName || 'Unknown';
+          }
+        } else {
+          const btn = document.createElement('button');
+          btn.textContent = 'Sign In';
+          btn.onclick = () => window.Clerk.openSignIn();
+          container.appendChild(btn);
+        }
+
+        loadPosts();
+        if (currentRole === 'top5') { loadPendingPosts(); }
+      });
+
+      // --- POSTS LOADING ---
+      async function loadPosts() {
+          try {
+              const res = await fetch('/api/situation?status=approved');
+              const posts = await res.json();
+              const grid = document.getElementById('post-grid');
+              grid.innerHTML = '';
+              
+              if (posts.length > 0) {
+                  posts.forEach(p => {
+                      const parsedBody = marked.parse(p.body_markdown || '');
+                      const date = new Date(p.created_at + 'Z').toLocaleString();
+                      
+                      let menuHtml = '';
+                      if (currentRole === 'top5' || p.author_id === currentUserId) {
+                          let pinOption = currentRole === 'top5' ? `<button onclick="togglePin(${p.id})">${p.pinned === 1 ? 'Unpin Post' : 'Pin Post'}</button>` : '';
+                          menuHtml = `
+                              <div class="post-menu">
+                                  <button class="menu-btn" onclick="toggleMenu(${p.id})">⋮</button>
+                                  <div class="menu-dropdown" id="menu-${p.id}">
+                                      ${pinOption}
+                                      <button onclick="deletePost(${p.id})" style="color: #ff4d4d;">Delete</button>
+                                  </div>
+                              </div>
+                          `;
+                      }
+
+                      let pinBadge = p.pinned === 1 ? `<div class="pin-badge">★ PINNED</div>` : '';
+                      let bannerHtml = p.banner_url ? `<img src="${p.banner_url}" class="post-banner" alt="Banner">` : '';
+
+                      const card = document.createElement('div');
+                      card.className = 'post-card';
+                      card.innerHTML = `
+                          ${pinBadge}
+                          ${menuHtml}
+                          ${bannerHtml}
+                          <div class="post-content">
+                              <h2 class="post-headline">${p.headline}</h2>
+                              <div class="post-meta"><span>By ${p.author_name}</span><span>${date}</span></div>
+                              <div class="post-body">${parsedBody}</div>
+                          </div>
+                      `;
+                      grid.appendChild(card);
+                  });
+              } else {
+                  grid.innerHTML = '<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1;">No briefings have been authorized yet.</p>';
+              }
+          } catch (e) { console.error(e); }
+      }
+
+      // --- PENDING POSTS (TOP 5 ONLY) ---
+      async function loadPendingPosts() {
+          try {
+              const token = await window.Clerk.session.getToken();
+              const res = await fetch('/api/situation?status=pending', { headers: { 'Authorization': `Bearer ${token}` } });
+              const posts = await res.json();
+              const box = document.getElementById('pending-box');
+              const list = document.getElementById('pending-list');
+              
+              if (posts.length > 0) {
+                  box.style.display = 'block';
+                  list.innerHTML = '';
+                  posts.forEach(p => {
+                      const div = document.createElement('div');
+                      div.className = 'pending-item';
+                      div.innerHTML = `
+                          <div><strong>${p.headline}</strong> by ${p.author_name}</div>
+                          <div>
+                              <button class="btn-primary" style="background: #4caf50; padding: 5px 10px; font-size: 0.8rem;" onclick="approvePost(${p.id})">Approve</button>
+                              <button class="btn-danger" style="padding: 5px 10px; font-size: 0.8rem;" onclick="deletePost(${p.id})">Delete</button>
+                          </div>
+                      `;
+                      list.appendChild(div);
+                  });
+              } else { box.style.display = 'none'; }
+          } catch (e) { console.error(e); }
+      }
+
+      // --- COMPOSER LOGIC ---
+      function openComposer() { document.getElementById('composer-modal').style.display = 'flex'; }
+      function closeComposer() { document.getElementById('composer-modal').style.display = 'none'; }
+      function openConfirmModal() { document.getElementById('confirm-modal').style.display = 'flex'; }
+      function closeConfirmModal() { document.getElementById('confirm-modal').style.display = 'none'; }
+
+      function insertMarkdown(before, after = '') {
+          const textarea = document.getElementById('post-body');
+          const start = textarea.selectionStart;
+          const end = textarea.selectionEnd;
+          const text = textarea.value;
+          const selectedText = text.substring(start, end);
+          
+          textarea.value = text.substring(0, start) + before + selectedText + after + text.substring(end);
+          textarea.focus();
+          textarea.setSelectionRange(start + before.length, end + before.length);
+      }
+
+      function insertLink() {
+          const url = prompt('Enter URL:', 'https://');
+          if (!url) return;
+          const text = prompt('Enter link text:', 'Click here');
+          if (!text) return;
+          insertMarkdown(`[${text}](${url})`);
+      }
+
+      function togglePreview() {
+          const box = document.getElementById('preview-box');
+          const content = document.getElementById('preview-content');
+          const bodyText = document.getElementById('post-body').value;
+          
+          content.innerHTML = marked.parse(bodyText);
+          box.style.display = box.style.display === 'none' ? 'block' : 'none';
+      }
+
+      async function submitPost() {
+          const author = document.getElementById('post-author').value.trim();
+          const headline = document.getElementById('post-headline').value.trim();
+          const banner = document.getElementById('post-banner-url').value.trim();
+          const body = document.getElementById('post-body').value.trim();
+
+          if (!author || !headline || !body) return alert('Author, Headline, and Body are required.');
+
+          try {
+              const token = await window.Clerk.session.getToken();
+              const res = await fetch('/api/situation', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                  body: JSON.stringify({ action: 'create', author_name: author, headline, banner_url: banner, body_markdown: body })
+              });
+
+              if (res.ok) {
+                  alert('Briefing submitted for authorization!');
+                  closeComposer();
+                  closeConfirmModal();
+                  document.getElementById('post-headline').value = '';
+                  document.getElementById('post-banner-url').value = '';
+                  document.getElementById('post-body').value = '';
+                  if (currentRole === 'top5') loadPendingPosts();
+              } else { alert('Error submitting post.'); }
+          } catch (e) { alert('Network error.'); }
+      }
+
+      // --- POST ACTIONS ---
+      function toggleMenu(id) {
+          const menu = document.getElementById(`menu-${id}`);
+          menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+      }
+
+      async function approvePost(id) {
+          try {
+              const token = await window.Clerk.session.getToken();
+              await fetch('/api/situation', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ action: 'approve', postId: id }) });
+              loadPosts(); loadPendingPosts();
+          } catch (e) { alert('Error approving.'); }
+      }
+
+      async function deletePost(id) {
+          if (!confirm('Delete this briefing permanently?')) return;
+          try {
+              const token = await window.Clerk.session.getToken();
+              await fetch('/api/situation', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ action: 'delete', postId: id }) });
+              loadPosts(); loadPendingPosts();
+          } catch (e) { alert('Error deleting.'); }
+      }
+
+      async function togglePin(id) {
+          try {
+              const token = await window.Clerk.session.getToken();
+              await fetch('/api/situation', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ action: 'pin', postId: id }) });
+              loadPosts();
+          } catch (e) { alert('Error pinning.'); }
+      }
+    </script>
+</body>
+</html>
