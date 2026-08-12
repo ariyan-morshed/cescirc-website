@@ -25,49 +25,68 @@
         .add-post-btn { background: var(--accent-primary); color: var(--bg-primary); border: none; padding: 10px 20px; font-family: 'Inter', sans-serif; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 4px; font-size: 0.9rem; display: none; }
         .add-post-btn:hover { background: var(--accent-hover); }
 
-        /* Pending Approval Box (Top 5 Only) */
-        .pending-box { background: rgba(42, 14, 14, 0.8); border: 1px solid #ff4d4d; padding: 20px; margin-bottom: 40px; border-radius: 8px; display: none; }
-        .pending-box h3 { color: #ff4d4d; margin-top: 0; }
-        .pending-item { background: rgba(90, 31, 31, 0.5); padding: 15px; border-radius: 4px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        /* Pending Approval Box */
+        .pending-box { background: var(--bg-shadow); border: 1px solid #ff4d4d; padding: 20px; margin-bottom: 40px; border-radius: 8px; display: none; }
+        .pending-box h3 { color: #ff4d4d; margin-top: 0; font-family: 'MyRedaction', monospace; }
+        .pending-item { background: var(--bg-primary); padding: 15px; border-radius: 4px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #ff4d4d; }
 
         /* Post Grid */
         .post-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
         @media (max-width: 768px) { .post-grid { grid-template-columns: 1fr; } .situation-header { flex-direction: column; gap: 15px; text-align: center; } }
 
-        .post-card { background: linear-gradient(180deg, #7a3232 0%, var(--bg-secondary) 40%, var(--bg-primary) 100%); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; }
+        .post-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: transform 0.2s; position: relative; }
         .post-card:hover { transform: translateY(-5px); border-color: var(--accent-hover); }
-        .post-banner { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--accent-primary); }
+        
+        .post-banner { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--accent-primary); background: var(--bg-shadow); }
+        .post-banner-placeholder { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--accent-primary); background: radial-gradient(circle at center, var(--bg-shadow) 0%, #1a0808 100%); display: flex; align-items: center; justify-content: center; color: rgba(201, 163, 78, 0.2); font-family: 'MyRedaction', monospace; font-size: 2rem; }
+        
         .post-content { padding: 20px; }
         .post-headline { font-family: 'MyRedaction', monospace; font-size: 1.5rem; color: var(--text-primary); margin: 0 0 10px 0; line-height: 1.3; }
-        .post-meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; }
-        .post-body { font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; max-height: 150px; overflow: hidden; position: relative; }
-        .post-body::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; background: linear-gradient(transparent, var(--bg-primary)); }
+        .post-meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .post-body { font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; max-height: 250px; overflow: hidden; position: relative; font-family: 'Inter', sans-serif; }
+        .post-body::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; background: linear-gradient(transparent, var(--bg-secondary)); }
         .post-body p { margin: 0 0 10px 0; }
-        .post-body h1, .post-body h2, .post-body h3 { color: var(--accent-hover); font-family: 'Inter', sans-serif; }
+        .post-body h1, .post-body h2, .post-body h3 { color: var(--accent-hover); font-family: 'MyRedaction', monospace; margin-top: 15px; }
+        .post-body a { color: var(--accent-primary); }
+        .post-body blockquote { border-left: 3px solid var(--accent-primary); padding-left: 15px; margin: 10px 0; color: var(--text-secondary); font-style: italic; }
         
-        .pin-badge { position: absolute; top: 10px; right: 10px; background: var(--accent-primary); color: var(--bg-primary); padding: 5px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; z-index: 2; }
+        .pin-badge { position: absolute; top: 10px; left: 10px; background: var(--accent-primary); color: var(--bg-primary); padding: 5px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; z-index: 2; }
         .post-menu { position: absolute; top: 10px; right: 10px; z-index: 3; }
-        .menu-btn { background: rgba(0,0,0,0.6); color: var(--text-primary); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 1.2rem; line-height: 1; display: flex; align-items: center; justify-content: center; }
+        .menu-btn { background: rgba(0,0,0,0.6); color: var(--text-primary); border: none; border-radius: 4px; width: 30px; height: 30px; cursor: pointer; font-size: 1.2rem; line-height: 1; display: flex; align-items: center; justify-content: center; }
         .menu-dropdown { position: absolute; right: 0; top: 35px; background: var(--bg-shadow); border: 1px solid var(--accent-primary); border-radius: 4px; display: none; flex-direction: column; z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .menu-dropdown button { background: none; border: none; color: var(--text-primary); padding: 10px 15px; text-align: left; cursor: pointer; font-size: 0.85rem; width: 120px; font-family: 'Inter', sans-serif; }
         .menu-dropdown button:hover { background: rgba(201, 163, 78, 0.2); }
 
         /* Composer Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9998; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .composer-box { background: var(--bg-secondary); border: 1px solid var(--accent-primary); border-radius: 8px; padding: 30px; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .composer-box h2 { color: var(--accent-hover); margin-top: 0; }
-        .composer-input { width: 100%; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 12px; font-family: 'Inter', sans-serif; font-size: 0.9rem; border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; }
+        .composer-box { background: var(--bg-primary); border: 1px solid var(--accent-primary); border-radius: 8px; padding: 30px; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .composer-box h2 { color: var(--accent-hover); margin-top: 0; font-family: 'MyRedaction', monospace; }
+        .composer-input { width: 100%; background: var(--bg-shadow); color: var(--text-primary); border: 1px solid var(--border-color); padding: 12px; font-family: 'Inter', sans-serif; font-size: 0.9rem; border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; }
+        .composer-input:focus { outline: none; border-color: var(--accent-primary); }
+        
         .composer-toolbar { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
-        .toolbar-btn { background: var(--bg-primary); color: var(--accent-primary); border: 1px solid var(--border-color); padding: 5px 10px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; font-weight: 700; }
+        .toolbar-btn { background: var(--bg-shadow); color: var(--accent-primary); border: 1px solid var(--border-color); padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 0.8rem; font-weight: 700; font-family: 'Inter', sans-serif; }
         .toolbar-btn:hover { background: var(--border-color); }
         .composer-textarea { min-height: 200px; resize: vertical; }
         .composer-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
-        .btn-primary { background: var(--accent-primary); color: var(--bg-primary); border: none; padding: 10px 20px; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 4px; }
-        .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); padding: 10px 20px; cursor: pointer; border-radius: 4px; }
-        .btn-danger { background: #ff4d4d; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; }
+        
+        .btn-primary { background: var(--accent-primary); color: var(--bg-primary); border: none; padding: 10px 20px; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 4px; font-size: 0.85rem; }
+        .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); padding: 10px 20px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; }
+        .btn-danger { background: #ff4d4d; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 0.85rem; }
 
-        .preview-box { background: var(--bg-primary); padding: 20px; border-radius: 4px; margin-top: 15px; display: none; }
-        .preview-box h3 { color: var(--accent-hover); margin-top: 0; }
+        /* Markdown Guide */
+        .md-guide { background: var(--bg-shadow); border: 1px solid var(--border-color); border-radius: 4px; padding: 15px; margin-bottom: 15px; }
+        .md-guide-toggle { color: var(--accent-primary); cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .md-guide-content { display: none; margin-top: 15px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+        .md-guide-content code { background: var(--bg-primary); padding: 2px 6px; border-radius: 4px; color: var(--accent-hover); }
+        .md-guide-content div { margin-bottom: 8px; }
+
+        /* Preview Box */
+        .preview-box { background: var(--bg-shadow); border: 1px dashed var(--accent-primary); padding: 20px; border-radius: 4px; margin-top: 15px; display: none; }
+        .preview-box h3 { color: var(--accent-hover); margin-top: 0; font-family: 'MyRedaction', monospace; font-size: 1rem; }
+        .preview-content { color: var(--text-primary); font-size: 0.95rem; line-height: 1.6; }
+        .preview-content h1, .preview-content h2, .preview-content h3 { color: var(--accent-hover); font-family: 'MyRedaction', monospace; }
+        .preview-content a { color: var(--accent-primary); }
         
         /* Confirm Modal */
         .confirm-modal { background: var(--bg-shadow); border: 1px solid var(--accent-primary); padding: 30px; border-radius: 8px; text-align: center; max-width: 400px; }
@@ -115,18 +134,32 @@
             <h2>Draft New Briefing</h2>
             <input type="text" class="composer-input" id="post-author" placeholder="Author Name (e.g., Ariyan M.)">
             <input type="text" class="composer-input" id="post-headline" placeholder="Headline...">
-            <input type="text" class="composer-input" id="post-banner-url" placeholder="Banner Image URL (Optional - use ImgBB)">
+            <input type="text" class="composer-input" id="post-banner-url" placeholder="Banner Image URL (Optional)">
             
             <div class="composer-toolbar">
-                <button class="toolbar-btn" onclick="insertMarkdown('**', '**')"><b>B</b></button>
-                <button class="toolbar-btn" onclick="insertMarkdown('*', '*')"><i>I</i></button>
-                <button class="toolbar-btn" onclick="insertMarkdown('# ', '')">H1</button>
-                <button class="toolbar-btn" onclick="insertMarkdown('## ', '')">H2</button>
-                <button class="toolbar-btn" onclick="insertMarkdown('- ', '')">• List</button>
-                <button class="toolbar-btn" onclick="insertMarkdown('> ', '')">"</button>
-                <button class="toolbar-btn" onclick="insertLink()">🔗</button>
+                <button class="toolbar-btn" onclick="insertMarkdown('**', '**')"><b>Bold</b></button>
+                <button class="toolbar-btn" onclick="insertMarkdown('*', '*')"><i>Italic</i></button>
+                <button class="toolbar-btn" onclick="insertMarkdown('# ', '')">Heading 1</button>
+                <button class="toolbar-btn" onclick="insertMarkdown('## ', '')">Heading 2</button>
+                <button class="toolbar-btn" onclick="insertMarkdown('- ', '')">List</button>
+                <button class="toolbar-btn" onclick="insertMarkdown('> ', '')">Quote</button>
+                <button class="toolbar-btn" onclick="insertLink()">Link</button>
             </div>
             <textarea class="composer-input composer-textarea" id="post-body" placeholder="Write the briefing here..."></textarea>
+
+            <!-- Markdown Guide -->
+            <div class="md-guide">
+                <div class="md-guide-toggle" onclick="toggleGuide()">
+                    <span id="guide-icon">▸</span> Formatting & Image Guide
+                </div>
+                <div class="md-guide-content" id="guide-content">
+                    <div><strong>Headings:</strong> Use <code>#</code> for large titles, <code>##</code> for subtitles.</div>
+                    <div><strong>Bold/Italic:</strong> Wrap text in <code>**double asterisks**</code> for bold, <code>*single*</code> for italic.</div>
+                    <div><strong>Lists:</strong> Start a line with <code>-</code> to create a bullet point.</div>
+                    <div><strong>Links:</strong> Format as <code>[Link Text](https://url.com)</code></div>
+                    <div><strong>Banner Images:</strong> To get a URL for your banner image, go to <a href="https://imgbb.com/" target="_blank" style="color: var(--accent-hover);">ImgBB</a>, upload your image, click "Embed codes", and copy the "Direct Link" URL. Paste it into the Banner Image URL box above.</div>
+                </div>
+            </div>
 
             <div class="composer-actions">
                 <button class="btn-secondary" onclick="togglePreview()">Preview</button>
@@ -136,7 +169,7 @@
 
             <div class="preview-box" id="preview-box">
                 <h3>Preview</h3>
-                <div id="preview-content" style="color: var(--text-primary);"></div>
+                <div class="preview-content" id="preview-content"></div>
             </div>
         </div>
     </div>
@@ -144,7 +177,7 @@
     <!-- Confirm Submit Modal -->
     <div class="modal-overlay" id="confirm-modal" style="z-index: 9999;">
         <div class="confirm-modal">
-            <p>⚠️ This briefing will be submitted to the Top 5 for authorization. Do you wish to proceed?</p>
+            <p>⚠️ This briefing will be submitted to the Top 5 for authorization. The timestamp will be locked in now. Do you wish to proceed?</p>
             <div class="confirm-actions">
                 <button class="btn-primary" style="background: #4caf50;" onclick="submitPost()">Yes, Submit</button>
                 <button class="btn-danger" style="background: #ff4d4d;" onclick="closeConfirmModal()">No, Cancel</button>
@@ -226,7 +259,7 @@
                       }
 
                       let pinBadge = p.pinned === 1 ? `<div class="pin-badge">★ PINNED</div>` : '';
-                      let bannerHtml = p.banner_url ? `<img src="${p.banner_url}" class="post-banner" alt="Banner">` : '';
+                      let bannerHtml = p.banner_url ? `<img src="${p.banner_url}" class="post-banner" alt="Banner">` : `<div class="post-banner-placeholder">CESCIRC</div>`;
 
                       const card = document.createElement('div');
                       card.className = 'post-card';
@@ -264,7 +297,7 @@
                       const div = document.createElement('div');
                       div.className = 'pending-item';
                       div.innerHTML = `
-                          <div><strong>${p.headline}</strong> by ${p.author_name}</div>
+                          <div style="color: var(--text-primary);"><strong>${p.headline}</strong> by ${p.author_name}</div>
                           <div>
                               <button class="btn-primary" style="background: #4caf50; padding: 5px 10px; font-size: 0.8rem;" onclick="approvePost(${p.id})">Approve</button>
                               <button class="btn-danger" style="padding: 5px 10px; font-size: 0.8rem;" onclick="deletePost(${p.id})">Delete</button>
@@ -281,6 +314,12 @@
       function closeComposer() { document.getElementById('composer-modal').style.display = 'none'; }
       function openConfirmModal() { document.getElementById('confirm-modal').style.display = 'flex'; }
       function closeConfirmModal() { document.getElementById('confirm-modal').style.display = 'none'; }
+      function toggleGuide() {
+          const content = document.getElementById('guide-content');
+          const icon = document.getElementById('guide-icon');
+          if (content.style.display === 'block') { content.style.display = 'none'; icon.innerText = '▸'; } 
+          else { content.style.display = 'block'; icon.innerText = '▾'; }
+      }
 
       function insertMarkdown(before, after = '') {
           const textarea = document.getElementById('post-body');
