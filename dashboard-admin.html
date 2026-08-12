@@ -168,7 +168,7 @@
               loadTasks(deptCode, role);
               loadMessages(deptCode, role);
               // AUTO-REFRESH INBOX EVERY 30 SECONDS
-              setInterval(() => loadMessages(deptCode, role), 30000); 
+              setInterval(() => loadMessages(deptCode, role, true), 30000); 
               window.cescircSender = { name: senderName, dept: deptName };
           } else { denied.style.display = 'block'; }
         } else { denied.style.display = 'block'; const btn = document.createElement('button'); btn.textContent = 'Sign In'; btn.onclick = () => window.Clerk.openSignIn(); container.appendChild(btn); }
@@ -249,9 +249,13 @@
       };
 
       // --- MESSAGES LOGIC ---
-      async function loadMessages(deptCode, role) {
+      // Added isAutoRefresh parameter to stop flicker
+      async function loadMessages(deptCode, role, isAutoRefresh = false) {
           const list = document.getElementById('inbox-list');
-          list.innerHTML = '<div class="skeleton-box"></div><div class="skeleton-box"></div>'; // Skeletons
+          // Only show skeletons on the very first load, NOT on the 30s auto-refresh
+          if (!isAutoRefresh) {
+              list.innerHTML = '<div class="skeleton-box"></div><div class="skeleton-box"></div>';
+          }
           try {
               const res = await fetch(`/api/messages?dept=${deptCode}`);
               const messages = await res.json();
@@ -260,7 +264,8 @@
                   messages.forEach(m => {
                       const li = document.createElement('li');
                       li.className = 'inbox-item';
-                      const date = new Date(m.created_at).toLocaleString(); // Full date & time
+                      // Added + 'Z' to fix the 6-hour timezone offset
+                      const date = new Date(m.created_at + 'Z').toLocaleString(); 
                       let deleteHtml = '';
                       if (role === 'top5' || role === 'director') {
                           deleteHtml = `<button class="task-delete-btn" onclick="deleteMessage(${m.id}, '${deptCode}')" style="margin-top: 10px;">Delete</button>`;

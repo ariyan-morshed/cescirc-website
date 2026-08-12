@@ -49,6 +49,10 @@
     <div class="admin-container" id="admin-dashboard">
         <h1 class="admin-title">Personnel Management</h1>
         <p style="color: var(--text-secondary); margin-bottom: 30px;">Assign ranks and departments. Changes take effect immediately.</p>
+	<p style="color: var(--text-secondary); margin-bottom: 30px;">Assign ranks and departments. Changes take effect immediately.</p>
+        
+        <!-- NEW SEARCH BOX -->
+        <input type="text" id="user-search" placeholder="Search personnel by name, role, or dept..." class="admin-select" style="width: 100%; max-width: 400px; margin-bottom: 20px; padding: 12px; border-radius: 4px; box-sizing: border-box;" onkeyup="filterUsers()">
 
         <table class="user-table">
             <thead>
@@ -169,11 +173,11 @@
                       </td>
                       <td><button class="admin-btn" onclick="saveUser('${u.id}')">Save</button></td>`;
                     tbody.appendChild(row);
+		    row.dataset.searchText = name.toLowerCase() + role.toLowerCase() + dept.toLowerCase();
                 });
             } else { alert("Could not find user list. Check the Console (F12)."); }
           } catch (err) { console.error("Fetch Failed:", err); alert("Network Error: " + err.message); }
         }
-
         window.saveUser = async function(userId) {
           const newRole = document.getElementById(`role-${userId}`).value;
           const newDept = document.getElementById(`dept-${userId}`).value;
@@ -195,6 +199,24 @@
           statusDiv.style.display = 'block';
           setTimeout(() => statusDiv.style.display = 'none', 4000);
         }
+
+        // --- NEW SEARCH FUNCTION ---
+        window.filterUsers = function() {
+            const input = document.getElementById('user-search');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('user-list-body');
+            const rows = table.getElementsByTagName('tr');
+            
+            for (let i = 0; i < rows.length; i++) {
+                const rowData = rows[i].dataset.searchText || '';
+                if (rowData.includes(filter)) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        };
+
       });
     </script>
 </body>

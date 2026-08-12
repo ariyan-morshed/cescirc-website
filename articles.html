@@ -29,6 +29,13 @@
         .read-btn { display: inline-block; background: transparent; color: var(--accent-primary); padding: 15px 30px; border: 2px solid var(--accent-primary); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
         .read-btn:hover { background: var(--accent-primary); color: var(--bg-shadow); }
         .classified-stamp { position: absolute; top: 20px; right: 20px; border: 2px solid var(--accent-primary); color: var(--accent-primary); padding: 5px 15px; font-family: 'MyRedaction', monospace; font-size: 0.8rem; transform: rotate(5deg); opacity: 0.7; }
+        
+        .add-intel-container { max-width: 800px; margin: 0 auto 50px auto; background: rgba(42, 14, 14, 0.6); border: 1px solid var(--border-color); padding: 30px; border-radius: 8px; display: none; }
+        .add-intel-container h3 { color: var(--accent-hover); margin-top: 0; }
+        .dash-input { width: 100%; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 12px; font-family: 'Inter', sans-serif; font-size: 0.9rem; border-radius: 4px; box-sizing: border-box; margin-bottom: 10px; }
+        .dash-btn { background: var(--accent-primary); color: var(--bg-primary); border: none; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.3s; width: auto; padding: 12px 25px; border-radius: 4px; }
+        .dash-btn:hover { background: var(--accent-hover); }
+
         @media (max-width: 768px) { .explore-container { padding-top: 200px !important; } .intel-card { padding: 30px 20px; } .intel-title { font-size: 1.6rem; } .intel-source { padding-right: 120px !important; } .navbar { flex-direction: column; gap: 15px; padding: 15px; align-items: center !important; text-align: center; } .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; } }
     </style>
 </head>
@@ -54,234 +61,130 @@
         <h2 style="font-family: 'MyRedaction', monospace; color: var(--accent-hover); border: none; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; font-size: 3rem;">The Reading Room</h2>
         <p style="color: var(--text-secondary); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; font-size: 0.9rem;">Curated intelligence. Roll the dice to discover a specific, deep-dive geopolitical briefing.</p>
 
+        <div class="add-intel-container" id="add-intel-form">
+            <h3>Add New Intel</h3>
+            <input type="text" class="dash-input" id="intel-title" placeholder="Article Title...">
+            <input type="text" class="dash-input" id="intel-source" placeholder="Source (e.g., BBC News)...">
+            <input type="text" class="dash-input" id="intel-url" placeholder="https://link-to-article.com...">
+            <textarea class="dash-input" id="intel-summary" rows="3" placeholder="Brief summary of the article..."></textarea>
+            <button class="dash-btn" onclick="submitIntel()">Submit Intel</button>
+        </div>
+
         <button class="random-btn" onclick="loadRandomArticle()">Declassify Intel</button>
         <div id="card-container"></div>
     </div>
 
-    <script>
-        const articles = [
-            {
-                title: "Balanced foreign policy essential in changing world",
-                source: "Prothom Alo",
-                summary: "A Dhaka roundtable arguing that Bangladesh needs a pragmatic, strategic, and balanced foreign policy amid intensifying major-power competition and economic pressure.",
-                url: "https://en.prothomalo.com/bangladesh/roundtable/d2gxuns9uz"
-            },
-            {
-                title: "Bengal Council policy brief outlines roadmap for implementing Bangladesh-US trade deal",
-                source: "The Business Standard",
-                summary: "A policy brief on how Bangladesh’s reciprocal trade agreement with the United States could affect garments, geopolitics, compliance, and relations with the EU, India, and China.",
-                url: "https://www.tbsnews.net/foreign-policy/bengal-council-policy-brief-outlines-roadmap-implementing-bangladesh-us-trade-deal?amp"
-            },
-            {
-                title: "India visa restart signals warmer ties, but Chinese investment could reshape Bangladesh ties",
-                source: "bdnews24",
-                summary: "An analysis of how Bangladesh must balance improved ties with India against the strategic implications of deeper Chinese investment.",
-                url: "https://bdnews24.com/business/3e88ea89c5da"
-            },
-            {
-                title: "Bangladesh in the Indo-Pacific: An Analysis of the Interim Government’s Foreign Policy",
-                source: "Observer Research Foundation",
-                summary: "An analysis of Bangladesh’s foreign policy under the interim government, including ties with India, China, the US, and Japan in the Indo-Pacific.",
-                url: "https://www.orfonline.org/research/bangladesh-in-the-indo-pacific-an-analysis-of-the-interim-government-s-foreign-policy"
-            },
-            {
-                title: "Strong relations with China will sharpen Bangladesh's negotiation skills",
-                source: "Prothom Alo",
-                summary: "An interview-based opinion piece discussing why deeper ties with China may affect Bangladesh’s bargaining position with other partners.",
-                url: "https://en.prothomalo.com/opinion/interview/m8wc1s36kv"
-            },
-            {
-                title: "Bangladesh courts China even as ties with India improve",
-                source: "BBC News",
-                summary: "A report on Bangladesh’s efforts to seek more Chinese investment while managing a gradual warming in relations with India.",
-                url: "https://www.bbc.com/news/articles/cy4e1lzwgvxo"
-            },
-            {
-                title: "What the Russia-Ukraine war means for Bangladesh's economy",
-                source: "The Daily Star",
-                summary: "An economic analysis of how the Russia-Ukraine war affects Bangladesh through import costs, exports, and global price shocks.",
-                url: "https://www.thedailystar.net/opinion/macro-mirror/news/what-the-ukraine-war-means-our-economy-2986941"
-            },
-            {
-                title: "What the Russia-Ukraine war means for Bangladesh's economy",
-                source: "CPD",
-                summary: "A policy piece explaining how the war may widen Bangladesh’s trade deficit and raise pressure on the currency and imports.",
-                url: "https://cpd.org.bd/what-the-russia-ukraine-war-means-for-bangladeshs-economy/"
-            },
-            {
-                title: "Lingering Red Sea crisis pushes up trade costs for Bangladesh",
-                source: "The Daily Star",
-                summary: "A report showing how Red Sea disruptions are raising Bangladesh’s trade costs, threatening exports and adding inflation pressure.",
-                url: "https://www.thedailystar.net/business/economy/news/lingering-red-sea-crisis-pushes-trade-costs-bangladesh-3520936"
-            },
-            {
-                title: "Red Sea crisis: Domino effect on Bangladesh and global supply chain",
-                source: "South Asia Monitor",
-                summary: "An explainer on how the Red Sea crisis can disrupt Bangladesh’s exports, shipping routes, and broader supply chains.",
-                url: "https://www.southasiamonitor.org/spotlight/red-sea-crisis-domino-effect-bangladesh-and-global-supply-chain"
-            },
-            {
-                title: "Bangladesh is helping to create a geopolitical shift in South Asia",
-                source: "Chatham House",
-                summary: "An analysis of Bangladesh’s realignment under the interim government, including closer engagement with China, Pakistan, and Turkey.",
-                url: "https://www.chathamhouse.org/2025/06/bangladesh-helping-create-geopolitical-shift-south-asia"
-            },
-            {
-                title: "Bangladesh's Geopolitical Moment: Between India, China, and the United States",
-                source: "Yip Institute",
-                summary: "A discussion of Bangladesh as a strategic state in the Bay of Bengal and a site of competition among India, China, and the United States.",
-                url: "https://yipinstitute.org/article/bangladeshs-geopolitical-moment-between-india-china-and-the-united-states"
-            },
-            {
-                title: "The Rohingya Crisis",
-                source: "Council on Foreign Relations",
-                summary: "A backgrounder on the Rohingya crisis and why Bangladesh remains central because it hosts the world’s largest Rohingya refugee population.",
-                url: "https://www.cfr.org/backgrounders/rohingya-crisis"
-            },
-            {
-                title: "The Rohingya Crisis and its Impact on Bangladesh-Myanmar Relations",
-                source: "Observer Research Foundation",
-                summary: "A brief on how the Rohingya issue affects trade, diplomacy, and security between Bangladesh and Myanmar.",
-                url: "https://www.orfonline.org/research/the-rohingya-crisis-and-its-impact-on-bangladesh-myanmar-relations"
-            },
-            {
-                title: "Climate Change and Migration Across the Bay of Bengal",
-                source: "Climate-Diplomacy.org",
-                summary: "A policy analysis of how climate change may increase migration and instability across the Bay of Bengal, affecting Bangladesh directly.",
-                url: "https://climate-diplomacy.org/magazine/environment/climate-change-and-migration-across-bay-bengal"
-            },
-            {
-                title: "Climate Migrants Face a Gap in International Law",
-                source: "ReliefWeb",
-                summary: "A report noting that climate pressure in Bangladesh is fueling internal displacement and urbanization challenges.",
-                url: "https://reliefweb.int/report/bangladesh/climate-migrants-face-gap-international-law"
-            },
-            {
-                title: "Climate Change in Bangladesh Shapes Internal Migration",
-                source: "Migration Policy Institute",
-                summary: "A policy article on how climate change drives internal migration in Bangladesh and affects broader mobility debates.",
-                url: "https://www.migrationpolicy.org/article/bangladesh-india-climate-migration"
-            },
-            {
-                title: "Bangladesh’s Climate Diplomacy",
-                source: "ICCCAD",
-                summary: "A discussion of Bangladesh’s climate diplomacy and its leadership role in climate-vulnerable forums and negotiation spaces.",
-                url: "https://icccad.net/dr-saleemul-huq-media/bangladeshs-climate-diplomacy/"
-            },
-            {
-                title: "Bangladesh-EU relations pass a new milestone with the initialling of a Partnership and Cooperation Agreement",
-                source: "European Union in Bangladesh",
-                summary: "An official EU update on the new Bangladesh-EU partnership framework covering trade, security, climate, and maritime cooperation.",
-                url: "https://www.facebook.com/EUinBangladesh/posts/bangladesh-eu-relations-pass-a-new-milestone-with-the-initialling-of-the-partner/1390332879787647/"
-            },
-            {
-                title: "Bangladesh, EU strike deal on trade, investment, sustainable development",
-                source: "Just Style",
-                summary: "A trade-focused report on the Bangladesh-EU partnership and its implications for apparel exports and broader cooperation.",
-                url: "https://www.just-style.com/news/bangladesh-eu-strike-deal-on-trade-investment-sustainable-development/"
-            },
-            {
-                title: "Energy crisis poses difficult policy trade-off challenges: GED",
-                source: "The Business Standard",
-                summary: "A report on Bangladesh’s energy crisis and how global energy prices are affecting inflation, imports, and fiscal balance.",
-                url: "https://www.tbsnews.net/bangladesh/energy/energy-crisis-poses-difficult-policy-trade-challenges-ged-1406836"
-            },
-            {
-                title: "How shockwaves from the Gulf are reshaping Bangladesh's economy",
-                source: "International Growth Centre",
-                summary: "An analysis of how Middle East supply shocks affect Bangladesh’s energy dependence, remittances, trade, and inflation.",
-                url: "https://www.theigc.org/blogs/energy-crisis-bangladesh-economy"
-            },
-            {
-                title: "Bangladesh’s Shifting Geopolitics: Why India Cannot Afford To Wait",
-                source: "Asia Society Policy Institute",
-                summary: "An analysis of Bangladesh’s shifting posture after the 2024 political transition and its implications for India, China, and Pakistan.",
-                url: "https://asiasociety.org/policy-institute/bangladeshs-shifting-geopolitics-why-india-cannot-afford-wait"
-            },
-            {
-                title: "Indo-Pacific: Bangladesh's Strategic Move to Geopolitics, Climate Diplomacy, and Security",
-                source: "Dirosat Journal Article",
-                summary: "A scholarly article on Bangladesh’s Indo-Pacific engagement, climate diplomacy, migration pressures, and Bay of Bengal security.",
-                url: "https://dirosat.com/index.php/i/article/view/128"
-            }
-        ];
-
-        function loadRandomArticle() {
-            const randomIndex = Math.floor(Math.random() * articles.length);
-            const chosen = articles[randomIndex];
-            const cardHTML = `
-                <div class="intel-card">
-                    <div class="classified-stamp">CLASSIFIED</div>
-                    <span class="intel-source">Source: ${chosen.source}</span>
-                    <h2 class="intel-title">${chosen.title}</h2>
-                    <p class="intel-summary">${chosen.summary}</p>
-                    <a href="${chosen.url}" target="_blank" class="read-btn">Read Full Briefing →</a>
-                </div>
-            `;
-            document.getElementById('card-container').innerHTML = cardHTML;
-        }
-    </script>
-
     <footer class="mega-footer">
         <div class="footer-grid">
-            <div class="footer-col footer-about">
-                <h4>About CESCIRC</h4>
-                <p>Starting its journey in 2026, the CESC International Relations Club was entirely conceptualized and built by the students of Cantonment English School and College. It serves as the premier academic arena for developing diplomatic acumen and geopolitical awareness.</p>
-            </div>
-            <div class="footer-col footer-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="panel-main.html">Governing Body</a></li>
-                    <li><a href="articles.html">Explore IR</a></li>
-                </ul>
-            </div>
-            <div class="footer-col footer-links">
-                <h4>Useful External Links</h4>
-                <ul>
-                    <li><a href="https://cesc.edu.bd" target="_blank">CESC Official Website</a></li>
-                    <li><a href="https://www.un.org/en/about-us/un-charter" target="_blank">UN Charter</a></li>
-                    <li><a href="https://www.mofa.gov.bd/" target="_blank">Bangladesh MoFA</a></li>
-                    <li><a href="https://www.cfr.org/" target="_blank">Council on Foreign Relations</a></li>
-                    <li><a href="https://www.chathamhouse.org/" target="_blank">Chatham House</a></li>
-                </ul>
-            </div>
+            <div class="footer-col footer-about"><h4>About CESCIRC</h4><p>Starting its journey in 2026, the CESC International Relations Club was entirely conceptualized and built by the students of Cantonment English School and College.</p></div>
+            <div class="footer-col footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="panel-main.html">Governing Body</a></li><li><a href="articles.html">Explore IR</a></li></ul></div>
+            <div class="footer-col footer-links"><h4>Useful External Links</h4><ul><li><a href="https://cesc.edu.bd" target="_blank">CESC Official Website</a></li><li><a href="https://www.un.org/en/about-us/un-charter" target="_blank">UN Charter</a></li><li><a href="https://www.mofa.gov.bd/" target="_blank">Bangladesh MoFA</a></li><li><a href="https://www.cfr.org/" target="_blank">Council on Foreign Relations</a></li><li><a href="https://www.chathamhouse.org/" target="_blank">Chatham House</a></li></ul></div>
         </div>
-        <div class="footer-bottom">
-            © 2026 CESCIRC. All Rights Reserved. | Designed by <span>Ariyan Morshed Chowdhury</span>
-        </div>
+        <div class="footer-bottom">© 2026 CESCIRC. All Rights Reserved. | Designed by <span>Ariyan Morshed Chowdhury</span></div>
     </footer>
 
     <script>
+      let dynamicArticles = [];
+      let lastArticleIndex = -1;
+
       window.addEventListener('load', async function () {
         await window.Clerk.load();
         const container = document.getElementById('clerk-auth');
+        const addIntelForm = document.getElementById('add-intel-form');
+
         if (window.Clerk.user) {
           const user = window.Clerk.user;
           const role = user.publicMetadata?.role || 'unverified';
+          const dept = user.publicMetadata?.department || 'none';
+          
           const statusText = role === 'unverified' ? 'Pending Approval' : `Signed in as ${user.firstName}`;
           const statusColor = role === 'unverified' ? '#ff4d4d' : 'var(--text-secondary)';
           container.innerHTML = `<span style="margin-right: 15px; font-size: 0.8rem; color: ${statusColor}; text-transform: uppercase; letter-spacing: 1px;">${statusText}</span>`;
-          const btn = document.createElement('button'); btn.textContent = 'Sign out';
+          
+          const btn = document.createElement('button');
+          btn.textContent = 'Sign out';
           btn.onclick = async () => {
-              try {
-                  // 1. Wait for Clerk to fully destroy the session
-                  await window.Clerk.signOut();
-              } catch (e) {
-                  console.error("Sign out error:", e);
-              } finally {
-                  // 2. Force a hard reload to the home page with a timestamp to bypass cache
-                  window.location.href = '/?t=' + Date.now();
-              }
+              try { await window.Clerk.signOut(); } catch (e) { console.error("Sign out error:", e); }
+              finally { window.location.href = '/?t=' + Date.now(); }
           };
           container.appendChild(btn);
+
+          // Show Add Intel form ONLY for Top 5 OR (Academics Dept AND (Director OR Member))
+          if (role === 'top5' || (dept === 'academics_dept' && (role === 'director' || role === 'member'))) {
+              addIntelForm.style.display = 'block';
+          }
         } else {
           const btn = document.createElement('button');
           btn.textContent = 'Sign In';
           btn.onclick = () => window.Clerk.openSignIn();
           container.appendChild(btn);
         }
+
+        // Fetch articles from DB
+        try {
+            const res = await fetch('/api/articles');
+            dynamicArticles = await res.json();
+        } catch (e) { console.error("Failed to load articles:", e); }
       });
+
+      function loadRandomArticle() {
+          if (dynamicArticles.length === 0) {
+              document.getElementById('card-container').innerHTML = `<div class="intel-card"><span class="intel-source">No Intel Available</span><h2 class="intel-title">Archive Empty</h2><p class="intel-summary">There are no articles in the database yet. Check back later.</p></div>`;
+              return;
+          }
+
+          let randomIndex;
+          // Ensure we don't get the same article twice in a row
+          do {
+              randomIndex = Math.floor(Math.random() * dynamicArticles.length);
+          } while (dynamicArticles.length > 1 && randomIndex === lastArticleIndex);
+          
+          lastArticleIndex = randomIndex;
+          const chosen = dynamicArticles[randomIndex];
+          
+          document.getElementById('card-container').innerHTML = `
+              <div class="intel-card">
+                  <div class="classified-stamp">CLASSIFIED</div>
+                  <span class="intel-source">Source: ${chosen.source}</span>
+                  <h2 class="intel-title">${chosen.title}</h2>
+                  <p class="intel-summary">${chosen.summary}</p>
+                  <a href="${chosen.url}" target="_blank" class="read-btn">Read Full Briefing →</a>
+              </div>
+          `;
+      }
+
+      window.submitIntel = async function() {
+          const title = document.getElementById('intel-title').value.trim();
+          const source = document.getElementById('intel-source').value.trim();
+          const url = document.getElementById('intel-url').value.trim();
+          const summary = document.getElementById('intel-summary').value.trim();
+
+          if (!title || !source || !url || !summary) return alert('All fields are required.');
+
+          try {
+              const token = await window.Clerk.session.getToken();
+              const res = await fetch('/api/articles', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                  body: JSON.stringify({ title, source, url, summary })
+              });
+
+              if (res.ok) {
+                  alert('Intel added successfully!');
+                  document.getElementById('intel-title').value = '';
+                  document.getElementById('intel-source').value = '';
+                  document.getElementById('intel-url').value = '';
+                  document.getElementById('intel-summary').value = '';
+                  // Reload articles from DB
+                  const fetchRes = await fetch('/api/articles');
+                  dynamicArticles = await fetchRes.json();
+              } else {
+                  alert('Error: You may not have permission to do this.');
+              }
+          } catch (e) {
+              alert('Error submitting intel.');
+          }
+      };
     </script>
 </body>
 </html>
