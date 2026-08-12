@@ -77,7 +77,7 @@
         .queue-empty { color: var(--text-secondary); font-size: 0.85rem; text-align: center; padding: 10px 0; }
 
         /* ============ Post grid ============ */
-        .post-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .post-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
         .grid-empty { grid-column: 1 / -1; text-align: center; color: var(--text-secondary); padding: 60px 20px; border: 1px dashed var(--border-color); border-radius: 8px; font-size: 0.95rem; background: rgba(42, 14, 14, 0.3); }
 
         .post-card {
@@ -247,7 +247,7 @@
             box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 30px rgba(201, 163, 78, 0.05);
             position: relative; overflow: hidden; max-height: 85vh; display: flex; flex-direction: column;
         }
-        .viewer-banner { width: 100%; height: 250px; object-fit: cover; border-bottom: 3px solid var(--accent-primary); background: var(--bg-shadow); }
+        .viewer-banner { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; border-bottom: 3px solid var(--accent-primary); background: var(--bg-shadow); }
         .viewer-content { padding: 30px 40px; overflow-y: auto; }
         .viewer-close { position: absolute; top: 15px; right: 15px; z-index: 5; background: rgba(20,8,8,0.8); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 50%; width: 36px; height: 36px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .viewer-close:hover { background: #ff4d4d; border-color: #ff4d4d; color: white; }
@@ -398,7 +398,7 @@
                 <summary>Markdown & image guide</summary>
                 <div class="md-guide-body">
                     <p><code>**bold**</code>, <code>*italic*</code>, <code># Heading 1</code>, <code>## Heading 2</code>, <code>- list item</code>, <code>&gt; quote</code>, and <code>[link text](https://example.com)</code> all render automatically in the preview and in the published card.</p>
-                    <p>For a banner image, upload it to <code>imgbb.com</code>, copy the <strong>direct image link</strong> it gives you (ending in .jpg/.png/.webp), and paste that into the Banner Image URL field above. Leave it blank to use the default CESCIRC placeholder.</p>
+                    <p>For a banner image, upload it to <code>imgbb.com</code>, copy the <strong>direct image link</strong> it gives you (ending in .jpg/.png/.webp), and paste that into the Banner Image URL field above (you must be signed in to get the direct link). The image should be in a 16:9 ratio for optimal viewing. Leave it blank to use the default CESCIRC placeholder.</p>
                 </div>
             </details>
 
@@ -669,9 +669,9 @@
 
             const bannerWrap = document.getElementById('viewer-banner-wrap');
             if (post.banner_url) {
-                bannerWrap.innerHTML = `<img src="${escapeHtml(post.banner_url)}" class="viewer-banner" alt="" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.add('placeholder');">`;
+                bannerWrap.innerHTML = `<img src="${escapeHtml(post.banner_url)}" class="viewer-banner" alt="" onerror="this.parentElement.innerHTML='';">`;
             } else {
-                bannerWrap.innerHTML = `<div class="viewer-banner placeholder"></div>`;
+                bannerWrap.innerHTML = '';
             }
 
             document.getElementById('viewer-overlay').classList.add('open');
